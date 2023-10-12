@@ -25,11 +25,11 @@ public class UsoDeVaga {
         this.valorPago = valorPago;
     }
 
-    public void Sair() {
+    public void sair() {
         this.saida = LocalDateTime.now();
     }
 
-    public double CalcularValor() {
+    public double calcularValor() {
         long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
         double valor = 0.0;

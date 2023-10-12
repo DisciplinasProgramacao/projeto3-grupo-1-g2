@@ -30,17 +30,22 @@ public class UsoDeVaga {
     }
 
     public double CalcularValor() {
+        long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
         double valor = 0.0;
 
+        minutos += horas * 60; // Converte horas para minutos
+
         if (minutos <= 15) {
-            valor = 0.0;
-        } else if (minutos <= 60) {
-            valor = this.VALOR_FRACAO;
+            valor = VALOR_FRACAO;
         } else {
-            valor = this.VALOR_FRACAO;
-            minutos -= 60;
-            valor += Math.ceil(minutos / 15) * this.FRACAO_USO;
+            minutos -= 15; // Subtrai os primeiros 15 minutos
+            valor = this.VALOR_FRACAO; // Valor da primeira fração de 15 minutos
+
+            if (minutos > 0) {
+                int fracoes = (int) Math.ceil((double) minutos / (FRACAO_USO * 60)); // Calcula as fraçoes restantes após 15 minutos
+                valor += fracoes * this.VALOR_FRACAO;
+            }
         }
 
         if (valor > this.VALOR_MAXIMO) {

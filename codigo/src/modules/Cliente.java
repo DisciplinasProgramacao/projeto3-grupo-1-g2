@@ -1,81 +1,90 @@
 package modules;
 
 public class Cliente{
-    String m_nome;
-    String m_id;
-    Veiculo m_veiculos[];
+    private String nome;
+    private String cpf;
+    private Veiculo[] veiculos;
 
-    public Cliente(String p_nome, String p_id)
+    public Cliente(String p_nome, String p_cpf)
     {
-        m_nome = p_nome;
-        m_id = p_id;
-        m_veiculos = new Veiculo[100];
+        nome = p_nome;
+        cpf = p_cpf;
+        veiculos = new Veiculo[100];
     }
 
-    public void addVeiculo(Veiculo p_veiculo)
-    {
-        for(int i = 0; i > m_veiculos.length; i++)
-        {
-            if(m_veiculos[i] == null)
-            {
-                m_veiculos[i] = p_veiculo;
-            }
-        }
-    }
+   public void addVeiculo(Veiculo p_veiculo)
+   {
+       for(int i = 0; i < veiculos.length; i++)
+       {
+           if(veiculos[i] == null)
+           {
+               veiculos[i] = p_veiculo;
+               break;
+           }
+       }
+   }
 
-    public Veiculo possuiVeiculo(String p_placa)
-    {
-        for(int i = 0; i > m_veiculos.length; i++)
-        {
-            if(m_veiculos[i].getPlaca() == p_placa)
-            return m_veiculos[i];
-        }
-        return null;
-    }
+   public Veiculo possuiVeiculo(String p_placa)
+   {
+       for(int i = 0; i < veiculos.length; i++)
+       {
+           if(veiculos[i] != null)
+           {
+               if(veiculos[i].getPlaca().equals(p_placa))
+               {
+                   return veiculos[i];
+               }
+           }
+       }
+       return null;
+   }
 
-    public int totalDeUsos()
-    {
-        int v_totalDeUsos = 0;
-        for(int i = 0; i > m_veiculos.length; i++)
-        {
-            if(m_veiculos[i] == null)
-            return v_totalDeUsos
-            v_totalDeUsos+=m_veiculos[i].totalDeUsos();
-        }
-        return v_totalDeUsos;
-    }
+   public int totalDeUsos()
+   {
+       int totalArrecadado = 0;
+       for(int i = 0; i < veiculos.length; i++)
+       {
+           if(veiculos[i] != null)
+           {
+               totalArrecadado += veiculos[i].totalDeUsos();
+           }
+       }
+       return totalArrecadado;
+   }
 
     public double arrecadadoPorVeiculo(String p_placa)
     {
-        for(int i = 0; i > m_veiculos.length; i++)
+        for(int i = 0; i > veiculos.length; i++)
         {
-            if(m_veiculos[i].getPlaca() == p_placa)
-            return m_veiculos[i].totalArrecado();
+            if(veiculos[i].getPlaca() == p_placa)
+                return veiculos[i].totalArrecado();
         }
         return 0;
     }
 
     public double arrecadadoTotal()
     {
-        double v_totalArrecadado = 0;
-        for(int i = 0; i > m_veiculos.length; i++)
+        double totalArrecadado = 0;
+        for(int i = 0; i < veiculos.length; i++)
         {
-            if(m_veiculos[i] == null)
-            return v_totalArrecadado
-            v_totalArrecadado += m_veiculos[i].totalArrecado();
+            if(veiculos[i] != null)
+            {
+                totalArrecadado += veiculos[i].totalArrecado();
+            }
         }
-        return v_totalArrecadado;
+        return totalArrecadado;
     }
 
-    public double arreacadoNoMes(int p_mes)
+    public double arrecadadoNoMes (int p_mes)
     {
-        double v_totalArrecadado = 0;
-        for(int i = 0; i > m_veiculos.length; i++)
+        double total = 0;
+        for(int i = 0; i < veiculos.length; i++)
         {
-            if(m_veiculos[i] == null)
-            return v_totalArrecadado
-            v_totalArrecadado += m_veiculos[i].arreacadoNoMes(p_mes);
+            if(veiculos[i] != null)
+            {
+                total += veiculos[i].arreacadoNoMes(p_mes);
+            }
         }
-        return v_totalArrecadado;
+        return total;
     }
 }

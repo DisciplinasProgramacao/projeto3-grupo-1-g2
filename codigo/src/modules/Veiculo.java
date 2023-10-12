@@ -1,32 +1,31 @@
 package modules;
 
 public class Veiculo {
+    private String placa;
 
-	private String placa;
-	private UsoDeVaga[] usos;
+    private UsoDeVaga usoDeVaga;
 
-	public Veiculo(String placa) {
-		
-	}
+    public Veiculo(String placa) {
+        this.placa = placa;
+    }
 
-	public void estacionar(Vaga vaga) {
-		
-	}
+    public void estacionar(Vaga vaga) {
+        
+    }
 
-	public double sair() {
-		
-	}
+    public double sair() {
 
-	public double totalArrecadado() {
-		
-	}
+    }
 
-	public double arrecadadoNoMes(int mes) {
-		
-	}
+    public double totalArrecadado() {
 
-	public int totalDeUsos() {
-		
-	}
+    }
 
+    public double arrecadadoNoMes(int mes) {
+
+    }
+
+    public int totalDeUsos() {
+
+    }
 }

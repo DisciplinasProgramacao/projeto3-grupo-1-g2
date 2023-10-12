@@ -29,13 +29,55 @@ public class UsoDeVaga {
         this.saida = LocalDateTime.now();
     }
 
-    public void valorPago() {
-        if (this.saida == null) {
-            this.saida = LocalDateTime.now();
+    public double CalcularValor() {
+        long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
+        double valor = 0.0;
+
+        if (minutos <= 15) {
+            valor = 0.0;
+        } else if (minutos <= 60) {
+            valor = this.VALOR_FRACAO;
+        } else {
+            valor = this.VALOR_FRACAO;
+            minutos -= 60;
+            valor += Math.ceil(minutos / 15) * this.FRACAO_USO;
         }
 
-        long minutos = this.entrada.until(this.saida, ChronoUnit.MINUTES);
+        if (valor > this.VALOR_MAXIMO) {
+            valor = this.VALOR_MAXIMO;
+        }
 
-        double valor = 0.0;
+        return valor;
+    }
+
+    public double getValorPago() {
+        return this.valorPago;
+    }
+
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public LocalDateTime getEntrada() {
+        return this.entrada;
+    }
+    public void setEntrada(LocalDateTime entrada) {
+        this.entrada = entrada;
+    }
+
+    public LocalDateTime getSaida() {
+        return this.saida;
+    }
+
+    public void setSaida(LocalDateTime saida) {
+        this.saida = saida;
+    }
+
+    public ArrayList<Vaga> getVaga() {
+        return this.vaga;
+    }
+
+    public void setVaga(ArrayList<Vaga> vaga) {
+        this.vaga = vaga;
     }
 }

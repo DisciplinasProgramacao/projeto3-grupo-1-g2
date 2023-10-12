@@ -2,7 +2,8 @@ package modules;
 
 public class Veiculo {
     private String placa;
-    private UsoDeVaga usos = new UsoDeVaga[];
+
+    private UsoDeVaga usoDeVaga;
 
     public Veiculo(String placa) {
         this.placa = placa;

@@ -9,16 +9,19 @@ public class Vaga {
 		
 	}
 
-	public boolean estacionar() {
-		
+	public boolean estacionar(String placa) {
+		disponivel = false;
+		return  disponivel;
 	}
 
-	public boolean sair() {
-		
+	public boolean sair(String placa) {
+		disponivel = true;
+		return  disponivel;
 	}
 
 	public boolean disponivel() {
-		
+		return disponivel;
 	}
+
 
 }

@@ -32,7 +32,7 @@ public class Veiculo {
 
     public void sair() {
         UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
-        ultimoUso.Sair();
+        ultimoUso.sair();
     }
 
     public double totalArrecadado() {

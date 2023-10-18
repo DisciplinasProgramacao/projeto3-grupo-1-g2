@@ -57,7 +57,7 @@ public class Cliente{
         for(int i = 0; i > veiculos.length; i++)
         {
             if(veiculos[i].getPlaca() == p_placa)
-                return veiculos[i].totalArrecado();
+                return veiculos[i].totalArrecadado();
         }
         return 0;
     }
@@ -69,7 +69,7 @@ public class Cliente{
         {
             if(veiculos[i] != null)
             {
-                totalArrecadado += veiculos[i].totalArrecado();
+                totalArrecadado += veiculos[i].totalArrecadado();
             }
         }
         return totalArrecadado;
@@ -82,7 +82,7 @@ public class Cliente{
         {
             if(veiculos[i] != null)
             {
-                total += veiculos[i].arreacadoNoMes(p_mes);
+                total += veiculos[i].arrecadadoNoMes(p_mes);
             }
         }
         return total;

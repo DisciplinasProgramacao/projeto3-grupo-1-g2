@@ -40,11 +40,11 @@ public class Estacionamento {
     }
 
     public void estacionar(String placa) {
-        vagas.estacionar(placa);
+        vagas.estacionar();
     }
 
     public boolean sair(String placa) {
-        vagas.sair(placa);
+        vagas.sair();
         return vagas.disponivel();
     }
 

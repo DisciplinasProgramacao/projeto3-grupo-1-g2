@@ -1,43 +1,59 @@
 package modules;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Veiculo {
+    
+    private String placa;
+    private List<UsoDeVaga> usos;
 
-	private String placa;
-	private UsoDeVaga[] usos;
+    public Veiculo(String placa) {
+        this.placa = placa;
+        this.usos = new ArrayList<UsoDeVaga>();
+    }
 
+    public String getPlaca() {
+        return placa;
+    }
 
-	public Veiculo(String placa) {
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
-	}
+    public List<UsoDeVaga> getUsos() {
+        return usos;
+    }
 
-	public void estacionar(Vaga vaga) {
+    public void estacionar(Vaga vaga) {
+        UsoDeVaga uso = new UsoDeVaga(null, null, null, 0);
+        usos.add(uso);
+        vaga.estacionar();
+    }
 
-	}
+    public void sair() {
+        UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
+        ultimoUso.Sair();
+    }
 
-	public double sair() {
+    public double totalArrecadado() {
+        double total = 0;
+        for(UsoDeVaga uso : usos) {
+            total += uso.getValorPago();
+        }
+        return total;
+    }
 
-	}
+    public double arrecadadoNoMes(int mes) {
+        double totalMes = 0;
+        for(UsoDeVaga uso : usos) {
+            if(uso.getEntrada().getMonthValue() == mes) {
+                totalMes += uso.getValorPago();
+            }
+        }
+        return totalMes;
+    }
 
-	public double totalArrecadado() {
-
-	}
-
-	public double arrecadadoNoMes(int mes) {
-
-	}
-
-	public int totalDeUsos() {
-
-	}
-
-	public String getPlaca() {
-		return placa;
-	}
-
-	public void setPlaca(int id) {
-		this.placa = placa;
-	}
-
-
-
+    public int totalDeUsos() {
+        return usos.size();
+    }
 }

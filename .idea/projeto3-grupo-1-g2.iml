@@ -18,6 +18,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+<<<<<<< HEAD
+=======
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit5.8.1">
         <CLASSES>
@@ -49,5 +51,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+>>>>>>> origin/develop
   </component>
 </module>

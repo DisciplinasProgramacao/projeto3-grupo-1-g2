@@ -1,7 +1,10 @@
-package modules;
+package test.modules;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import modules.Cliente;
+import modules.Veiculo;
 
 class ClienteTest {
 
@@ -15,7 +18,7 @@ class ClienteTest {
     @Test
     void testPossuiVeiculo() {
         Cliente cliente = new Cliente("João", "123456789");
-        Veiculo veiculo = new Veiculo("ABC1234";
+        Veiculo veiculo = new Veiculo("ABC1234");
         cliente.addVeiculo(veiculo);
         assertEquals(veiculo, cliente.possuiVeiculo("ABC1234"));
     }

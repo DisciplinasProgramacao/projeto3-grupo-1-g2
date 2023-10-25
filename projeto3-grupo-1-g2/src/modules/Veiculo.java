@@ -25,14 +25,19 @@ public class Veiculo {
     }
 
     public void estacionar(Vaga vaga) {
-        UsoDeVaga uso = new UsoDeVaga(null, null, null, 0);
+        UsoDeVaga uso = new UsoDeVaga(null, null, null, 0, false, false, false);
         usos.add(uso);
         vaga.estacionar();
     }
 
     public void sair() {
         UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
-        ultimoUso.sair();
+        try {
+            ultimoUso.sair();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public double totalArrecadado() {

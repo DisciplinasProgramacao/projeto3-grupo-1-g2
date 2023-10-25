@@ -1,4 +1,4 @@
-package modules;
+package test.modules;
 import modules.Cliente;
 import modules.Estacionamento;
 import modules.Vaga;
@@ -42,7 +42,7 @@ public class EstacionamentoTest {
         estacionamento.setVagas(vaga);
         estacionamento.estacionar("Placa123");
 
-        assertTrue(vaga.estacionar("Placa123"));
+        assertTrue(vaga.estacionar());
     }
 
     @Test

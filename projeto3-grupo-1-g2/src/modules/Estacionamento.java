@@ -1,9 +1,6 @@
 
 package modules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Estacionamento {
 
     private int id;
@@ -47,22 +44,6 @@ public class Estacionamento {
         vagas.sair();
         return vagas.disponivel();
     }
-
-//    public double totalArrecadado() {
-//
-//    }
-//
-//    public double arrecadacaoNoMes(int mes) {
-//
-//    }
-//
-//    public double valorMedioPorUso() {
-//
-//    }
-//
-//    public String top5Clientes(int mes) {
-//
-//    }
 
     public String getNome() {
         return nome;

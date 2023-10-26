@@ -26,7 +26,7 @@ class UsoDeVagaTest {
     @Test
     void testSair() {
         ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga());
+        vagas.add(new Vaga(1, 1));
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
@@ -38,7 +38,7 @@ class UsoDeVagaTest {
     @Test
     void testSetAndGet() {
         ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga());
+        vagas.add(new Vaga(1, 1));
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();

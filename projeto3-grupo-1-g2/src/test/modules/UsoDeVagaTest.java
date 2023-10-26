@@ -1,7 +1,10 @@
-package modules;
+package test.modules;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import modules.UsoDeVaga;
+import modules.Vaga;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +13,7 @@ class UsoDeVagaTest {
     @Test
     void testCalcularValor() {
         ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga());
+        vagas.add(new Vaga(1,1));
         
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();

@@ -34,14 +34,9 @@ public class Veiculo {
         UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
         try {
             ultimoUso.sair();
-<<<<<<< Updated upstream:projeto3-grupo-1-g2/src/modules/Veiculo.java
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-=======
+
         } catch(Exception e) {
             System.out.print(e);
->>>>>>> Stashed changes:codigo/src/modules/Veiculo.java
         }
     }
 

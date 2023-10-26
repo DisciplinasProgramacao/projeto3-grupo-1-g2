@@ -1,6 +1,6 @@
 # Código do Projeto
 
-Este repositório contém o código fonte do projeto [Ligas Desportivas]. A estrutura de diretórios foi organizada de acordo com as melhores práticas de desenvolvimento.
+Este repositório contém o código fonte do projeto [Gerência de Estacionamentos]. A estrutura de diretórios foi organizada de acordo com as melhores práticas de desenvolvimento.
 
 ## Estrutura de Diretórios
 

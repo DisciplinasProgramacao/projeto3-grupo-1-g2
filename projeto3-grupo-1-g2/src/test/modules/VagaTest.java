@@ -5,8 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VagaTest {
-
+class VagaTest {
     private Vaga vaga;
 
     @BeforeEach
@@ -37,4 +36,5 @@ public class VagaTest {
         assertTrue(vaga.sair());
         assertTrue(vaga.disponivel());
     }
+
 }

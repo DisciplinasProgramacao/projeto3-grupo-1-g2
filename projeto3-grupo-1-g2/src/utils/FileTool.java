@@ -14,7 +14,7 @@ public class FileTool {
 
     /**
 	 * @param path
-	 *                    Construtor do FileTool
+	 *  Construtor do FileTool
 	 */
     public FileTool(String path) throws IOException {
         this.file_reader = new FileReader(path);
@@ -25,7 +25,7 @@ public class FileTool {
 
     /**
 	 * @param index
-	 *                    Retorna linha de leitura do arquivo
+	 *  Retorna linha de leitura do arquivo
 	 */
     public String readLine(int index) throws IOException {
         String line;
@@ -46,7 +46,7 @@ public class FileTool {
     }
 
     /**
-	 *                    Retorna uma string com a leitura do arquivo por completo
+	 * Retorna uma string com a leitura do arquivo por completo
 	 */
     public String readAll() throws IOException {
         String line;
@@ -61,7 +61,7 @@ public class FileTool {
 
     /**
 	 * @param text
-	 *                    Busca String dentro do arquivo procurado e retorna caso encontre
+	 *  Busca String dentro do arquivo procurado e retorna caso encontre
 	 */
     public String findText(String text) throws IOException {
         String line;
@@ -77,7 +77,7 @@ public class FileTool {
     }
 
     /**
-	 *                    Escreve no arquivo em uma linha nova.
+	 * Escreve no arquivo em uma linha nova.
 	 */
     public boolean writeNewLine(String text) throws IOException {
         buffered_writer.newLine();
@@ -88,7 +88,7 @@ public class FileTool {
 
     /**
 	 * @param text
-	 *                    Escreve no arquivo.
+	 *  Escreve no arquivo.
 	 */
     public boolean write(String text) throws IOException {
         buffered_writer.write(text);
@@ -97,7 +97,7 @@ public class FileTool {
     }
 
     /**
-	 *                    Fecha as leituras dos arquivos.
+	 *  Fecha as leituras dos arquivos.
 	 */
     public void close() throws IOException {
         buffered_reader.close();

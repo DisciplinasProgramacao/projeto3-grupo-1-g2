@@ -25,8 +25,8 @@ public class Main {
         }
 
         // Exibir os usos de vaga criados
-        for (UsoDeVaga uso : usosDeVaga) {
-            System.out.println("Uso de Vaga criado: " + uso);
+        for (int i = usosDeVaga.size() - 1; i >= 0; i--) {
+            System.out.println("A vaga teve entrada " + usosDeVaga.get(i).getEntrada() + "E saida em " + usosDeVaga.get(i).getSaida());
         }
     }
 

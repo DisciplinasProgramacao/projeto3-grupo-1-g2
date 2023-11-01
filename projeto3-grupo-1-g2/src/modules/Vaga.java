@@ -5,8 +5,7 @@ public class Vaga {
     private int numero;
     private boolean ocupada;
 
-    public Vaga(int fila, int numero) {
-        this.fila = fila;
+    public Vaga(int numero) {
         this.numero = numero;
         this.ocupada = false; // Por padrão, a vaga está livre.
     }
@@ -30,11 +29,7 @@ public class Vaga {
     public boolean disponivel() {
         return !ocupada; // Retorna true se a vaga estiver disponível (não ocupada).
     }
-
-    public int getFila() {
-        return fila;
-    }
-
+    
     public int getNumero() {
         return numero;
     }

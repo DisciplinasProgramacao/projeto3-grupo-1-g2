@@ -7,17 +7,10 @@ import java.util.ArrayList;
 public class UsoDeVaga {
     private double FRACAO_USO = 0.25;
     private double VALOR_FRACAO = 4.0;
-
     private double VALOR_MAXIMO = 50.0;
-
-    private ArrayList<Vaga> vaga;
-
     private LocalDateTime entrada;
-
     private LocalDateTime saida;
-
     private double valorPago;
-
     private servicosDisponiveis servicoUtilizado[];
 
     private enum servicosDisponiveis {

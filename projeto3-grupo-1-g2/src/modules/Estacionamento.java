@@ -9,6 +9,7 @@ public class Estacionamento {
     private Vaga vagas;
     private int quantFileiras;
     private int vagasPorFileira;
+    private ArrayList<Vaga> vagas;
 
     public Estacionamento() {
     }

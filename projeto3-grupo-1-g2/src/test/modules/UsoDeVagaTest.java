@@ -12,38 +12,35 @@ class UsoDeVagaTest {
 
     @Test
     void testCalcularValor() {
-        ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga(1,1));
-        
+        Vaga vaga = new Vaga(1, 1);
+
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
-        
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vagas, entrada, saida, 0, false, false, false);
+
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, false, false);
         double valor = usoDeVaga.calcularValor();
         assertEquals(8.0, valor);
     }
 
     @Test
     void testSair() {
-        ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga(1, 1));
+        Vaga vaga = new Vaga(5, 8);
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
 
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vagas, entrada, saida, 0, false, true, false);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, true, false);
         assertThrows(Exception.class, usoDeVaga::sair);
     }
 
     @Test
     void testSetAndGet() {
-        ArrayList<Vaga> vagas = new ArrayList<>();
-        vagas.add(new Vaga(1, 1));
+        Vaga vaga = new Vaga(1, 1);
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
 
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vagas, entrada, saida, 0, false, false, false);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, false, false);
 
         usoDeVaga.setValorPago(10.0);
         assertEquals(10.0, usoDeVaga.getValorPago());
@@ -56,8 +53,8 @@ class UsoDeVagaTest {
         usoDeVaga.setSaida(novaSaida);
         assertEquals(novaSaida, usoDeVaga.getSaida());
 
-        ArrayList<Vaga> novasVagas = new ArrayList<>();
-        usoDeVaga.setVaga(novasVagas);
-        assertEquals(novasVagas, usoDeVaga.getVaga());
+        Vaga novasVaga = new Vaga(1, 1);
+        usoDeVaga.setVaga(novasVaga);
+        assertEquals(novasVaga, usoDeVaga.getVaga());
     }
 }

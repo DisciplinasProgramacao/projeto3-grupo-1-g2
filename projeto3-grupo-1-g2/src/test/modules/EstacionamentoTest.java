@@ -5,15 +5,18 @@ import modules.Vaga;
 import modules.Veiculo;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
+
+import org.junit.After;
 public class EstacionamentoTest {
 
     private Estacionamento estacionamento;
 
     @Before
     public void setUp() {
-        // Inicializa um estacionamento antes de cada teste
         estacionamento = new Estacionamento("Estacionamento Teste", 5, 10);
     }
 

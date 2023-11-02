@@ -1,9 +1,11 @@
 package modules;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Veiculo {
-    
+
     private String placa;
     private List<UsoDeVaga> usos;
 
@@ -25,7 +27,7 @@ public class Veiculo {
     }
 
     public void estacionar(Vaga vaga) {
-        UsoDeVaga uso = new UsoDeVaga(null, null, null, 0, false, false, false);
+        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, 0, false, false, false);
         usos.add(uso);
         vaga.estacionar();
     }
@@ -35,14 +37,14 @@ public class Veiculo {
         try {
             ultimoUso.sair();
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.print(e);
         }
     }
 
     public double totalArrecadado() {
         double total = 0;
-        for(UsoDeVaga uso : usos) {
+        for (UsoDeVaga uso : usos) {
             total += uso.getValorPago();
         }
         return total;
@@ -50,8 +52,8 @@ public class Veiculo {
 
     public double arrecadadoNoMes(int mes) {
         double totalMes = 0;
-        for(UsoDeVaga uso : usos) {
-            if(uso.getEntrada().getMonthValue() == mes) {
+        for (UsoDeVaga uso : usos) {
+            if (uso.getEntrada().getMonthValue() == mes) {
                 totalMes += uso.getValorPago();
             }
         }

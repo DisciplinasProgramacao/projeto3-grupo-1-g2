@@ -10,7 +10,7 @@ public class UsoDeVaga {
 
     private double VALOR_MAXIMO = 50.0;
 
-    private ArrayList<Vaga> vaga;
+    private Vaga vaga;
 
     private LocalDateTime entrada;
 
@@ -27,7 +27,7 @@ public class UsoDeVaga {
         Polimento
     }
 
-    public UsoDeVaga(ArrayList<Vaga> vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
+    public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
             boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
         this.entrada = entrada;
@@ -35,6 +35,9 @@ public class UsoDeVaga {
         this.valorPago = valorPago;
         this.servicoUtilizado = new servicosDisponiveis[4];
         this.servicoUtilizado[0] = (servicosDisponiveis.Estacionamento);
+        this.servicoUtilizado[1] = usadoManobrista ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
+        this.servicoUtilizado[2] = usadoLavagem ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
+        this.servicoUtilizado[3] = usadoPolimento ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
         for (int i = 0; i < servicoUtilizado.length; i++) {
             if (usadoManobrista)
                 this.servicoUtilizado[i] = (servicosDisponiveis.Estacionamento);
@@ -49,14 +52,14 @@ public class UsoDeVaga {
         this.saida = LocalDateTime.now();
         long minutos = calcularMinutos();
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            if(minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
-            throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Lavagem é 1 hora");
-            else if(minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
-            throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Polimento são 2 horas");
+            if (minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
+                throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Lavagem é 1 hora");
+            else if (minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
+                throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Polimento são 2 horas");
         }
     }
 
-    private long calcularMinutos(){
+    private long calcularMinutos() {
         long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
         minutos += horas * 60; // Converte horas para minutos
@@ -78,7 +81,7 @@ public class UsoDeVaga {
                                                                                      // após 15 minutos
                 valor += fracoes * this.VALOR_FRACAO;
             }
-            minutos += 15; //Restaura valor padrão de minutos
+            minutos += 15; // Restaura valor padrão de minutos
         }
 
         if (valor > this.VALOR_MAXIMO) {
@@ -86,19 +89,20 @@ public class UsoDeVaga {
         }
 
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            switch(servicoUtilizado[i])
-            {
+            switch (servicoUtilizado[i]) {
                 case Estacionamento:
-                break;
+                    break;
                 case Manobrista:
-                valor+=5;
-                break;
+                    valor += 5;
+                    break;
                 case Lavagem:
-                valor+=20;
-                break;
+                    valor += 20;
+                    break;
                 case Polimento:
-                valor+=45;
-                break;
+                    valor += 45;
+                    break;
+                default:
+                    continue;
             }
         }
 
@@ -129,11 +133,11 @@ public class UsoDeVaga {
         this.saida = saida;
     }
 
-    public ArrayList<Vaga> getVaga() {
+    public Vaga getVaga() {
         return this.vaga;
     }
 
-    public void setVaga(ArrayList<Vaga> vaga) {
+    public void setVaga(Vaga vaga) {
         this.vaga = vaga;
     }
 }

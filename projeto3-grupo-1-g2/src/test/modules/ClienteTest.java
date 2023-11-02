@@ -36,7 +36,7 @@ class ClienteTest {
         Cliente cliente = new Cliente("João", "123456789");
         Veiculo veiculo = new Veiculo("ABC1234");
         cliente.addVeiculo(veiculo);
-        assertEquals(0, cliente.arrecadadoPorVeiculo("ABC1234"));
+        assertEquals(0, cliente.arrecadadoPorVeiculo("ABC1234"), 0);
     }
 
     @Test
@@ -44,7 +44,7 @@ class ClienteTest {
         Cliente cliente = new Cliente("João", "123456789");
         Veiculo veiculo = new Veiculo("ABC1234");
         cliente.addVeiculo(veiculo);
-        assertEquals(0, cliente.arrecadadoTotal());
+        assertEquals(0, cliente.arrecadadoTotal(), 0);
     }
 
     @Test
@@ -52,6 +52,6 @@ class ClienteTest {
         Cliente cliente = new Cliente("João", "123456789");
         Veiculo veiculo = new Veiculo("ABC1234");
         cliente.addVeiculo(veiculo);
-        assertEquals(0, cliente.arrecadadoNoMes(1));
+        assertEquals(0, cliente.arrecadadoNoMes(1), 0);
     }
 }

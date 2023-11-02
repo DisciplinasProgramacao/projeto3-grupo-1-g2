@@ -1,8 +1,8 @@
 package test.modules;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.jupiter.api.Test;
 
+import org.junit.Test;
 import modules.Cliente;
 import modules.Veiculo;
 

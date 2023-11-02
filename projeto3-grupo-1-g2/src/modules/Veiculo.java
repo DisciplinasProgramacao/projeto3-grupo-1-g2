@@ -32,13 +32,13 @@ public class Veiculo {
         vaga.estacionar();
     }
 
-    public void sair() {
+    public double sair() throws Exception {
         UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
         try {
-            ultimoUso.sair();
+            return ultimoUso.sair();
 
         } catch (Exception e) {
-            System.out.print(e);
+            throw e;
         }
     }
 

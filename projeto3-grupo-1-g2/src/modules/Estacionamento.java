@@ -1,12 +1,13 @@
 
 package modules;
 
+import java.util.ArrayList;
+
 public class Estacionamento {
 
     private int id;
     private String nome;
     private Cliente[] clientes;
-    private Vaga vagas;
     private int quantFileiras;
     private int vagasPorFileira;
     private ArrayList<Vaga> vagas;
@@ -38,12 +39,39 @@ public class Estacionamento {
     }
 
     public void estacionar(String placa) {
-        vagas.estacionar();
+        for (Cliente t_cliente:clientes) {
+            Veiculo veiculo = t_cliente.possuiVeiculo(placa);
+            if(veiculo != null){
+                for(int i = 0; i < vagas.size(); i++){
+                    Vaga vagaUso = vagas.get(i);
+                    if(vagaUso.disponivel()){
+                        veiculo.estacionar(vagaUso);
+                    }
+                }
+            }
+        }
     }
 
     public boolean sair(String placa) {
-        vagas.sair();
-        return vagas.disponivel();
+        for (Cliente t_cliente:clientes) {
+            Veiculo veiculo = t_cliente.possuiVeiculo(placa);
+            if(veiculo != null){
+                for(int i = 0; i < vagas.size(); i++){
+                    Vaga vagaUso = vagas.get(i);
+                    if(vagaUso.disponivel()){
+                        try{
+                            double valor = veiculo.sair();
+                            System.out.println("O valor pago foi : " + valor);
+                            return true;
+                        }catch (Exception e){
+                            System.out.println(e);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public String getNome() {

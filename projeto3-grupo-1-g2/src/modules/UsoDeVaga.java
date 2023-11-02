@@ -44,15 +44,18 @@ public class UsoDeVaga {
         }
     }
 
-    public void sair() throws Exception {
+    public double sair() throws Exception {
+        double valor = 0.0;
         this.saida = LocalDateTime.now();
         long minutos = calcularMinutos();
         for (int i = 0; i < servicoUtilizado.length; i++) {
             if (minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
-                throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Lavagem é 1 hora");
+                throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou a lavagem");
             else if (minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
-                throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Polimento são 2 horas");
+                throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou o polimento");
         }
+        return calcularValor();
+
     }
 
     private long calcularMinutos() {

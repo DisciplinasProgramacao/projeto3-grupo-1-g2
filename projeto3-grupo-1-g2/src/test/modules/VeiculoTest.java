@@ -1,9 +1,6 @@
 package test.modules;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import modules.Veiculo;
 
 public class VeiculoTest {
     @Test

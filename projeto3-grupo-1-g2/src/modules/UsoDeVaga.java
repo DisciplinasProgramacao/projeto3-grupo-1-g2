@@ -2,7 +2,6 @@ package modules;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 public class UsoDeVaga {
     private double FRACAO_USO = 0.25;
@@ -24,7 +23,7 @@ public class UsoDeVaga {
     }
 
     public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
-            boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
+                     boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
         this.entrada = entrada;
         this.saida = saida;

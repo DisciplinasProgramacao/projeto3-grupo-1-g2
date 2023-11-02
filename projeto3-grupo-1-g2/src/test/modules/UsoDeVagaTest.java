@@ -1,8 +1,6 @@
 package test.modules;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import modules.UsoDeVaga;
 import modules.Vaga;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,7 @@ class UsoDeVagaTest {
 
     @Test
     void testCalcularValor() {
-        Vaga vaga = new Vaga(1, 1);
+        Vaga vaga = new Vaga(1);
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
@@ -24,7 +22,7 @@ class UsoDeVagaTest {
 
     @Test
     void testSair() {
-        Vaga vaga = new Vaga(5, 8);
+        Vaga vaga = new Vaga(5);
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
@@ -35,7 +33,7 @@ class UsoDeVagaTest {
 
     @Test
     void testSetAndGet() {
-        Vaga vaga = new Vaga(1, 1);
+        Vaga vaga = new Vaga(1);
 
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
@@ -53,7 +51,7 @@ class UsoDeVagaTest {
         usoDeVaga.setSaida(novaSaida);
         assertEquals(novaSaida, usoDeVaga.getSaida());
 
-        Vaga novasVaga = new Vaga(1, 1);
+        Vaga novasVaga = new Vaga(1);
         usoDeVaga.setVaga(novasVaga);
         assertEquals(novasVaga, usoDeVaga.getVaga());
     }

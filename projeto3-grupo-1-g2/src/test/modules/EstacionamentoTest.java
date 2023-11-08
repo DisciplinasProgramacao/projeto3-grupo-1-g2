@@ -5,8 +5,6 @@ import modules.Vaga;
 import modules.Veiculo;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +23,7 @@ public class EstacionamentoTest {
         Cliente cliente = new Cliente("Cliente1", "123456");
         estacionamento.addCliente(cliente);
 
-        assertEquals(cliente, estacionamento.getClientes()[0]);
+        assertEquals(cliente, estacionamento.getClientes());
     }
 
     @Test
@@ -41,7 +39,7 @@ public class EstacionamentoTest {
 
     @Test
     public void estacionar() {
-        Vaga vaga = new Vaga(1, 1);
+        Vaga vaga = new Vaga( 1);
         estacionamento.setVagas(vaga);
         estacionamento.estacionar("Placa123");
 
@@ -50,7 +48,7 @@ public class EstacionamentoTest {
 
     @Test
     public void sair() {
-        Vaga vaga = new Vaga(1, 1);
+        Vaga vaga = new Vaga( 1);
         estacionamento.setVagas(vaga);
         estacionamento.estacionar("Placa123");
 

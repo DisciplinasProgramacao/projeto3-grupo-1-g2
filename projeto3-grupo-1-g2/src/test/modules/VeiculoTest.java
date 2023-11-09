@@ -27,7 +27,7 @@ class VeiculoTest {
     }
 
     @Test
-    void testSair() {
+    void testSair() throws Exception {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga = new Vaga(1);
         veiculo.estacionar(vaga);
@@ -38,7 +38,7 @@ class VeiculoTest {
     }
 
     @Test
-    void testTotalArrecadado() {
+    void testTotalArrecadado() throws Exception {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);
@@ -54,7 +54,7 @@ class VeiculoTest {
     }
 
     @Test
-    void testArrecadadoNoMes() {
+    void testArrecadadoNoMes() throws Exception {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);
@@ -71,7 +71,7 @@ class VeiculoTest {
     }
 
     @Test
-    void testTotalDeUsos() {
+    void testTotalDeUsos() throws Exception {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);

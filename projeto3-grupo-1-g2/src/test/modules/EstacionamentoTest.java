@@ -23,7 +23,7 @@ public class EstacionamentoTest {
         Cliente cliente = new Cliente("Cliente1", "123456");
         estacionamento.addCliente(cliente);
 
-        assertEquals(cliente, estacionamento.getClientes());
+        assertEquals(cliente, estacionamento.getClientes().get(0));
     }
 
     @Test

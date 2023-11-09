@@ -32,6 +32,7 @@ public class EstacionamentoTest {
         estacionamento.addCliente(cliente);
 
         Veiculo veiculo = new Veiculo("Placa123");
+        cliente.addVeiculo(veiculo);
         estacionamento.addVeiculo(veiculo, "789012");
 
         assertEquals(veiculo, cliente.possuiVeiculo(veiculo.getPlaca()));
@@ -48,7 +49,11 @@ public class EstacionamentoTest {
 
     @Test
     public void sair() {
+        Cliente cliente = new Cliente("Cliente2", "789012");
+        Veiculo veiculo = new Veiculo("Placa123");
+        cliente.addVeiculo(veiculo);
         Vaga vaga = new Vaga( 1);
+        estacionamento.addCliente(cliente);
         estacionamento.setVagas(vaga);
         estacionamento.estacionar("Placa123");
 

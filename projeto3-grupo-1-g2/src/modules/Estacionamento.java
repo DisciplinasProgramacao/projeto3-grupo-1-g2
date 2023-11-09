@@ -59,9 +59,10 @@ public class Estacionamento {
             if(veiculo != null){
                 for(int i = 0; i < vagas.size(); i++){
                     Vaga vagaUso = vagas.get(i);
-                    if(vagaUso.disponivel()){
+                    if(!vagaUso.disponivel()){
                         try{
                             double valor = veiculo.sair();
+                            vagaUso.sair();
                             System.out.println("O valor pago foi : " + valor);
                             return true;
                         }catch (Exception e){

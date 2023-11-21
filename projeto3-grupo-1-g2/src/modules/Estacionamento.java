@@ -1,7 +1,7 @@
 
 package modules;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Estacionamento {
 
@@ -101,18 +101,29 @@ public class Estacionamento {
         return valor/qtd;
     }
 
-//    public String top5Clientes(int mes){
-//        double valor = 0;
-//        ArrayList<Cliente> top5Mes = new ArrayList<>();
-//        for (Cliente cliente: clientes) {
-//            valor = cliente.arrecadadoNoMes(mes);
-//            for (Cliente cli: top5Mes) {
-//                if(valor > cli.arrecadadoNoMes(mes)){
-//
-//                }
-//            }
-//        }
-//    }
+public void top5Clientes() {
+    // Verifica se a lista tem elementos
+    if (clientes == null || clientes.size() == 0) {
+        System.out.println("A lista está vazia.");
+    }
+
+    Cliente[] array = new Cliente[clientes.size()];
+    int count = 0;
+
+    for (Cliente cliente: clientes ){
+        array[count] = cliente;
+        count++;
+    }
+
+
+    Arrays.sort(array);
+
+    for(int i = 0; i >= 5; i++){
+        System.out.println(array[i]);
+    }
+
+
+}
 
     public String getNome() {
         return nome;

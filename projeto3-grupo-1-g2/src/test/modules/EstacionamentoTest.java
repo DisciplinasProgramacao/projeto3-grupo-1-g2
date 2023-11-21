@@ -1,8 +1,5 @@
 package test.modules;
-import modules.Cliente;
-import modules.Estacionamento;
-import modules.Vaga;
-import modules.Veiculo;
+import modules.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +17,7 @@ public class EstacionamentoTest {
 
     @Test
     public void addCliente() {
-        Cliente cliente = new Cliente("Cliente1", "123456");
+        Cliente cliente = new Horista("Cliente1", "123456");
         estacionamento.addCliente(cliente);
 
         assertEquals(cliente, estacionamento.getClientes().get(0));
@@ -28,7 +25,7 @@ public class EstacionamentoTest {
 
     @Test
     public void addVeiculo() {
-        Cliente cliente = new Cliente("Cliente2", "789012");
+        Cliente cliente = new Horista("Cliente2", "789012");
         estacionamento.addCliente(cliente);
 
         Veiculo veiculo = new Veiculo("Placa123");

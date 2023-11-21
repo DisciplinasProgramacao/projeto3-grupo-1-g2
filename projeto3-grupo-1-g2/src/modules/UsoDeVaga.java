@@ -22,6 +22,12 @@ public class UsoDeVaga {
         Polimento
     }
 
+    public UsoDeVaga(LocalDateTime entrada, LocalDateTime saida) {
+        this.vaga = vaga;
+        this.entrada = entrada;
+        this.saida = saida;
+    }
+
     public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
                      boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;

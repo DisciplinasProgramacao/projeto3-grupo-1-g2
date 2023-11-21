@@ -47,6 +47,7 @@ public class Estacionamento {
                     Vaga vagaUso = vagas.get(i);
                     if(vagaUso.disponivel()){
                         veiculo.estacionar(vagaUso);
+                        break;
                     }
                 }
             }

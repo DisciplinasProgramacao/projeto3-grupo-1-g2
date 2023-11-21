@@ -77,4 +77,7 @@ public class Cliente {
 //        }
         return total;
     }
+    public HashMap<String, Veiculo> getVeiculos() {
+        return veiculos;
+    }
 }

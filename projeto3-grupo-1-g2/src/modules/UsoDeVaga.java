@@ -12,7 +12,6 @@ public class UsoDeVaga {
 
     private LocalDateTime entrada;
     private LocalDateTime saida;
-    private double valorPago;
     private servicosDisponiveis servicoUtilizado[];
 
     private enum servicosDisponiveis {
@@ -22,18 +21,11 @@ public class UsoDeVaga {
         Polimento
     }
 
-    public UsoDeVaga(LocalDateTime entrada, LocalDateTime saida) {
-        this.vaga = vaga;
-        this.entrada = entrada;
-        this.saida = saida;
-    }
-
-    public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
+    public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida,
                      boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
         this.entrada = entrada;
         this.saida = saida;
-        this.valorPago = valorPago;
         this.servicoUtilizado = new servicosDisponiveis[4];
         this.servicoUtilizado[0] = (servicosDisponiveis.Estacionamento);
         this.servicoUtilizado[1] = usadoManobrista ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
@@ -50,7 +42,6 @@ public class UsoDeVaga {
     }
 
     public double sair() throws Exception {
-        double valor = 0.0;
         this.saida = LocalDateTime.now();
         long minutos = calcularMinutos();
         for (int i = 0; i < servicoUtilizado.length; i++) {
@@ -59,6 +50,7 @@ public class UsoDeVaga {
             else if (minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
                 throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou o polimento");
         }
+        vaga.sair();
         return calcularValor();
 
     }
@@ -114,11 +106,7 @@ public class UsoDeVaga {
     }
 
     public double getValorPago() {
-        return this.valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
+        return calcularValor();
     }
 
     public LocalDateTime getEntrada() {

@@ -103,4 +103,8 @@ public class FileTool {
         buffered_reader.close();
         buffered_writer.close();
     }
+
+    public void create(String path) {
+        
+    }
 }

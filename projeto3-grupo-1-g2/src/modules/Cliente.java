@@ -1,68 +1,86 @@
 package modules;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Cliente{
-    protected String nome;
-    protected String cpf;
-    protected HashMap<String, Veiculo> veiculos;
+public class Cliente {
+    private String nome;
+    private String cpf;
+    private List<Veiculo> veiculos;
+    
+    public Cliente(String p_nome, String p_cpf) {
+        nome = p_nome;
+        cpf = p_cpf;
+        veiculos = new ArrayList<>();
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public String getCpf() {
+        return this.cpf;
+    }
+
+    public List<Veiculo> getVeiculos() {
+        return this.veiculos;
+    }
 
     public void addVeiculo(Veiculo p_veiculo) {
-        if(veiculos == null){
-            veiculos = new HashMap<>();
-        }
-        veiculos.put(p_veiculo.getPlaca(), p_veiculo);
+        veiculos.add(p_veiculo);
     }
 
-    public Veiculo possuiVeiculo(String p_placa) {
-        if(veiculos == null){
-            veiculos = new HashMap<>();
-        }
-        for(String placa : veiculos.keySet()) {
-            if(placa.equals(p_placa)) {
-                return veiculos.get(placa);
+    public boolean possuiVeiculo(String p_placa) {
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getPlaca().equals(p_placa)) {
+                return true;
             }
         }
-//        for (Veiculo veiculo : veiculos) {
-//            if (veiculo.getPlaca().equals(p_placa)) {
-//                return veiculo;
-//            }
-//        }
-        return null;
+        return false;
     }
 
-
+    public int totalDeUsos() {
+        int totalDeUsos = 0;
+        for (Veiculo veiculo : veiculos) {
+            totalDeUsos += veiculo.totalDeUsos();
+        }
+        return totalDeUsos;
+    }
 
     public double arrecadadoPorVeiculo(String p_placa) {
-        for(String placa : veiculos.keySet()) {
-            if(placa.equals(p_placa)) {
-                return veiculos.get(placa).totalArrecadado();
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getPlaca().equals(p_placa)) {
+                return veiculo.totalArrecadado();
             }
         }
-//        for (Veiculo veiculo : veiculos) {
-//            if (veiculo.getPlaca().equals(p_placa)) {
-//                return veiculo.totalArrecadado();
-//            }
-//        }
+        // for (String placa : veiculos.keySet()) {
+        // if (placa.equals(p_placa)) {
+        // return veiculos.get(placa).totalArrecadado();
+        // }
+        // }
         return 0;
     }
 
-    public int totalDeUsos(){
-        int totalArrecadado = 0;
-        for(String placa : veiculos.keySet()) {
-            totalArrecadado += veiculos.get(placa).totalDeUsos();
+    public double arrecadadoTotal() {
+        double totalArrecadado = 0;
+        for (Veiculo veiculo : veiculos) {
+            totalArrecadado += veiculo.totalArrecadado();
         }
-//        for (Veiculo veiculo : veiculos) {
-//            totalArrecadado += veiculo.totalDeUsos();
-//        }
+        // for (String placa : veiculos.keySet()) {
+        // totalArrecadado += veiculos.get(placa).totalArrecadado();
+        // }
         return totalArrecadado;
     }
 
-
-    public abstract double arrecadadoTotal();
-
-    public abstract double arrecadadoNoMes(int p_mes);
-
-
+    public double arrecadadoNoMes(int p_mes) {
+        double total = 0;
+        for (Veiculo veiculo : veiculos) {
+            total += veiculo.arrecadadoNoMes(p_mes);
+        }
+        // for (String placa : veiculos.keySet()) {
+        // total += veiculos.get(placa).arrecadadoNoMes(p_mes);
+        // }
+        return total;
+    }
 
 }

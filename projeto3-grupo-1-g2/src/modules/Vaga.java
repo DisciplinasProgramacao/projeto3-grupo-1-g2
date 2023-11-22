@@ -1,7 +1,6 @@
 package modules;
 
 public class Vaga {
-    private int fila;
     private int numero;
     private boolean ocupada;
 

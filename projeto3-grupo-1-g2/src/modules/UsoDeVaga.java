@@ -53,6 +53,7 @@ public class UsoDeVaga {
             else if (minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
                 throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou o polimento");
         }
+        vaga.sair();
         return calcularValor();
 
     }

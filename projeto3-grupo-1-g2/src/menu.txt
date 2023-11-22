@@ -1,0 +1,24 @@
+
+N. Gerar vaga
+N. Adicionar cliente
+N. Registrar veículo // 2 métodos para add veículo
+N. Estacionar veículo
+N. Registrar saída (usoDeVaga)
+N. Calcular valor do serviço
+N. Total de arrecadação do cliente no mês
+N. Valor médio por uso (cliente)
+N. Verificar se a placa está cadastrada
+N. Qtd arrecadada por veículo 
+N. Gerar total de uso do veículo
+N. Gerar arrecadação no mês
+
+
+
+--------------------------------
+
+
+
+Veículo pode ser arrayList<>
+
+Cliente 
+treeMap

@@ -2,125 +2,107 @@
 package modules;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
 
 public class Estacionamento {
-
     private int id;
-    private String nome;
-    private ArrayList<Cliente> clientes;
+    private String local;
+    private HashMap<Cliente, List<Veiculo>> clientesVeiculos;
     private int quantFileiras;
     private int vagasPorFileira;
     private ArrayList<Vaga> vagas;
 
-    public Estacionamento() {
-    }
-
-    public Estacionamento(String nome, int quantFileiras, int vagasPorFileira) {
-        this.nome = nome;
+    public Estacionamento(String local, int quantFileiras, int vagasPorFileira) {
+        this.local = local;
         this.quantFileiras = quantFileiras;
         this.vagasPorFileira = vagasPorFileira;
-        this.clientes = new ArrayList<>();
+        this.clientesVeiculos = new HashMap<>();
         this.vagas = new ArrayList<>();
-    }
-
-    public void addVeiculo(Veiculo veiculo, String idCli) {
-        for(int i = 0; i < clientes.size() ; i++){
-           if(clientes.get(i).equals(id)) {
-               clientes.get(i).addVeiculo(veiculo);
-            }
-        }
+        this.criarVagas();
     }
 
     public void addCliente(Cliente cliente) {
-       clientes.add(cliente);
+        clientesVeiculos.put(cliente, cliente.getVeiculos());
     }
 
-    private void gerarVagas(int numero) {
-        Vaga vaga = new Vaga(numero);
-    }
-
-    public void estacionar(String placa) {
-            for (Cliente t_cliente:clientes) {
-            Veiculo veiculo = t_cliente.possuiVeiculo(placa);
-            if(veiculo != null){
-                for(int i = 0; i < vagas.size(); i++){
-                    Vaga vagaUso = vagas.get(i);
-                    if(vagaUso.disponivel()){
-                        veiculo.estacionar(vagaUso);
-                    }
-                }
+    private void criarVagas() {
+        for (int i = 0; i < this.quantFileiras; i++) {
+            for (int j = 0; j < this.vagasPorFileira; j++) {
+                vagas.add(new Vaga(Integer.parseInt(String.valueOf(i) + String.valueOf(j))));
             }
         }
     }
 
-    public boolean sair(String placa) {
-        for (Cliente t_cliente:clientes) {
-            Veiculo veiculo = t_cliente.possuiVeiculo(placa);
-            if(veiculo != null){
-                for(int i = 0; i < vagas.size(); i++){
-                    Vaga vagaUso = vagas.get(i);
-                    if(!vagaUso.disponivel()){
-                        try{
-                            double valor = veiculo.sair();
-                            vagaUso.sair();
-                            System.out.println("O valor pago foi : " + valor);
-                            return true;
-                        }catch (Exception e){
-                            System.out.println(e);
-                            return false;
-                        }
+    public boolean estacionar(Veiculo veiculo) {
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+            boolean possuiVeiculo = cliente.possuiVeiculo(veiculo.getPlaca());
+
+            if (possuiVeiculo) {
+                for (Vaga vaga : vagas) {
+                    if (vaga.disponivel()) {
+                        veiculo.estacionar(vaga);
+                        return true;
                     }
                 }
             }
         }
+
         return false;
     }
 
-    public double totalArrecadado(){
+    public boolean sair(Veiculo veiculo) {
+        try {
+            double valor = veiculo.sair();
+            System.out.println("O valor pago foi : " + valor);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public double totalArrecadado() {
         double valor = 0;
-        for (Cliente cliente: clientes) {
+        for (Cliente cliente : clientesVeiculos.keySet()) {
             valor += cliente.arrecadadoTotal();
         }
         return valor;
     }
 
-    public double totalArrecadadoNoMes(int mes){
+    public double totalArrecadadoNoMes(int mes) {
         double valor = 0;
-        for (Cliente cliente: clientes) {
+        for (Cliente cliente : clientesVeiculos.keySet()) {
             valor += cliente.arrecadadoNoMes(mes);
         }
         return valor;
     }
 
-    public double valoMedioPorUso(){
+    public double valoMedioPorUso() {
         double valor = 0;
         int qtd = 0;
-        for (Cliente cliente: clientes) {
+        for (Cliente cliente : clientesVeiculos.keySet()) {
             valor += cliente.arrecadadoTotal();
             qtd++;
         }
-        return valor/qtd;
+        return valor / qtd;
     }
 
-//    public String top5Clientes(int mes){
-//        double valor = 0;
-//        ArrayList<Cliente> top5Mes = new ArrayList<>();
-//        for (Cliente cliente: clientes) {
-//            valor = cliente.arrecadadoNoMes(mes);
-//            for (Cliente cli: top5Mes) {
-//                if(valor > cli.arrecadadoNoMes(mes)){
-//
-//                }
-//            }
-//        }
-//    }
+    // public String top5Clientes(int mes){
+    // double valor = 0;
+    // ArrayList<Cliente> top5Mes = new ArrayList<>();
+    // for (Cliente cliente: clientes) {
+    // valor = cliente.arrecadadoNoMes(mes);
+    // for (Cliente cli: top5Mes) {
+    // if(valor > cli.arrecadadoNoMes(mes)){
+    //
+    // }
+    // }
+    // }
+    // }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getLocal() {
+        return local;
     }
 
     public int getId() {
@@ -129,41 +111,5 @@ public class Estacionamento {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public ArrayList<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
-    public void setVagas(ArrayList<Vaga> vagas) {
-        this.vagas = vagas;
-    }
-
-    public ArrayList<Vaga> getVagas() {
-        return vagas;
-    }
-
-    public void setVagas(Vaga vaga) {
-        this.vagas.add(vaga);
-    }
-
-    public int getQuantFileiras() {
-        return quantFileiras;
-    }
-
-    public void setQuantFileiras(int quantFileiras) {
-        this.quantFileiras = quantFileiras;
-    }
-
-    public int getVagasPorFileira() {
-        return vagasPorFileira;
-    }
-
-    public void setVagasPorFileira(int vagasPorFileira) {
-        this.vagasPorFileira = vagasPorFileira;
     }
 }

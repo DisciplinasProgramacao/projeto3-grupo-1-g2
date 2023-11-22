@@ -7,13 +7,17 @@ public class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
-
+    
     public Cliente(String p_nome, String p_cpf) {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
     }
-
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
     public String getCpf() {
         return this.cpf;
     }
@@ -78,4 +82,5 @@ public class Cliente {
         // }
         return total;
     }
+
 }

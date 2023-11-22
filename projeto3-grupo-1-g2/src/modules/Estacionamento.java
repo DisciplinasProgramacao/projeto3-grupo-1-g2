@@ -54,7 +54,7 @@ public class Estacionamento {
     public boolean sair(Veiculo veiculo) {
         try {
             double valor = veiculo.sair();
-            System.out.println("O valor pago foi : " + valor);
+            System.out.println("O valor pago foi: R$" + valor);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -112,5 +112,9 @@ public class Estacionamento {
             return true; 
         }
         return false;
+    }
+
+    public HashMap<Cliente, List<Veiculo>> getClientesVeiculos() {
+        return this.clientesVeiculos;
     }
 }

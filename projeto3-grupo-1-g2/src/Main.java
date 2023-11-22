@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,6 +27,8 @@ public class Main {
             System.out.println("\t 1. Cadastrar cliente");
             System.out.println("\t 2. Cadastrar veículo");
             System.out.println("\t 3. Estacionar veículo");
+            System.out.println("\t 4. Informar saída do veículo");
+            System.out.println("\t 5. Listar clientes e veículos");
             System.out.println("\t 10. Sair\n");
 
             System.out.print("Escolha uma opção: ");
@@ -114,7 +117,6 @@ public class Main {
                     System.out.print("\nInforme a placa do veículo que deseja estacionar: ");
                     String placaVeiculo = scanner.nextLine();
 
-                    // Encontrar o cliente que possui o veículo com a placa informada
                     Cliente clienteEstacionamento = null;
                     Veiculo veiculoEstacionamento = null;
 
@@ -154,6 +156,57 @@ public class Main {
                         }
                     } else {
                         System.out.println("Veículo não encontrado ou cliente não cadastrado.");
+                    }
+                    break;
+                case 4:
+                    System.out.print("Informe a placa do veículo que finalizou o uso da vaga: ");
+                    String placaVeiculoSair = scanner.nextLine();
+
+                    Cliente clienteSaida = null;
+                    Veiculo veiculoSaida = null;
+                    Estacionamento estacionamentoSaida = null;
+
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
+                            if (cliente.possuiVeiculo(placaVeiculoSair)) {
+                                clienteSaida = cliente;
+                                for (Veiculo veiculo : cliente.getVeiculos()) {
+                                    if (veiculo.getPlaca().equals(placaVeiculoSair)) {
+                                        veiculoSaida = veiculo;
+                                        estacionamentoSaida = estacionamento;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        if (clienteSaida != null) {
+                            break;
+                        }
+                    }
+
+                    if (clienteSaida != null && veiculoSaida != null && estacionamentoSaida != null) {
+                        boolean veiculoRemovido = estacionamentoSaida.sair(veiculoSaida);
+
+                        if (veiculoRemovido) {
+                            System.out.println("Veículo deixou o estacionamento: " + estacionamentoSaida.getLocal());
+                        } else {
+                            System.out.println("Não foi possível remover o veículo do estacionamento.");
+                        }
+                    } else {
+                        System.out.println("Veículo não encontrado ou não está estacionado em nenhum estacionamento.");
+                    }
+                    break;
+                case 5: 
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        HashMap<Cliente, List<Veiculo>> clientesVeiculos = estacionamento.getClientesVeiculos();
+                        for (Cliente cliente : clientesVeiculos.keySet()) {
+                            System.out.println("\tCliente: " + cliente.getNome() + " - CPF: " + cliente.getCpf());
+                            List<Veiculo> veiculos = clientesVeiculos.get(cliente);
+                            for (Veiculo veiculo : veiculos) {
+                                System.out.println("\t\tVeículo: " + veiculo.getPlaca());
+                            }
+                        }
                     }
                     break;
 

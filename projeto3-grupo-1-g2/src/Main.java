@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -6,6 +7,8 @@ import java.util.Scanner;
 import modules.Cliente;
 import modules.Estacionamento;
 import modules.Horista;
+import modules.Mensalista;
+import modules.Turnista;
 import modules.Veiculo;
 
 public class Main {
@@ -14,7 +17,7 @@ public class Main {
         int escolha;
 
         List<Estacionamento> listaEstacionamentos = new LinkedList<>();
-
+        HashMap<Cliente, List<Veiculo>> clientesVeiculos = new HashMap<>();
         Estacionamento avenida = new Estacionamento("Avenida", 2, 4);
         Estacionamento savassi = new Estacionamento("Savassi", 2, 4);
         Estacionamento pampulha = new Estacionamento("Pampulha", 2, 4);
@@ -39,41 +42,73 @@ public class Main {
 
             switch (escolha) {
                 case 1:
+                    System.out.println("Escolha o tipo de cliente:");
+                    System.out.println("\t1. Horista");
+                    System.out.println("\t2. Mensalista");
+                    System.out.println("\t3. Turnista");
+                    System.out.print("Resposta: ");
+                    int tipoCliente = scanner.nextInt();
+                    scanner.nextLine();
+
                     System.out.println("Informe o nome do cliente:");
                     String nomeCliente = scanner.nextLine();
                     System.out.println("Informe o CPF do cliente:");
                     String cpfCliente = scanner.nextLine();
-                    Cliente novoCliente = new Horista(nomeCliente, cpfCliente);
 
-                    System.out.println("\nEm qual estacionamento deseja armazenar o cliente?");
-                    for (int i = 0; i < listaEstacionamentos.size(); i++) {
-                        System.out.println((i + 1) + ". " + listaEstacionamentos.get(i).getLocal());
+                    Cliente novoCliente = null;
+
+                    switch (tipoCliente) {
+                        case 1:
+                            novoCliente = new Horista(nomeCliente, cpfCliente);
+                            break;
+                        case 2:
+                            novoCliente = new Mensalista(nomeCliente, cpfCliente);
+                            break;
+                        case 3:
+                            novoCliente = new Turnista(nomeCliente, cpfCliente);
+                            break;
+                        default:
+                            System.out.println("Tipo de cliente inválido.");
+                            break;
                     }
-                    System.out.print("Resposta: ");
-                    int escolhaEstacionamento = scanner.nextInt();
-                    scanner.nextLine();
 
-                    if (escolhaEstacionamento >= 1 && escolhaEstacionamento <= listaEstacionamentos.size()) {
-                        Estacionamento estacionamentoEscolhido = listaEstacionamentos.get(escolhaEstacionamento - 1);
+                    if (novoCliente != null) {
+                        List<Veiculo> veiculosCliente = new ArrayList<>();
+                        clientesVeiculos.put(novoCliente, veiculosCliente);
+                        System.out.println("\nEm qual estacionamento deseja armazenar o cliente?");
+                        for (int i = 0; i < listaEstacionamentos.size(); i++) {
+                            System.out.println((i + 1) + ". " + listaEstacionamentos.get(i).getLocal());
+                        }
+                        System.out.print("Resposta: ");
+                        int escolhaEstacionamento = scanner.nextInt();
+                        scanner.nextLine();
 
-                        boolean clienteExistente = estacionamentoEscolhido.clienteExiste(novoCliente);
+                        if (escolhaEstacionamento >= 1 && escolhaEstacionamento <= listaEstacionamentos.size()) {
+                            Estacionamento estacionamentoEscolhido = listaEstacionamentos
+                                    .get(escolhaEstacionamento - 1);
 
-                        if (!clienteExistente) {
-                            boolean clienteAdicionado = estacionamentoEscolhido.addClienteToEstacionamento(novoCliente);
+                            boolean clienteExistente = estacionamentoEscolhido.clienteExiste(novoCliente);
 
-                            if (clienteAdicionado) {
-                                System.out.println("\nCliente adicionado com sucesso ao estacionamento: "
-                                        + estacionamentoEscolhido.getLocal());
+                            if (!clienteExistente) {
+                                boolean clienteAdicionado = estacionamentoEscolhido
+                                        .addClienteToEstacionamento(novoCliente);
+
+                                if (clienteAdicionado) {
+                                    System.out.println("\nCliente adicionado com sucesso ao estacionamento: "
+                                            + estacionamentoEscolhido.getLocal());
+                                } else {
+                                    System.out.println(
+                                            "O cliente já existe no estacionamento: "
+                                                    + estacionamentoEscolhido.getLocal());
+                                }
                             } else {
                                 System.out.println(
                                         "O cliente já existe no estacionamento: " + estacionamentoEscolhido.getLocal());
                             }
                         } else {
-                            System.out.println(
-                                    "O cliente já existe no estacionamento: " + estacionamentoEscolhido.getLocal());
+                            System.out.println("Escolha de estacionamento inválida.");
                         }
-                    } else {
-                        System.out.println("Escolha de estacionamento inválida.");
+                        System.out.println("Cliente cadastrado com sucesso!");
                     }
                     break;
                 case 2:
@@ -82,16 +117,12 @@ public class Main {
                     String cpf = scanner.nextLine();
 
                     Cliente clienteExistente = null;
-                    // Itera sobre os clientes existentes nos estacionamentos
                     for (Estacionamento estacionamento : listaEstacionamentos) {
                         for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
                             if (cliente.getCpf().equals(cpf)) {
                                 clienteExistente = cliente;
                                 break;
                             }
-                        }
-                        if (clienteExistente != null) {
-                            break;
                         }
                     }
 
@@ -201,16 +232,18 @@ public class Main {
                     break;
                 case 5:
                     for (Estacionamento estacionamento : listaEstacionamentos) {
-                        HashMap<Cliente, List<Veiculo>> clientesVeiculos = estacionamento.getClientesVeiculos();
-                        for (Cliente cliente : clientesVeiculos.keySet()) {
+                        HashMap<Cliente, List<Veiculo>> clientesVeiculosEstacionamento = estacionamento
+                                .getClientesVeiculos();
+                        for (Cliente cliente : clientesVeiculosEstacionamento.keySet()) {
                             System.out.println("\tCliente: " + cliente.getNome() + " - CPF: " + cliente.getCpf());
-                            List<Veiculo> veiculos = clientesVeiculos.get(cliente);
+                            List<Veiculo> veiculos = clientesVeiculosEstacionamento.get(cliente);
                             for (Veiculo veiculo : veiculos) {
                                 System.out.println("\t\tVeículo: " + veiculo.getPlaca());
                             }
                         }
                     }
                     break;
+
                 case 6:
                     System.out.println("Informe a placa do veículo para calcular o valor médio por uso:");
                     String placaVeiculoParaRelatorio = scanner.nextLine();

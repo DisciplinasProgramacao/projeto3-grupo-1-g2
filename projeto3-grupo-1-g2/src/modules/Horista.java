@@ -1,18 +1,20 @@
 package modules;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Horista extends Cliente{
 
-    public Horista(String cliente3, String s) {
-        super();
+
+    public Horista(String p_nome, String p_cpf) {
+        super(p_nome, p_cpf);
     }
 
     @Override
     public double arrecadadoTotal() {
         double totalArrecadado = 0;
-        for(String placa : this.veiculos.keySet()) {
-            totalArrecadado += this.veiculos.get(placa).totalArrecadado();
+        for(Veiculo veiculo : this.getVeiculos() ) {
+            totalArrecadado += veiculo.totalArrecadado();
         }
 //        for (Veiculo veiculo : veiculos) {
 //            totalArrecadado += veiculo.totalArrecadado();
@@ -22,14 +24,14 @@ public class Horista extends Cliente{
 
     @Override
     public double arrecadadoNoMes(int p_mes) {
-        double total = 0;
-        for(String placa : veiculos.keySet()) {
-            total += veiculos.get(placa).arrecadadoNoMes(p_mes);
+        double totalMes = 0;
+        for(Veiculo veiculo : this.getVeiculos() )  {
+            totalMes += veiculo.arrecadadoNoMes(p_mes);
         }
 //        for (Veiculo veiculo : veiculos) {
 //            total += veiculo.arrecadadoNoMes(p_mes);
 //        }
-        return total;
+        return totalMes;
     }
 
 }

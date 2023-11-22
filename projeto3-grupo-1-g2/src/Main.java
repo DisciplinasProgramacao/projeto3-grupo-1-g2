@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import modules.Cliente;
 import modules.Estacionamento;
+import modules.Horista;
 import modules.Veiculo;
 
 public class Main {
@@ -42,7 +43,7 @@ public class Main {
                     String nomeCliente = scanner.nextLine();
                     System.out.println("Informe o CPF do cliente:");
                     String cpfCliente = scanner.nextLine();
-                    Cliente novoCliente = new Cliente(nomeCliente, cpfCliente);
+                    Cliente novoCliente = new Horista(nomeCliente, cpfCliente);
 
                     System.out.println("\nEm qual estacionamento deseja armazenar o cliente?");
                     for (int i = 0; i < listaEstacionamentos.size(); i++) {

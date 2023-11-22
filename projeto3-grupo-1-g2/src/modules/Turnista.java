@@ -8,13 +8,8 @@ public class Turnista extends Cliente{
 
     private double pagoParte;
 
-    public Turnista(String turno) {
-        super();
-        this.turno = turno;
-    }
-
-    public Turnista(String cliente2, String s) {
-        super();
+    public Turnista(String p_nome, String p_cpf) {
+        super(p_nome, p_cpf);
     }
 
     public static String obterPeriodoDoDia() {
@@ -55,7 +50,8 @@ public class Turnista extends Cliente{
         if(isTurno){
             return 0;
         }else {
-            UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
+            Vaga vaga = new Vaga(10);
+            UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, false, false);
             pagoParte = usoDeVaga.calcularValor();
             return pagoParte;
         }

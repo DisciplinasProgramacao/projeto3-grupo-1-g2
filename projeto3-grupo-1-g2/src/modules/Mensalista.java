@@ -3,9 +3,8 @@ package modules;
 public class Mensalista extends Cliente{
 
 
-
-    public Mensalista(String cliente1, String s) {
-        super();
+    public Mensalista(String p_nome, String p_cpf) {
+        super(p_nome, p_cpf);
     }
 
     @Override

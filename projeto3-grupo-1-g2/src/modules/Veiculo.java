@@ -30,7 +30,7 @@ public class Veiculo {
     }
 
     public void estacionar(Vaga vaga) {
-        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, 0, false, false, false);
+        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, false, false, false);
         usos.add(uso);
         vaga.estacionar();
     }

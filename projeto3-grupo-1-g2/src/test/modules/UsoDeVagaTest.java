@@ -15,7 +15,7 @@ class UsoDeVagaTest {
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
 
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, false, false);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, false, false);
         double valor = usoDeVaga.calcularValor();
         assertEquals(8.0, valor);
     }
@@ -27,7 +27,7 @@ class UsoDeVagaTest {
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
 
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, true, false);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, true, false);
         assertThrows(Exception.class, usoDeVaga::sair);
     }
 
@@ -38,9 +38,8 @@ class UsoDeVagaTest {
         LocalDateTime entrada = LocalDateTime.now().minusMinutes(30);
         LocalDateTime saida = LocalDateTime.now();
 
-        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, 0, false, false, false);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, false, false);
 
-        usoDeVaga.setValorPago(10.0);
         assertEquals(10.0, usoDeVaga.getValorPago());
 
         LocalDateTime novaEntrada = LocalDateTime.now().minusHours(1);

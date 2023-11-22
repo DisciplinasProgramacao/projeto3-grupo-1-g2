@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Estacionamento {
     private int id;
     private String local;
-    private HashMap<Cliente, List<Veiculo>> clientesVeiculos;
+    public HashMap<Cliente, List<Veiculo>> clientesVeiculos;
     private int quantFileiras;
     private int vagasPorFileira;
     private ArrayList<Vaga> vagas;
@@ -88,30 +88,6 @@ public class Estacionamento {
         return valor / qtd;
     }
 
-public void top5Clientes() {
-    // Verifica se a lista tem elementos
-    if (clientes == null || clientes.size() == 0) {
-        System.out.println("A lista está vazia.");
-    }
-
-    Cliente[] array = new Cliente[clientes.size()];
-    int count = 0;
-
-    for (Cliente cliente: clientes ){
-        array[count] = cliente;
-        count++;
-    }
-
-
-    Arrays.sort(array);
-
-    for(int i = 0; i >= 5; i++){
-        System.out.println(array[i]);
-    }
-
-
-}
-
     public String getLocal() {
         return local;
     }
@@ -122,5 +98,19 @@ public void top5Clientes() {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean clienteExiste(Cliente cliente) {
+        return clientesVeiculos.containsKey(cliente);
+    }
+
+    public boolean addClienteToEstacionamento(Cliente cliente) {
+        List<Veiculo> veiculosCliente = cliente.getVeiculos();
+        
+        if (!clientesVeiculos.containsKey(cliente)) {
+            clientesVeiculos.put(cliente, veiculosCliente);
+            return true; 
+        }
+        return false;
     }
 }

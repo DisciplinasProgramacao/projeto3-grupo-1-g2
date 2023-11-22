@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import modules.Cliente;
@@ -9,52 +11,154 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int escolha;
 
+        List<Estacionamento> listaEstacionamentos = new LinkedList<>();
+
+        Estacionamento avenida = new Estacionamento("Avenida", 2, 4);
+        Estacionamento savassi = new Estacionamento("Savassi", 2, 4);
+        Estacionamento pampulha = new Estacionamento("Pampulha", 2, 4);
+
+        listaEstacionamentos.add(avenida);
+        listaEstacionamentos.add(savassi);
+        listaEstacionamentos.add(pampulha);
+
         do {
-            System.out.println("\n###################################\n");
-            System.out.println("GESTÃO DE ESTACIONAMENTO");
-            System.out.println("\t 1. Criar estacionamento");
-            System.out.println("\t 2. Cadastrar cliente & veículo");
-            System.out.println("\t 3. Registrar estacionamento de veículo");
+            System.out.println("\nGESTÃO DE ESTACIONAMENTO");
+            System.out.println("\t 1. Cadastrar cliente");
+            System.out.println("\t 2. Cadastrar veículo");
+            System.out.println("\t 3. Estacionar veículo");
             System.out.println("\t 10. Sair\n");
 
             System.out.print("Escolha uma opção: ");
             escolha = scanner.nextInt();
+            scanner.nextLine();
 
             switch (escolha) {
                 case 1:
-                    System.out.println("\n1. Criar estacionamento");
-                    Estacionamento avenida = new Estacionamento("Avenida", 2, 3);
-                    System.out.println("Estacionamento criado:\nLocal: Avenida / 2 fileiras / 3 vagas por fileira");
+                    System.out.println("Informe o nome do cliente:");
+                    String nomeCliente = scanner.nextLine();
+                    System.out.println("Informe o CPF do cliente:");
+                    String cpfCliente = scanner.nextLine();
+                    Cliente novoCliente = new Cliente(nomeCliente, cpfCliente);
+
+                    System.out.println("\nEm qual estacionamento deseja armazenar o cliente?");
+                    for (int i = 0; i < listaEstacionamentos.size(); i++) {
+                        System.out.println((i + 1) + ". " + listaEstacionamentos.get(i).getLocal());
+                    }
+                    System.out.print("Resposta: ");
+                    int escolhaEstacionamento = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (escolhaEstacionamento >= 1 && escolhaEstacionamento <= listaEstacionamentos.size()) {
+                        Estacionamento estacionamentoEscolhido = listaEstacionamentos.get(escolhaEstacionamento - 1);
+
+                        boolean clienteExistente = estacionamentoEscolhido.clienteExiste(novoCliente);
+
+                        if (!clienteExistente) {
+                            boolean clienteAdicionado = estacionamentoEscolhido.addClienteToEstacionamento(novoCliente);
+
+                            if (clienteAdicionado) {
+                                System.out.println("\nCliente adicionado com sucesso ao estacionamento: "
+                                        + estacionamentoEscolhido.getLocal());
+                            } else {
+                                System.out.println(
+                                        "O cliente já existe no estacionamento: " + estacionamentoEscolhido.getLocal());
+                            }
+                        } else {
+                            System.out.println(
+                                    "O cliente já existe no estacionamento: " + estacionamentoEscolhido.getLocal());
+                        }
+                    } else {
+                        System.out.println("Escolha de estacionamento inválida.");
+                    }
                     break;
                 case 2:
-                    System.out.println("\n2. Cadastrar cliente");
-                    System.out.println("Informe nome do cliente: ");
-                    String nome = scanner.nextLine();
-                    scanner.nextLine();
-                    System.out.println("Informe CPF do cliente: ");
+                    System.out.println("\nIdentificar um cliente e atribuir um veículo:");
+                    System.out.println("Informe o CPF do cliente:");
                     String cpf = scanner.nextLine();
-                    Cliente cliente = new Cliente(nome, cpf);
-                    System.out.println("Cliente cadastrado com sucesso!");
-                    Estacionamento.addCliente(cliente);
-                    System.out.println("Informe placa do veículo: ");
-                    String placa = scanner.nextLine();
-                    Veiculo veiculo = new Veiculo(placa);
-                    cliente.addVeiculo(veiculo);
-                    System.out.println("Veículo cadastrado com sucesso!");
+
+                    Cliente clienteExistente = null;
+                    // Itera sobre os clientes existentes nos estacionamentos
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
+                            if (cliente.getCpf().equals(cpf)) {
+                                clienteExistente = cliente;
+                                break;
+                            }
+                        }
+                        if (clienteExistente != null) {
+                            break;
+                        }
+                    }
+
+                    if (clienteExistente != null) {
+                        System.out.println("Cliente encontrado. Informe os detalhes do veículo:");
+                        System.out.println("Informe a placa do veículo:");
+                        String placaVeiculo = scanner.nextLine();
+
+                        Veiculo novoVeiculo = new Veiculo(placaVeiculo);
+                        clienteExistente.addVeiculo(novoVeiculo);
+
+                        for (Estacionamento estacionamento : listaEstacionamentos) {
+                            if (estacionamento.clientesVeiculos.containsKey(clienteExistente)) {
+                                estacionamento.clientesVeiculos.get(clienteExistente).add(novoVeiculo);
+                                System.out.println(
+                                        "Veículo atribuído ao cliente no estacionamento: " + estacionamento.getLocal());
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado.");
+                    }
                     break;
                 case 3:
-                    System.out.println("\n3. Registrar estacionamento de veículo");
-                    
+                    System.out.print("\nInforme a placa do veículo que deseja estacionar: ");
+                    String placaVeiculo = scanner.nextLine();
+
+                    // Encontrar o cliente que possui o veículo com a placa informada
+                    Cliente clienteEstacionamento = null;
+                    Veiculo veiculoEstacionamento = null;
+
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
+                            if (cliente.possuiVeiculo(placaVeiculo)) {
+                                clienteEstacionamento = cliente;
+                                for (Veiculo veiculo : cliente.getVeiculos()) {
+                                    if (veiculo.getPlaca().equals(placaVeiculo)) {
+                                        veiculoEstacionamento = veiculo;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        if (clienteEstacionamento != null) {
+                            break;
+                        }
+                    }
+
+                    if (clienteEstacionamento != null && veiculoEstacionamento != null) {
+                        System.out.println("Veículo encontrado. Estacionando...");
+
+                        boolean estacionadoComSucesso = false;
+                        for (Estacionamento estacionamento : listaEstacionamentos) {
+                            estacionadoComSucesso = estacionamento.estacionar(veiculoEstacionamento);
+                            if (estacionadoComSucesso) {
+                                System.out.println("Veículo estacionado com sucesso no estacionamento: "
+                                        + estacionamento.getLocal());
+                                break;
+                            }
+                        }
+
+                        if (!estacionadoComSucesso) {
+                            System.out.println("Não foi possível estacionar o veículo.");
+                        }
+                    } else {
+                        System.out.println("Veículo não encontrado ou cliente não cadastrado.");
+                    }
                     break;
-                                
-                case 10:
-                    System.out.println("Saindo do programa. Adeus!");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Escolha novamente.");
-                    break;
+
             }
-        } while (escolha != 3);
+        } while (escolha != 10);
 
         scanner.close();
     }

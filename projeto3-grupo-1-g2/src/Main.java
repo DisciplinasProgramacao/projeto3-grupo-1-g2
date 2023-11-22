@@ -23,12 +23,13 @@ public class Main {
         listaEstacionamentos.add(pampulha);
 
         do {
-            System.out.println("\nGESTÃO DE ESTACIONAMENTO");
+            System.out.println("\n GESTÃO DE ESTACIONAMENTO");
             System.out.println("\t 1. Cadastrar cliente");
             System.out.println("\t 2. Cadastrar veículo");
             System.out.println("\t 3. Estacionar veículo");
             System.out.println("\t 4. Informar saída do veículo");
             System.out.println("\t 5. Listar clientes e veículos");
+            System.out.println("\t 6. Gerar relatório de uso do veículo\");");
             System.out.println("\t 10. Sair\n");
 
             System.out.print("Escolha uma opção: ");
@@ -197,7 +198,7 @@ public class Main {
                         System.out.println("Veículo não encontrado ou não está estacionado em nenhum estacionamento.");
                     }
                     break;
-                case 5: 
+                case 5:
                     for (Estacionamento estacionamento : listaEstacionamentos) {
                         HashMap<Cliente, List<Veiculo>> clientesVeiculos = estacionamento.getClientesVeiculos();
                         for (Cliente cliente : clientesVeiculos.keySet()) {
@@ -207,6 +208,33 @@ public class Main {
                                 System.out.println("\t\tVeículo: " + veiculo.getPlaca());
                             }
                         }
+                    }
+                    break;
+                case 6:
+                    System.out.println("Informe a placa do veículo para calcular o valor médio por uso:");
+                    String placaVeiculoParaRelatorio = scanner.nextLine();
+
+                    double valorMedioPorUso = 0;
+                    int countEstacionamentos = 0;
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                            List<Veiculo> veiculos = estacionamento.getClientesVeiculos().get(cliente);
+                            for (Veiculo veiculo : veiculos) {
+                                if (veiculo.getPlaca().equals(placaVeiculoParaRelatorio)) {
+                                    valorMedioPorUso += cliente.arrecadadoTotal();
+                                    countEstacionamentos++;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (countEstacionamentos > 0) {
+                        double valorMedioTotal = valorMedioPorUso / countEstacionamentos;
+                        System.out.println(
+                                "Valor médio por uso do veículo " + placaVeiculoParaRelatorio + ": " + valorMedioTotal);
+                    } else {
+                        System.out.println(
+                                "Veículo não encontrado ou não está associado a nenhum cliente nos estacionamentos.");
                     }
                     break;
 

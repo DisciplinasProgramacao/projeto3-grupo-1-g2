@@ -78,7 +78,7 @@ public class Estacionamento {
         return valor;
     }
 
-    public double valoMedioPorUso() {
+    public double valorMedioPorUso() {
         double valor = 0;
         int qtd = 0;
         for (Cliente cliente : clientesVeiculos.keySet()) {

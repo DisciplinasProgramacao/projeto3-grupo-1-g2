@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 
+>>>>>>> develop
 N. Gerar vaga
 N. Adicionar cliente
 N. Registrar veículo // 2 métodos para add veículo
@@ -11,14 +14,24 @@ N. Verificar se a placa está cadastrada
 N. Qtd arrecadada por veículo 
 N. Gerar total de uso do veículo
 N. Gerar arrecadação no mês
+<<<<<<< HEAD
+N. 
+=======
+>>>>>>> develop
 
 
 
 --------------------------------
 
+<<<<<<< HEAD
+GERENCIAMENTO DE ESTACIONAMENTO
+
+1. Registrar veículo
+=======
 
 
 Veículo pode ser arrayList<>
 
 Cliente 
 treeMap
+>>>>>>> develop

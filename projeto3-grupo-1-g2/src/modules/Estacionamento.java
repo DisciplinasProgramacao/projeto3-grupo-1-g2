@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Estacionamento {
     private int id;
     private String local;
-    private HashMap<Cliente, List<Veiculo>> clientesVeiculos;
+    public HashMap<Cliente, List<Veiculo>> clientesVeiculos;
     private int quantFileiras;
     private int vagasPorFileira;
     private ArrayList<Vaga> vagas;
@@ -54,7 +54,7 @@ public class Estacionamento {
     public boolean sair(Veiculo veiculo) {
         try {
             double valor = veiculo.sair();
-            System.out.println("O valor pago foi : " + valor);
+            System.out.println("O valor pago foi: R$" + valor);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -78,7 +78,7 @@ public class Estacionamento {
         return valor;
     }
 
-    public double valoMedioPorUso() {
+    public double valorMedioPorUso() {
         double valor = 0;
         int qtd = 0;
         for (Cliente cliente : clientesVeiculos.keySet()) {
@@ -87,19 +87,6 @@ public class Estacionamento {
         }
         return valor / qtd;
     }
-
-    // public String top5Clientes(int mes){
-    // double valor = 0;
-    // ArrayList<Cliente> top5Mes = new ArrayList<>();
-    // for (Cliente cliente: clientes) {
-    // valor = cliente.arrecadadoNoMes(mes);
-    // for (Cliente cli: top5Mes) {
-    // if(valor > cli.arrecadadoNoMes(mes)){
-    //
-    // }
-    // }
-    // }
-    // }
 
     public String getLocal() {
         return local;
@@ -111,5 +98,23 @@ public class Estacionamento {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean clienteExiste(Cliente cliente) {
+        return clientesVeiculos.containsKey(cliente);
+    }
+
+    public boolean addClienteToEstacionamento(Cliente cliente) {
+        List<Veiculo> veiculosCliente = cliente.getVeiculos();
+        
+        if (!clientesVeiculos.containsKey(cliente)) {
+            clientesVeiculos.put(cliente, veiculosCliente);
+            return true; 
+        }
+        return false;
+    }
+
+    public HashMap<Cliente, List<Veiculo>> getClientesVeiculos() {
+        return this.clientesVeiculos;
     }
 }

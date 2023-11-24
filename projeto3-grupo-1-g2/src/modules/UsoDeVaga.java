@@ -15,10 +15,23 @@ public class UsoDeVaga {
     private servicosDisponiveis servicoUtilizado[];
 
     private enum servicosDisponiveis {
-        Estacionamento,
-        Manobrista,
-        Lavagem,
-        Polimento
+        Estacionamento(0),
+        Manobrista(5),
+        Lavagem(20),
+        Polimento(45);
+
+        private int value;
+
+        servicosDisponiveis(int p_value)
+        {
+            this.value = p_value;
+        }
+
+        public int getValue()
+        {
+            return this.value;
+        }
+
     }
 
     public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida,
@@ -28,9 +41,6 @@ public class UsoDeVaga {
         this.saida = saida;
         this.servicoUtilizado = new servicosDisponiveis[4];
         this.servicoUtilizado[0] = (servicosDisponiveis.Estacionamento);
-        this.servicoUtilizado[1] = usadoManobrista ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
-        this.servicoUtilizado[2] = usadoLavagem ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
-        this.servicoUtilizado[3] = usadoPolimento ? (servicosDisponiveis.Manobrista) : servicosDisponiveis.Estacionamento;
         for (int i = 0; i < servicoUtilizado.length; i++) {
             if (usadoManobrista)
                 this.servicoUtilizado[i] = (servicosDisponiveis.Estacionamento);
@@ -84,22 +94,9 @@ public class UsoDeVaga {
             valor = this.VALOR_MAXIMO;
         }
 
+        //Adicionar valores dos serviços utilizados
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            switch (servicoUtilizado[i]) {
-                case Estacionamento:
-                    break;
-                case Manobrista:
-                    valor += 5;
-                    break;
-                case Lavagem:
-                    valor += 20;
-                    break;
-                case Polimento:
-                    valor += 45;
-                    break;
-                default:
-                    continue;
-            }
+            valor += servicoUtilizado[i].getValue();
         }
 
         return valor;

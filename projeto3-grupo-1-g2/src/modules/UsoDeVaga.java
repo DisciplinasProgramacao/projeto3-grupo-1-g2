@@ -22,20 +22,18 @@ public class UsoDeVaga {
 
         private int value;
 
-        servicosDisponiveis(int p_value)
-        {
+        servicosDisponiveis(int p_value) {
             this.value = p_value;
         }
 
-        public int getValue()
-        {
+        public int getValue() {
             return this.value;
         }
 
     }
 
     public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida,
-                     boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
+            boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
         this.entrada = entrada;
         this.saida = saida;
@@ -52,7 +50,15 @@ public class UsoDeVaga {
     }
 
     public double sair() throws Exception {
-        this.saida = LocalDateTime.now();
+        return sairComParametro(LocalDateTime.now());
+    }
+
+    public double sair(LocalDateTime p_horario) throws Exception {
+        return sairComParametro(p_horario);
+    }
+
+    private double sairComParametro(LocalDateTime p_horario) throws Exception {
+        this.saida = p_horario;
         long minutos = calcularMinutos();
         for (int i = 0; i < servicoUtilizado.length; i++) {
             if (minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
@@ -62,7 +68,6 @@ public class UsoDeVaga {
         }
         vaga.sair();
         return calcularValor();
-
     }
 
     private long calcularMinutos() {
@@ -94,10 +99,9 @@ public class UsoDeVaga {
             valor = this.VALOR_MAXIMO;
         }
 
-        //Adicionar valores dos serviços utilizados
+        // Adicionar valores dos serviços utilizados
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            if(servicoUtilizado[i] != null)
-            {
+            if (servicoUtilizado[i] != null) {
                 valor += servicoUtilizado[i].getValue();
             }
         }

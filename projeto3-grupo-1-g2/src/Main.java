@@ -33,7 +33,9 @@ public class Main {
             System.out.println("\t 3. Estacionar veículo");
             System.out.println("\t 4. Informar saída do veículo");
             System.out.println("\t 5. Listar clientes e veículos");
-            System.out.println("\t 6. Gerar relatório de uso do veículo\");");
+            System.out.println("\t 6. Gerar relatório de uso do veículo");
+            System.out.println("\t 7. Gerar relatório de uso de vagas");
+
             System.out.println("\t 10. Sair\n");
 
             System.out.print("Escolha uma opção: ");
@@ -269,6 +271,30 @@ public class Main {
                     } else {
                         System.out.println(
                                 "Veículo não encontrado ou não está associado a nenhum cliente nos estacionamentos.");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Informe a placa do veículo para gerar o relatório de uso de vagas:");
+                    String placaVeiculoRelatorio = scanner.nextLine();
+
+                    // Iterar sobre os estacionamentos e clientes para encontrar o veículo desejado
+                    for (Estacionamento estacionamento : listaEstacionamentos) {
+                        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                            List<Veiculo> veiculos = estacionamento.getClientesVeiculos().get(cliente);
+                            for (Veiculo veiculo : veiculos) {
+                                if (veiculo.getPlaca().equals(placaVeiculoRelatorio)) {
+                                    // Verificar se o veículo é uma instância de Veiculo e chamar o método
+                                    // gerarRelatorioVagas()
+                                    if (veiculo instanceof Veiculo) {
+                                        String relatorioVagas = ((Veiculo) veiculo).gerarRelatorioVagas();
+                                        System.out.println(relatorioVagas);
+                                    } else {
+                                        System.out.println("Este veículo não suporta relatório de vagas.");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
                     }
                     break;
 

@@ -51,9 +51,9 @@ public class Estacionamento {
         return false;
     }
 
-    public boolean sair(Veiculo veiculo) {
+    public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {
         try {
-            double valor = veiculo.sair();
+            double valor = veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
             System.out.println("O valor pago foi: R$" + valor);
             return true;
         } catch (Exception e) {

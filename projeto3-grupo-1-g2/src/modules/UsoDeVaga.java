@@ -49,12 +49,9 @@ public class UsoDeVaga {
         }
     }
 
-    public double sair() throws Exception {
-        return sairComParametro(LocalDateTime.now());
-    }
-
-    public double sair(LocalDateTime p_horario) throws Exception {
-        return sairComParametro(p_horario);
+    public double sair(Integer p_horario) throws Exception {
+        LocalDateTime v_horario = LocalDateTime.now().plusMinutes(p_horario);
+        return sairComParametro(v_horario);
     }
 
     private double sairComParametro(LocalDateTime p_horario) throws Exception {

@@ -31,10 +31,14 @@ public class Veiculo {
         vaga.estacionar();
     }
 
-    public double sair() throws Exception {
+    public double sair(Integer p_horario) throws Exception {
+        return sairComParametro(p_horario);
+    }
+
+    private double sairComParametro(Integer p_horario) throws Exception {
         UsoDeVaga ultimoUso = usos.get(usos.size() - 1);
         try {
-            return ultimoUso.sair();
+            return ultimoUso.sair(p_horario);
 
         } catch (Exception e) {
             throw e;
@@ -58,33 +62,31 @@ public class Veiculo {
         }
         return totalMes;
     }
+
     public String gerarRelatorioVagas() {
         DateTimeFormatter dfm = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-     
+
         Map<LocalDateTime, UsoDeVaga> relatorio = new TreeMap<>();
-        
-       
+
         for (UsoDeVaga uso : usos) {
             relatorio.put(uso.getEntrada(), uso);
         }
-        
-       
+
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<LocalDateTime, UsoDeVaga> entry : relatorio.entrySet()) {
-     
+
             UsoDeVaga uso = entry.getValue();
-            
+
             sb.append("Vaga: ").append(uso.getVaga().getNumero())
-              .append(", Entrada: ").append(dfm.format(uso.getEntrada()))
-              .append(", Saida: ").append(uso.getSaida() == null ? "N/A" : dfm.format(uso.getSaida()))
-              .append(", Valor Pago: ").append(uso.getValorPago())
-              .append(", Placa Veículo: ").append(this.placa).append("\n");
+                    .append(", Entrada: ").append(dfm.format(uso.getEntrada()))
+                    .append(", Saida: ").append(uso.getSaida() == null ? "N/A" : dfm.format(uso.getSaida()))
+                    .append(", Valor Pago: ").append(uso.getValorPago())
+                    .append(", Placa Veículo: ").append(this.placa).append("\n");
         }
-        
 
         return sb.toString();
     }
-    
+
     public int totalDeUsos() {
         return usos.size();
     }

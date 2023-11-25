@@ -96,7 +96,10 @@ public class UsoDeVaga {
 
         //Adicionar valores dos serviços utilizados
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            valor += servicoUtilizado[i].getValue();
+            if(servicoUtilizado[i] != null)
+            {
+                valor += servicoUtilizado[i].getValue();
+            }
         }
 
         return valor;

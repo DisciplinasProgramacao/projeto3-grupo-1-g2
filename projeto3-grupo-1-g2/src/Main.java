@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,31 +11,72 @@ import modules.Estacionamento;
 import modules.Horista;
 import modules.Mensalista;
 import modules.Turnista;
-import modules.UsoDeVaga;
-import modules.Vaga;
 import modules.Veiculo;
+import utils.FileTool;
 
 public class Main {
     public static void main(String[] args) {
-        boolean usadoManobrista = false;
-        boolean usadoLavagem = false;
-        boolean usadoPolimento = false;
-        double valorTotal = 0.0;
 
         Scanner scanner = new Scanner(System.in);
         int escolha;
-        Vaga vaga = new Vaga(1);
-        LocalDateTime entrada = LocalDateTime.now();
 
         List<Estacionamento> listaEstacionamentos = new LinkedList<>();
         HashMap<Cliente, List<Veiculo>> clientesVeiculos = new HashMap<>();
-        Estacionamento avenida = new Estacionamento("Avenida", 2, 4);
-        Estacionamento savassi = new Estacionamento("Savassi", 2, 4);
-        Estacionamento pampulha = new Estacionamento("Pampulha", 2, 4);
+        Estacionamento avenida;
+        Estacionamento savassi;
+        Estacionamento pampulha;
 
-        listaEstacionamentos.add(avenida);
-        listaEstacionamentos.add(savassi);
-        listaEstacionamentos.add(pampulha);
+        try {
+            FileTool v_readerFile = new FileTool(true);
+            String v_line;
+            v_readerFile.changePath("./src/data/pub.in");
+            Integer v_insertClients = 0;
+            for (int i = 1; i <= 53; i++) {
+                v_line = v_readerFile.readLine(1);
+                if (i <= 3) {
+                    String[] v_lineSplit = v_line.split(" ; ");
+                    if (v_line.contains("Avenida")) {
+                        avenida = new Estacionamento("Avenida", Integer.parseInt(v_lineSplit[1]),
+                                Integer.parseInt(v_lineSplit[2]));
+                        listaEstacionamentos.add(avenida);
+                    }
+                    if (v_line.contains("Savassi")) {
+                        savassi = new Estacionamento("Savassi", Integer.parseInt(v_lineSplit[1]),
+                                Integer.parseInt(v_lineSplit[2]));
+                        listaEstacionamentos.add(savassi);
+                    }
+                    if (v_line.contains("Pampulha")) {
+                        pampulha = new Estacionamento("Pampulha", Integer.parseInt(v_lineSplit[1]),
+                                Integer.parseInt(v_lineSplit[2]));
+                        listaEstacionamentos.add(pampulha);
+                    }
+                }
+                if (i == 4) {
+                    v_insertClients = Integer.parseInt(v_line);
+                }
+                if (i >= 5) {
+                    for (int j = i; i <= v_insertClients; j++) {
+                        v_line = v_readerFile.readLine(1);
+                        String[] v_lineSplit = v_line.split(" ; ");
+                        String nomeCliente = v_lineSplit[1];
+                        String cpfCliente = v_lineSplit[2];
+                        Cliente novoCliente = new Horista(nomeCliente, cpfCliente);
+                        Estacionamento estacionamentoEscolhido = null;
+                        for (Estacionamento estacionamento : listaEstacionamentos) {
+                            if (estacionamento.getLocal().equals(v_lineSplit[0]))
+                                estacionamentoEscolhido = estacionamento;
+                        }
+                        estacionamentoEscolhido.addClienteToEstacionamento(novoCliente);
+                        Veiculo novoVeiculo = new Veiculo(v_lineSplit[3]);
+                        novoCliente.addVeiculo(novoVeiculo);
+                        i = j;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         do {
             System.out.println("\n GESTÃO DE ESTACIONAMENTO");

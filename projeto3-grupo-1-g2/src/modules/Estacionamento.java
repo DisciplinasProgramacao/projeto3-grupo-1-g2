@@ -48,14 +48,14 @@ public class Estacionamento {
                 }
             }
         }
-
         return false;
     }
 
     private ArrayList<Vaga> gerarVagas(int numero) {
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {
-                vagas.add(new Vaga(Integer.parseInt(String.valueOf(this.quantFileiras) + String.valueOf(this.vagasPorFileira))));
+                vagas.add(new Vaga(
+                        Integer.parseInt(String.valueOf(this.quantFileiras) + String.valueOf(this.vagasPorFileira))));
             }
         }
         return vagas;
@@ -116,10 +116,10 @@ public class Estacionamento {
 
     public boolean addClienteToEstacionamento(Cliente cliente) {
         List<Veiculo> veiculosCliente = cliente.getVeiculos();
-        
+
         if (!clientesVeiculos.containsKey(cliente)) {
             clientesVeiculos.put(cliente, veiculosCliente);
-            return true; 
+            return true;
         }
         return false;
     }

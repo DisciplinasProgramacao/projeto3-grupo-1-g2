@@ -7,17 +7,17 @@ public abstract class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
-    
+
     public Cliente(String p_nome, String p_cpf) {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
     }
-    
+
     public String getNome() {
         return this.nome;
     }
-    
+
     public String getCpf() {
         return this.cpf;
     }
@@ -31,12 +31,8 @@ public abstract class Cliente {
     }
 
     public boolean possuiVeiculo(String p_placa) {
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getPlaca().equals(p_placa)) {
-                return true;
-            }
-        }
-        return false;
+        return veiculos.stream()
+                .anyMatch(veiculo -> veiculo.getPlaca().equals(p_placa));
     }
 
     public int totalDeUsos() {
@@ -48,38 +44,23 @@ public abstract class Cliente {
     }
 
     public double arrecadadoPorVeiculo(String p_placa) {
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getPlaca().equals(p_placa)) {
-                return veiculo.totalArrecadado();
-            }
-        }
-        // for (String placa : veiculos.keySet()) {
-        // if (placa.equals(p_placa)) {
-        // return veiculos.get(placa).totalArrecadado();
-        // }
-        // }
-        return 0;
+        return veiculos.stream()
+                .filter(veiculo -> veiculo.getPlaca().equals(p_placa))
+                .findFirst()
+                .map(Veiculo::totalArrecadado)
+                .orElse(0.0);
     }
 
     public double arrecadadoTotal() {
-        double totalArrecadado = 0;
-        for (Veiculo veiculo : veiculos) {
-            totalArrecadado += veiculo.totalArrecadado();
-        }
-        // for (String placa : veiculos.keySet()) {
-        // totalArrecadado += veiculos.get(placa).totalArrecadado();
-        // }
+        double totalArrecadado = veiculos.stream()
+                .mapToDouble(Veiculo::totalArrecadado)
+                .sum();
         return totalArrecadado;
     }
 
     public double arrecadadoNoMes(int p_mes) {
-        double total = 0;
-        for (Veiculo veiculo : veiculos) {
-            total += veiculo.arrecadadoNoMes(p_mes);
-        }
-        // for (String placa : veiculos.keySet()) {
-        // total += veiculos.get(placa).arrecadadoNoMes(p_mes);
-        // }
-        return total;
+        return veiculos.stream()
+                .mapToDouble(veiculo -> veiculo.arrecadadoNoMes(p_mes))
+                .sum();
     }
 }

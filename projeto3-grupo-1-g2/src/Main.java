@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,12 +10,21 @@ import modules.Estacionamento;
 import modules.Horista;
 import modules.Mensalista;
 import modules.Turnista;
+import modules.UsoDeVaga;
+import modules.Vaga;
 import modules.Veiculo;
 
 public class Main {
     public static void main(String[] args) {
+        boolean usadoManobrista = false;
+        boolean usadoLavagem = false;
+        boolean usadoPolimento = false;
+        double valorTotal = 0.0;
+
         Scanner scanner = new Scanner(System.in);
         int escolha;
+        Vaga vaga = new Vaga(1);
+        LocalDateTime entrada = LocalDateTime.now();
 
         List<Estacionamento> listaEstacionamentos = new LinkedList<>();
         HashMap<Cliente, List<Veiculo>> clientesVeiculos = new HashMap<>();
@@ -193,6 +203,7 @@ public class Main {
                         System.out.println("Veículo não encontrado ou cliente não cadastrado.");
                     }
                     break;
+
                 case 4:
                     System.out.print("Informe a placa do veículo que finalizou o uso da vaga: ");
                     String placaVeiculoSair = scanner.nextLine();
@@ -221,7 +232,7 @@ public class Main {
                     }
 
                     if (clienteSaida != null && veiculoSaida != null && estacionamentoSaida != null) {
-                        boolean veiculoRemovido = estacionamentoSaida.sair(veiculoSaida);
+                        boolean veiculoRemovido = estacionamentoSaida.sair(veiculoSaida, 120);
 
                         if (veiculoRemovido) {
                             System.out.println("Veículo deixou o estacionamento: " + estacionamentoSaida.getLocal());
@@ -230,6 +241,26 @@ public class Main {
                         }
                     } else {
                         System.out.println("Veículo não encontrado ou não está estacionado em nenhum estacionamento.");
+                    }
+
+                    System.out.println("\nEscolha os serviços (Digite 'S' para sim ou 'N' para não): ");
+                    System.out.print("Manobrista (R$5): ");
+                    usadoManobrista = scanner.next().equalsIgnoreCase("S");
+
+                    System.out.print("Lavagem (R$20): ");
+                    usadoLavagem = scanner.next().equalsIgnoreCase("S");
+
+                    System.out.print("Polimento (R$45): ");
+                    usadoPolimento = scanner.next().equalsIgnoreCase("S");
+
+                    UsoDeVaga usoDeVaga = new UsoDeVaga(null, LocalDateTime.now(), null,
+                            usadoManobrista, usadoLavagem, usadoPolimento);
+
+                    try {
+                        valorTotal = usoDeVaga.sair(120);
+                        System.out.println("Valor total a pagar: R$" + valorTotal);
+                    } catch (Exception e) {
+                        System.out.println("Erro ao calcular o valor total: " + e.getMessage());
                     }
                     break;
                 case 5:
@@ -277,14 +308,11 @@ public class Main {
                     System.out.println("Informe a placa do veículo para gerar o relatório de uso de vagas:");
                     String placaVeiculoRelatorio = scanner.nextLine();
 
-                    // Iterar sobre os estacionamentos e clientes para encontrar o veículo desejado
                     for (Estacionamento estacionamento : listaEstacionamentos) {
                         for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
                             List<Veiculo> veiculos = estacionamento.getClientesVeiculos().get(cliente);
                             for (Veiculo veiculo : veiculos) {
                                 if (veiculo.getPlaca().equals(placaVeiculoRelatorio)) {
-                                    // Verificar se o veículo é uma instância de Veiculo e chamar o método
-                                    // gerarRelatorioVagas()
                                     if (veiculo instanceof Veiculo) {
                                         String relatorioVagas = ((Veiculo) veiculo).gerarRelatorioVagas();
                                         System.out.println(relatorioVagas);
@@ -297,7 +325,6 @@ public class Main {
                         }
                     }
                     break;
-
             }
         } while (escolha != 10);
 

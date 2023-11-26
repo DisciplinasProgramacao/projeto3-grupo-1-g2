@@ -20,6 +20,7 @@ public class Estacionamento {
         this.clientesVeiculos = new HashMap<>();
         this.vagas = new ArrayList<>();
         this.criarVagas();
+        this.vagas = gerarVagas(1);
     }
 
     public void addCliente(Cliente cliente) {
@@ -49,6 +50,15 @@ public class Estacionamento {
         }
 
         return false;
+    }
+
+    private ArrayList<Vaga> gerarVagas(int numero) {
+        for (int i = 0; i < this.quantFileiras; i++) {
+            for (int j = 0; j < this.vagasPorFileira; j++) {
+                vagas.add(new Vaga(Integer.parseInt(String.valueOf(this.quantFileiras) + String.valueOf(this.vagasPorFileira))));
+            }
+        }
+        return vagas;
     }
 
     public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {

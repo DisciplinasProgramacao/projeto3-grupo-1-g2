@@ -6,27 +6,27 @@ public class Vaga {
 
     public Vaga(int numero) {
         this.numero = numero;
-        this.ocupada = false; // Por padrão, a vaga está livre.
+        this.ocupada = false; 
     }
 
     public boolean estacionar() {
         if (!ocupada) {
             ocupada = true;
-            return true; // A vaga foi estacionada com sucesso.
+            return true;
         }
-        return false; // A vaga já está ocupada.
+        return false; 
     }
 
     public boolean sair() {
         if (ocupada) {
             ocupada = false;
-            return true; // O veículo saiu da vaga com sucesso.
+            return true; 
         }
-        return false; // A vaga já está livre.
+        return false;
     }
 
     public boolean disponivel() {
-        return !ocupada; // Retorna true se a vaga estiver disponível (não ocupada).
+        return !ocupada;
     }
     
     public int getNumero() {

@@ -1,16 +1,16 @@
-package modules;
+package test.modules;
 
+import modules.Vaga;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VagaTest {
-
+class VagaTest {
     private Vaga vaga;
 
     @BeforeEach
     public void setUp() {
-        vaga = new Vaga(1, 10);
+        vaga = new Vaga(1);
     }
 
     @Test
@@ -36,4 +36,5 @@ public class VagaTest {
         assertTrue(vaga.sair());
         assertTrue(vaga.disponivel());
     }
+
 }

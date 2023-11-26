@@ -2,61 +2,83 @@ package modules;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 public class UsoDeVaga {
     private double FRACAO_USO = 0.25;
     private double VALOR_FRACAO = 4.0;
-
     private double VALOR_MAXIMO = 50.0;
 
-    private ArrayList<Vaga> vaga;
+    private Vaga vaga;
 
     private LocalDateTime entrada;
-
     private LocalDateTime saida;
-
-    private double valorPago;
-
     private servicosDisponiveis servicoUtilizado[];
 
     private enum servicosDisponiveis {
-        Estacionamento,
-        Manobrista,
-        Lavagem,
-        Polimento
+        Estacionamento(0),
+        Manobrista(5),
+        Lavagem(20),
+        Polimento(45);
+
+        private int value;
+
+        servicosDisponiveis(int p_value) {
+            this.value = p_value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+
     }
 
-    public UsoDeVaga(ArrayList<Vaga> vaga, LocalDateTime entrada, LocalDateTime saida, double valorPago,
+    public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida,
             boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
         this.entrada = entrada;
         this.saida = saida;
-        this.valorPago = valorPago;
         this.servicoUtilizado = new servicosDisponiveis[4];
         this.servicoUtilizado[0] = (servicosDisponiveis.Estacionamento);
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            if (usadoManobrista)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Estacionamento);
+            if(i == 0)
+                this.servicoUtilizado[i] = servicosDisponiveis.Estacionamento;
+            else if (usadoManobrista)
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Estacionamento;
+                usadoManobrista = false;
+            }
             else if (usadoLavagem)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Lavagem);
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Lavagem;
+                usadoLavagem = false;
+            }
             else if (usadoPolimento)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Polimento);
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Polimento;
+                usadoPolimento = false;
+            }
         }
     }
 
-    public void sair() throws Exception {
-        this.saida = LocalDateTime.now();
+    public double sair(Integer p_horario) throws Exception {
+        LocalDateTime v_horario = LocalDateTime.now().plusMinutes(p_horario);
+        return sairComParametro(v_horario);
+    }
+
+    private double sairComParametro(LocalDateTime p_horario) throws Exception {
+        this.saida = p_horario;
         long minutos = calcularMinutos();
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            if(minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
-            throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Lavagem é 1 hora");
-            else if(minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
-            throw new Exception("Não é possível retirar seu carro agora, o tempo mínimo de Polimento são 2 horas");
+            if (minutos < 60 && servicoUtilizado[i] == servicosDisponiveis.Lavagem)
+                throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou a lavagem");
+            else if (minutos < 120 && servicoUtilizado[i] == servicosDisponiveis.Polimento)
+                throw new Exception("A saida da vaga não pode ser efetivada pois ainda não finzalizou o polimento");
         }
+        vaga.sair();
+        return calcularValor();
     }
 
-    private long calcularMinutos(){
+    private long calcularMinutos() {
         long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
         minutos += horas * 60; // Converte horas para minutos
@@ -78,27 +100,17 @@ public class UsoDeVaga {
                                                                                      // após 15 minutos
                 valor += fracoes * this.VALOR_FRACAO;
             }
-            minutos += 15; //Restaura valor padrão de minutos
+            minutos += 15; // Restaura valor padrão de minutos
         }
 
         if (valor > this.VALOR_MAXIMO) {
             valor = this.VALOR_MAXIMO;
         }
 
+        // Adicionar valores dos serviços utilizados
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            switch(servicoUtilizado[i])
-            {
-                case Estacionamento:
-                break;
-                case Manobrista:
-                valor+=5;
-                break;
-                case Lavagem:
-                valor+=20;
-                break;
-                case Polimento:
-                valor+=45;
-                break;
+            if (servicoUtilizado[i] != null) {
+                valor += servicoUtilizado[i].getValue();
             }
         }
 
@@ -106,11 +118,7 @@ public class UsoDeVaga {
     }
 
     public double getValorPago() {
-        return this.valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
+        return calcularValor();
     }
 
     public LocalDateTime getEntrada() {
@@ -129,11 +137,11 @@ public class UsoDeVaga {
         this.saida = saida;
     }
 
-    public ArrayList<Vaga> getVaga() {
+    public Vaga getVaga() {
         return this.vaga;
     }
 
-    public void setVaga(ArrayList<Vaga> vaga) {
+    public void setVaga(Vaga vaga) {
         this.vaga = vaga;
     }
 }

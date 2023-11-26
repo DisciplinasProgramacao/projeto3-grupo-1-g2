@@ -184,11 +184,36 @@ public class Main {
                     }
 
                     if (clienteEstacionamento != null && veiculoEstacionamento != null) {
+                        Integer tipoServico = 1;
+                        boolean usarManobrita = false;
+                        boolean usarLavagem = false;
+                        boolean usarPolimento = false;
+                        while (tipoServico != 0) {
+                            System.out.println("Escolha o tipo de serviço que vai ser utilizado:");
+                            System.out.println("\t0. Todos serviços escolhidos");
+                            System.out.println("\t1. Manobrista");
+                            System.out.println("\t2. Lavagem");
+                            System.out.println("\t3. Polimento");
+                            System.out.print("Resposta: ");
+                            tipoServico = scanner.nextInt();
+                            switch (tipoServico) {
+                                case 1:
+                                    usarManobrita = true;
+                                    break;
+                                case 2:
+                                    usarLavagem = true;
+                                    break;
+                                case 3:
+                                    usarPolimento = true;
+                                    break;
+                            }
+                        }
                         System.out.println("Veículo encontrado. Estacionando...");
 
                         boolean estacionadoComSucesso = false;
                         for (Estacionamento estacionamento : listaEstacionamentos) {
-                            estacionadoComSucesso = estacionamento.estacionar(veiculoEstacionamento);
+                            estacionadoComSucesso = estacionamento.estacionar(veiculoEstacionamento, usarManobrita,
+                                    usarLavagem, usarPolimento);
                             if (estacionadoComSucesso) {
                                 System.out.println("Veículo estacionado com sucesso no estacionamento: "
                                         + estacionamento.getLocal());
@@ -232,7 +257,9 @@ public class Main {
                     }
 
                     if (clienteSaida != null && veiculoSaida != null && estacionamentoSaida != null) {
-                        boolean veiculoRemovido = estacionamentoSaida.sair(veiculoSaida, 120);
+                        System.out.println("Quanto tempo o carro ficou no estacionamento?(Em minutos)");
+                        Integer tempoParaSair = scanner.nextInt();
+                        boolean veiculoRemovido = estacionamentoSaida.sair(veiculoSaida, tempoParaSair);
 
                         if (veiculoRemovido) {
                             System.out.println("Veículo deixou o estacionamento: " + estacionamentoSaida.getLocal());
@@ -241,26 +268,6 @@ public class Main {
                         }
                     } else {
                         System.out.println("Veículo não encontrado ou não está estacionado em nenhum estacionamento.");
-                    }
-
-                    System.out.println("\nEscolha os serviços (Digite 'S' para sim ou 'N' para não): ");
-                    System.out.print("Manobrista (R$5): ");
-                    usadoManobrista = scanner.next().equalsIgnoreCase("S");
-
-                    System.out.print("Lavagem (R$20): ");
-                    usadoLavagem = scanner.next().equalsIgnoreCase("S");
-
-                    System.out.print("Polimento (R$45): ");
-                    usadoPolimento = scanner.next().equalsIgnoreCase("S");
-
-                    UsoDeVaga usoDeVaga = new UsoDeVaga(null, LocalDateTime.now(), null,
-                            usadoManobrista, usadoLavagem, usadoPolimento);
-
-                    try {
-                        valorTotal = usoDeVaga.sair(120);
-                        System.out.println("Valor total a pagar: R$" + valorTotal);
-                    } catch (Exception e) {
-                        System.out.println("Erro ao calcular o valor total: " + e.getMessage());
                     }
                     break;
                 case 5:

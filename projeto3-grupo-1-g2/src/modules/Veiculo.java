@@ -25,8 +25,8 @@ public class Veiculo {
         return usos;
     }
 
-    public void estacionar(Vaga vaga) {
-        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, false, false, false);
+    public void estacionar(Vaga vaga,  boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
+        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, usadoManobrista, usadoLavagem, usadoPolimento);
         usos.add(uso);
         vaga.estacionar();
     }

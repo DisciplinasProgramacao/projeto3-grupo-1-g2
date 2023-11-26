@@ -40,12 +40,23 @@ public class UsoDeVaga {
         this.servicoUtilizado = new servicosDisponiveis[4];
         this.servicoUtilizado[0] = (servicosDisponiveis.Estacionamento);
         for (int i = 0; i < servicoUtilizado.length; i++) {
-            if (usadoManobrista)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Estacionamento);
+            if(i == 0)
+                this.servicoUtilizado[i] = servicosDisponiveis.Estacionamento;
+            else if (usadoManobrista)
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Estacionamento;
+                usadoManobrista = false;
+            }
             else if (usadoLavagem)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Lavagem);
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Lavagem;
+                usadoLavagem = false;
+            }
             else if (usadoPolimento)
-                this.servicoUtilizado[i] = (servicosDisponiveis.Polimento);
+            {
+                this.servicoUtilizado[i] = servicosDisponiveis.Polimento;
+                usadoPolimento = false;
+            }
         }
     }
 

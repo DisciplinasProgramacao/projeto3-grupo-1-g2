@@ -35,19 +35,17 @@ public class Estacionamento {
         }
     }
 
-    public boolean estacionar(Veiculo veiculo) {
+    public boolean estacionar(Veiculo veiculo,  boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         for (Cliente cliente : clientesVeiculos.keySet()) {
             boolean possuiVeiculo = cliente.possuiVeiculo(veiculo.getPlaca());
 
             if (possuiVeiculo) {
-                vagas.stream()
-                        .filter(Vaga::disponivel)
-                        .findFirst()
-                        .map(vaga -> {
-                            veiculo.estacionar(vaga);
-                            return true;
-                        })
-                        .orElse(false);
+                for (Vaga vaga : vagas) {
+                    if (vaga.disponivel()) {
+                        veiculo.estacionar(vaga, usadoManobrista, usadoLavagem, usadoPolimento);
+                        return true;
+                    }
+                }
             }
         }
         return false;

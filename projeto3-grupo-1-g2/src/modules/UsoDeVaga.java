@@ -62,7 +62,7 @@ public class UsoDeVaga {
         }
     }
 
-    public Executable sair(Integer p_horario) throws Exception {
+    public Double sair(Integer p_horario) throws Exception {
         LocalDateTime v_horario = LocalDateTime.now().plusMinutes(p_horario);
         return sairComParametro(v_horario);
     }

@@ -9,7 +9,6 @@ import modules.Vaga;
 import modules.Veiculo;
 
 class VeiculoTest {
-
     @Test
     void testCriarVeiculoEObterPlaca() {
         Veiculo veiculo = new Veiculo("ABC1234");
@@ -77,7 +76,7 @@ class VeiculoTest {
         Vaga vaga2 = new Vaga(2);
 
         veiculo.estacionar(vaga1);
-        veiculo.sair();
+        veiculo.sair("21:00");
 
         veiculo.estacionar(vaga2);
         veiculo.sair();

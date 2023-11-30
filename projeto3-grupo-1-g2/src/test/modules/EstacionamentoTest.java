@@ -40,7 +40,6 @@ public class EstacionamentoTest {
 
     @Test
     public void testsair() {
-
         Cliente cliente = new Horista("Cliente3", "345678");
         Veiculo veiculo = new Veiculo("Placa456");
         cliente.addVeiculo(veiculo);

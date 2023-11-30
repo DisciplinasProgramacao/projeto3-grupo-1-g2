@@ -81,7 +81,7 @@ public class UsoDeVaga {
     private long calcularMinutos() {
         long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
-        minutos += horas * 60; // Converte horas para minutos
+        minutos += horas * 60;
         return minutos;
     }
 
@@ -92,22 +92,21 @@ public class UsoDeVaga {
         if (minutos <= 15) {
             valor = VALOR_FRACAO;
         } else {
-            minutos -= 15; // Subtrai os primeiros 15 minutos
-            valor = this.VALOR_FRACAO; // Valor da primeira fração de 15 minutos
+            minutos -= 15;
+            valor = this.VALOR_FRACAO;
 
             if (minutos > 0) {
-                int fracoes = (int) Math.ceil((double) minutos / (FRACAO_USO * 60)); // Calcula as fraçoes restantes
-                                                                                     // após 15 minutos
+                int fracoes = (int) Math.ceil((double) minutos / (FRACAO_USO * 60));
+
                 valor += fracoes * this.VALOR_FRACAO;
             }
-            minutos += 15; // Restaura valor padrão de minutos
+            minutos += 15;
         }
 
         if (valor > this.VALOR_MAXIMO) {
             valor = this.VALOR_MAXIMO;
         }
 
-        // Adicionar valores dos serviços utilizados
         for (int i = 0; i < servicoUtilizado.length; i++) {
             if (servicoUtilizado[i] != null) {
                 valor += servicoUtilizado[i].getValue();

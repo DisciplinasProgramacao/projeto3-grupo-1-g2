@@ -20,9 +20,6 @@ public class Horista extends Cliente {
         for (Veiculo veiculo : this.getVeiculos()) {
             totalMes += veiculo.arrecadadoNoMes(p_mes);
         }
-        // for (Veiculo veiculo : veiculos) {
-        // total += veiculo.arrecadadoNoMes(p_mes);
-        // }
         return totalMes;
     }
 

@@ -34,7 +34,7 @@ public class EstacionamentoTest {
         Veiculo veiculo = new Veiculo("Placa123");
         cliente.addVeiculo(veiculo);
         estacionamento.addCliente(cliente);
-        boolean estacionado = estacionamento.estacionar(veiculo);
+        boolean estacionado = estacionamento.estacionar(veiculo, true, false, false);
         assertTrue(true);
     }
 
@@ -44,10 +44,10 @@ public class EstacionamentoTest {
         Veiculo veiculo = new Veiculo("Placa456");
         cliente.addVeiculo(veiculo);
         estacionamento.addCliente(cliente);
-        estacionamento.estacionar(veiculo);
+        estacionamento.estacionar(veiculo, true, false, false);
 
 
-        boolean saiuComSucesso = estacionamento.sair(veiculo);
+        boolean saiuComSucesso = estacionamento.sair(veiculo, 200);
 
         assertTrue(saiuComSucesso);
     }

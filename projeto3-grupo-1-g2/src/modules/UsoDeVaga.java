@@ -1,5 +1,7 @@
 package modules;
 
+import org.junit.jupiter.api.function.Executable;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -60,7 +62,7 @@ public class UsoDeVaga {
         }
     }
 
-    public double sair(Integer p_horario) throws Exception {
+    public Executable sair(Integer p_horario) throws Exception {
         LocalDateTime v_horario = LocalDateTime.now().plusMinutes(p_horario);
         return sairComParametro(v_horario);
     }

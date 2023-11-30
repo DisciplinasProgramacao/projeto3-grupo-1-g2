@@ -28,7 +28,11 @@ class UsoDeVagaTest {
         LocalDateTime saida = LocalDateTime.now();
 
         UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, true, false);
-        assertThrows(Exception.class, usoDeVaga::sair);
+        try {
+            assertThrows(Exception.class, usoDeVaga.sair(120));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

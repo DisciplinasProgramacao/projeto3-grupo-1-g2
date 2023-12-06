@@ -163,22 +163,6 @@ public class Estacionamento {
         return valor / qtd;
     }
 
-    public String getLocal() {
-        return local;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean clienteExiste(Cliente cliente) {
-        return clientesVeiculos.containsKey(cliente);
-    }
-
     /**
      * Adiciona um cliente ao estacionamento, associando a lista de veículos do cliente.
      * Se o cliente ainda não existe no estacionamento, é adicionado; caso contrário, a operação é ignorada.
@@ -196,6 +180,21 @@ public class Estacionamento {
         return false;
     }
 
+    public String getLocal() {
+        return local;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean clienteExiste(Cliente cliente) {
+        return clientesVeiculos.containsKey(cliente);
+    }
     public HashMap<Cliente, List<Veiculo>> getClientesVeiculos() {
         return this.clientesVeiculos;
     }

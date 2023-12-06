@@ -29,18 +29,6 @@ public abstract class Cliente {
         veiculos = new ArrayList<>();
     }
 
-    public String getNome() {
-        return this.nome;
-    }
-
-    public String getCpf() {
-        return this.cpf;
-    }
-
-    public List<Veiculo> getVeiculos() {
-        return this.veiculos;
-    }
-
     /**
      * Adiciona um veículo à lista de veículos do cliente.
      *
@@ -111,5 +99,17 @@ public abstract class Cliente {
         return veiculos.stream()
                 .mapToDouble(veiculo -> veiculo.arrecadadoNoMes(p_mes))
                 .sum();
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getCpf() {
+        return this.cpf;
+    }
+
+    public List<Veiculo> getVeiculos() {
+        return this.veiculos;
     }
 }

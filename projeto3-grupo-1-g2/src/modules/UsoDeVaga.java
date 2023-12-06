@@ -5,17 +5,24 @@ import org.junit.jupiter.api.function.Executable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Representa o uso de uma vaga de estacionamento por um veículo, incluindo os serviços utilizados.
+ * Calcula o valor a ser pago com base no tempo de uso, serviços utilizados e tarifas.
+ */
 public class UsoDeVaga {
+    //#region atributos
     private double FRACAO_USO = 0.25;
     private double VALOR_FRACAO = 4.0;
     private double VALOR_MAXIMO = 50.0;
-
     private Vaga vaga;
-
     private LocalDateTime entrada;
     private LocalDateTime saida;
     private servicosDisponiveis servicoUtilizado[];
+    //#endregion
 
+    /**
+     * Enumeração dos serviços disponíveis durante o uso da vaga.
+     */
     private enum servicosDisponiveis {
         Estacionamento(0),
         Manobrista(5),
@@ -34,6 +41,18 @@ public class UsoDeVaga {
 
     }
 
+    //#region Construtores
+
+    /**
+     * Construtor da classe UsoDeVaga.
+     *
+     * @param vaga A vaga a ser utilizada.
+     * @param entrada A data e hora de entrada na vaga.
+     * @param saida A data e hora de saída da vaga.
+     * @param usadoManobrista Indica se foi utilizado o serviço de manobrista.
+     * @param usadoLavagem Indica se foi utilizado o serviço de lavagem.
+     * @param usadoPolimento Indica se foi utilizado o serviço de polimento.
+     */
     public UsoDeVaga(Vaga vaga, LocalDateTime entrada, LocalDateTime saida,
             boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         this.vaga = vaga;
@@ -62,11 +81,25 @@ public class UsoDeVaga {
         }
     }
 
+    /**
+     * Registra a saída do veículo da vaga com base no horário fornecido e calcula o valor a ser pago.
+     *
+     * @param p_horario O horário de saída do veículo.
+     * @return O valor a ser pago pelo uso da vaga.
+     * @throws Exception Exceção lançada se a lavagem ou polimento ainda não estiverem finalizados.
+     */
     public Double sair(Integer p_horario) throws Exception {
         LocalDateTime v_horario = LocalDateTime.now().plusMinutes(p_horario);
         return sairComParametro(v_horario);
     }
 
+    /**
+     * Registra a saída do veículo da vaga com base no horário fornecido e calcula o valor a ser pago.
+     *
+     * @param p_horario O horário de saída do veículo.
+     * @return O valor a ser pago pelo uso da vaga.
+     * @throws Exception Exceção lançada se a lavagem ou polimento ainda não estiverem finalizados.
+     */
     private double sairComParametro(LocalDateTime p_horario) throws Exception {
         this.saida = p_horario;
         long minutos = calcularMinutos();
@@ -80,6 +113,11 @@ public class UsoDeVaga {
         return calcularValor();
     }
 
+    /**
+     * Calcula o número total de minutos entre a entrada e saída do veículo na vaga.
+     *
+     * @return O número total de minutos de ocupação da vaga.
+     */
     private long calcularMinutos() {
         long horas = ChronoUnit.HOURS.between(this.entrada, this.saida);
         long minutos = ChronoUnit.MINUTES.between(this.entrada, this.saida);
@@ -87,6 +125,11 @@ public class UsoDeVaga {
         return minutos;
     }
 
+    /**
+     * Calcula o valor a ser pago pelo uso da vaga com base no tempo de uso, serviços utilizados e tarifas.
+     *
+     * @return O valor a ser pago pelo uso da vaga.
+     */
     public double calcularValor() {
         double valor = 0.0;
         long minutos = calcularMinutos();

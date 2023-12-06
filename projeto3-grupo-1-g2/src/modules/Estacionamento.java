@@ -5,14 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 
+/**
+ * Representa um estacionamento que gerencia o estacionamento de veículos para clientes.
+ * Cada estacionamento possui um local, quantidade de fileiras, quantidade de vagas por fileira,
+ * uma lista de clientes associados e uma lista de vagas disponíveis.
+ *
+ */
 public class Estacionamento {
+    //#region atributos
     private int id;
     private String local;
     public HashMap<Cliente, List<Veiculo>> clientesVeiculos;
     private int quantFileiras;
     private int vagasPorFileira;
     private ArrayList<Vaga> vagas;
+    //#endregion
 
+    //#region Construtores
+
+    /**
+     * Construtor da classe Estacionamento.
+     *
+     * @param local O local do estacionamento.
+     * @param quantFileiras A quantidade de fileiras no estacionamento.
+     * @param vagasPorFileira A quantidade de vagas por fileira no estacionamento.
+     */
     public Estacionamento(String local, int quantFileiras, int vagasPorFileira) {
         this.local = local;
         this.quantFileiras = quantFileiras;
@@ -23,10 +40,18 @@ public class Estacionamento {
         this.vagas = gerarVagas(1);
     }
 
+    /**
+     * Adiciona um cliente ao estacionamento.
+     *
+     * @param cliente O cliente a ser adicionado.
+     */
     public void addCliente(Cliente cliente) {
         clientesVeiculos.put(cliente, cliente.getVeiculos());
     }
 
+    /**
+     * Cria as vagas no estacionamento com base na quantidade de fileiras e vagas por fileira.
+     */
     private void criarVagas() {
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {
@@ -35,6 +60,15 @@ public class Estacionamento {
         }
     }
 
+    /**
+     * Estaciona um veículo no estacionamento.
+     *
+     * @param veiculo O veículo a ser estacionado.
+     * @param usadoManobrista Indica se foi utilizado o serviço de manobrista.
+     * @param usadoLavagem Indica se foi utilizado o serviço de lavagem.
+     * @param usadoPolimento Indica se foi utilizado o serviço de polimento.
+     * @return TRUE se o veículo foi estacionado com sucesso, FALSE caso contrário.
+     */
     public boolean estacionar(Veiculo veiculo,  boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         for (Cliente cliente : clientesVeiculos.keySet()) {
             boolean possuiVeiculo = cliente.possuiVeiculo(veiculo.getPlaca());
@@ -51,6 +85,13 @@ public class Estacionamento {
         return false;
     }
 
+    /**
+     * Gera as vagas no estacionamento com base no número fornecido.
+     *
+     * @param numero O número usado para gerar as vagas.
+     * @return A lista de vagas gerada.
+     */
+
     private ArrayList<Vaga> gerarVagas(int numero) {
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {
@@ -61,6 +102,13 @@ public class Estacionamento {
         return vagas;
     }
 
+    /**
+     * Permite que um veículo saia do estacionamento e calcula o valor a ser pago.
+     *
+     * @param veiculo O veículo que está saindo.
+     * @param p_valorParaAdicionarNoDateTimeNow O valor a ser adicionado ao DateTime.now().
+     * @return TRUE se o veículo saiu com sucesso, FALSE caso contrário.
+     */
     public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {
         try {
             double valor = veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
@@ -72,6 +120,12 @@ public class Estacionamento {
         }
     }
 
+
+    /**
+     * Calcula o valor total arrecadado pelo estacionamento.
+     *
+     * @return O valor total arrecadado pelo estacionamento.
+     */
     public double totalArrecadado() {
         double valor = 0;
         for (Cliente cliente : clientesVeiculos.keySet()) {
@@ -80,6 +134,12 @@ public class Estacionamento {
         return valor;
     }
 
+    /**
+     * Calcula o valor total arrecadado pelo estacionamento no mês especificado.
+     *
+     * @param mes O mês para o qual se deseja calcular a arrecadação.
+     * @return O valor total arrecadado pelo estacionamento no mês.
+     */
     public double totalArrecadadoNoMes(int mes) {
         double valor = 0;
         for (Cliente cliente : clientesVeiculos.keySet()) {
@@ -88,6 +148,11 @@ public class Estacionamento {
         return valor;
     }
 
+    /**
+     * Calcula o valor médio arrecadado por uso no estacionamento.
+     *
+     * @return O valor médio arrecadado por uso no estacionamento.
+     */
     public double valorMedioPorUso() {
         double valor = 0;
         int qtd = 0;
@@ -114,6 +179,13 @@ public class Estacionamento {
         return clientesVeiculos.containsKey(cliente);
     }
 
+    /**
+     * Adiciona um cliente ao estacionamento, associando a lista de veículos do cliente.
+     * Se o cliente ainda não existe no estacionamento, é adicionado; caso contrário, a operação é ignorada.
+     *
+     * @param cliente O cliente a ser adicionado ao estacionamento.
+     * @return TRUE se o cliente foi adicionado com sucesso, FALSE se o cliente já existe no estacionamento.
+     */
     public boolean addClienteToEstacionamento(Cliente cliente) {
         List<Veiculo> veiculosCliente = cliente.getVeiculos();
 

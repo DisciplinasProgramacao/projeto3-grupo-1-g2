@@ -2,10 +2,7 @@ package modules;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Veiculo {
     //#region atributos
@@ -132,6 +129,50 @@ public class Veiculo {
      */
     public int totalDeUsos() {
         return usos.size();
+    }
+
+    /**
+     * Gerar um relatório ordenado de acordo com o comparador fornecido.
+     *
+     * @param comparator O comparador a ser usado para ordenar os usos de vaga.
+     * @return O relatório formatado.
+     */
+    private String gerarRelatorioOrdenado(Comparator<UsoDeVaga> comparator) {
+        DateTimeFormatter dfm = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+
+        List<UsoDeVaga> usosOrdenados = new ArrayList<>(usos);
+        usosOrdenados.sort(comparator);
+
+        StringBuilder sb = new StringBuilder();
+        for (UsoDeVaga uso : usosOrdenados) {
+            sb.append("Vaga: ").append(uso.getVaga().getNumero())
+                    .append(", Entrada: ").append(dfm.format(uso.getEntrada()))
+                    .append(", Saida: ").append(uso.getSaida() == null ? "N/A" : dfm.format(uso.getSaida()))
+                    .append(", Valor Pago: ").append(uso.getValorPago())
+                    .append(", Placa Veículo: ").append(this.placa).append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Gera um relatório formatado com informações sobre os usos de vaga associados a este veículo,
+     * ordenado por data de entrada em ordem crescente.
+     *
+     * @return O relatório formatado.
+     */
+    public String gerarRelatorioVagasPorDataCrescente() {
+        return gerarRelatorioOrdenado(Comparator.comparing(UsoDeVaga::getEntrada));
+    }
+
+    /**
+     * Gera um relatório formatado com informações sobre os usos de vaga associados a este veículo,
+     * ordenado por valor pago em ordem decrescente.
+     *
+     * @return O relatório formatado.
+     */
+    public String gerarRelatorioVagasPorValorDecrescente() {
+        return gerarRelatorioOrdenado(Collections.reverseOrder(Comparator.comparing(UsoDeVaga::getValorPago)));
     }
 
     public String getPlaca() {

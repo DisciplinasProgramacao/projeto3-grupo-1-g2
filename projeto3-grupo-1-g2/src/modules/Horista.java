@@ -25,6 +25,12 @@ public class Horista extends Cliente {
         return totalMes;
     }
 
+    @Override
+    public void addObservador() {
+        ObservadoraCliente observador = new ObservadoraCliente();
+        this.setObservadores(observador);
+    }
+
     public static void gerarRelatorioArrecadacaoMedia(List<Horista> horistas, int mes) {
         double totalArrecadado = 0;
         int totalClientes = horistas.size();

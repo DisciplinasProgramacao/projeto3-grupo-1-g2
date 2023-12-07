@@ -20,6 +20,12 @@ public class Mensalista extends Cliente{
         return 500.00;
     }
 
+    @Override
+    public void addObservador() {
+        ObservadoraCliente observador = new ObservadoraCliente();
+        this.setObservadores(observador);
+    }
+
     public static void gerarRelatorioUsoMensalistas(List<Mensalista> mensalistas) {
         int mesAtual = LocalDate.now().getMonthValue();
         int anoAtual = LocalDate.now().getYear();

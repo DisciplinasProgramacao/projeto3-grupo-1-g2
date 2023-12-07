@@ -7,11 +7,13 @@ public abstract class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
+    private List<ObservadoraCliente> observadores;
 
     public Cliente(String p_nome, String p_cpf) {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
+        observadores = new ArrayList<>();
     }
 
     public String getNome() {
@@ -28,6 +30,14 @@ public abstract class Cliente {
 
     public void addVeiculo(Veiculo p_veiculo) {
         veiculos.add(p_veiculo);
+    }
+
+    public List<ObservadoraCliente> getObservadores() {
+        return observadores;
+    }
+
+    public void setObservadores(ObservadoraCliente observador) {
+        this.observadores.add(observador);
     }
 
     public boolean possuiVeiculo(String p_placa) {
@@ -63,4 +73,6 @@ public abstract class Cliente {
                 .mapToDouble(veiculo -> veiculo.arrecadadoNoMes(p_mes))
                 .sum();
     }
+
+    public abstract void addObservador();
 }

@@ -35,6 +35,12 @@ public class Turnista extends Cliente{
     }
 
     @Override
+    public void addObservador() {
+        ObservadoraCliente observador = new ObservadoraCliente();
+        this.setObservadores(observador);
+    }
+
+    @Override
     public double arrecadadoTotal() {
        return 200 + pagoParte;
     }

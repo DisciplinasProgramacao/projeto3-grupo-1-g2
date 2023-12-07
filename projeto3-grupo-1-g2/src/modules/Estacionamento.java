@@ -1,11 +1,9 @@
 
 package modules;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
-public class Estacionamento {
+public class Estacionamento implements IObservadorEstacionamento{
     private int id;
     private String local;
     public HashMap<Cliente, List<Veiculo>> clientesVeiculos;
@@ -124,7 +122,30 @@ public class Estacionamento {
         return false;
     }
 
+    public Cliente[] top5Clientes(){
+        ArrayList<Cliente> clientes = null;
+        for (Cliente cliente : clientesVeiculos.keySet())
+        {
+            clientes.add(cliente);
+        }
+        Collections.sort(clientes, Comparator.comparingDouble(Cliente::arrecadadoTotal).reversed());
+
+        int tamanhoArray = Math.min(5, clientes.size());
+        Cliente[] topClientes = new Cliente[tamanhoArray];
+
+        for (int i = 0; i < tamanhoArray; i++) {
+            topClientes[i] = clientes.get(i);
+        }
+
+        return topClientes;
+    }
+
     public HashMap<Cliente, List<Veiculo>> getClientesVeiculos() {
         return this.clientesVeiculos;
+    }
+
+    @Override
+    public void update() {
+        top5Clientes();
     }
 }

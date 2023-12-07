@@ -3,10 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import modules.Cliente;
-import modules.Estacionamento;
-import modules.Horista;
-import modules.Veiculo;
+import modules.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -100,7 +97,8 @@ public class Main {
                         System.out.println("Informe a placa do veículo:");
                         String placaVeiculo = scanner.nextLine();
 
-                        Veiculo novoVeiculo = new Veiculo(placaVeiculo);
+                        FabricaVeiculoGenerico factory = new FabricaVeiculoGenerico();
+                        Veiculo novoVeiculo = factory.CriarVeiculo(placaVeiculo);
                         clienteExistente.addVeiculo(novoVeiculo);
 
                         for (Estacionamento estacionamento : listaEstacionamentos) {

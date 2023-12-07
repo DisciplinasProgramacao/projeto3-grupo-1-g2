@@ -61,25 +61,7 @@ public abstract class Cliente {
         return 0;
     }
 
-    public double arrecadadoTotal() {
-        double totalArrecadado = 0;
-        for (Veiculo veiculo : veiculos) {
-            totalArrecadado += veiculo.totalArrecadado();
-        }
-        // for (String placa : veiculos.keySet()) {
-        // totalArrecadado += veiculos.get(placa).totalArrecadado();
-        // }
-        return totalArrecadado;
-    }
+    public abstract double arrecadadoTotal();
 
-    public double arrecadadoNoMes(int p_mes) {
-        double total = 0;
-        for (Veiculo veiculo : veiculos) {
-            total += veiculo.arrecadadoNoMes(p_mes);
-        }
-        // for (String placa : veiculos.keySet()) {
-        // total += veiculos.get(placa).arrecadadoNoMes(p_mes);
-        // }
-        return total;
-    }
+    public abstract double arrecadadoNoMes(int p_mes);
 }

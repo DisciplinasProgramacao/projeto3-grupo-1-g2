@@ -9,7 +9,6 @@ public class UsoDeVaga {
     private double VALOR_MAXIMO = 50.0;
 
     private Vaga vaga;
-
     private LocalDateTime entrada;
     private LocalDateTime saida;
     private servicosDisponiveis servicoUtilizado[];

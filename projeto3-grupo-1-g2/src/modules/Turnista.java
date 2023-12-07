@@ -41,7 +41,7 @@ public class Turnista extends Cliente{
 
     @Override
     public double arrecadadoNoMes(int p_mes) {
-        return 0;
+        return 200 + pagoParte;
     }
 
     public double entradaEstacionamento(LocalDateTime entrada){

@@ -120,49 +120,6 @@ public class Estacionamento {
         }
     }
 
-
-    /**
-     * Calcula o valor total arrecadado pelo estacionamento.
-     *
-     * @return O valor total arrecadado pelo estacionamento.
-     */
-    public double totalArrecadado() {
-        double valor = 0;
-        for (Cliente cliente : clientesVeiculos.keySet()) {
-            valor += cliente.arrecadadoTotal();
-        }
-        return valor;
-    }
-
-    /**
-     * Calcula o valor total arrecadado pelo estacionamento no mês especificado.
-     *
-     * @param mes O mês para o qual se deseja calcular a arrecadação.
-     * @return O valor total arrecadado pelo estacionamento no mês.
-     */
-    public double totalArrecadadoNoMes(int mes) {
-        double valor = 0;
-        for (Cliente cliente : clientesVeiculos.keySet()) {
-            valor += cliente.arrecadadoNoMes(mes);
-        }
-        return valor;
-    }
-
-    /**
-     * Calcula o valor médio arrecadado por uso no estacionamento.
-     *
-     * @return O valor médio arrecadado por uso no estacionamento.
-     */
-    public double valorMedioPorUso() {
-        double valor = 0;
-        int qtd = 0;
-        for (Cliente cliente : clientesVeiculos.keySet()) {
-            valor += cliente.arrecadadoTotal();
-            qtd++;
-        }
-        return valor / qtd;
-    }
-
     /**
      * Adiciona um cliente ao estacionamento, associando a lista de veículos do cliente.
      * Se o cliente ainda não existe no estacionamento, é adicionado; caso contrário, a operação é ignorada.
@@ -178,6 +135,76 @@ public class Estacionamento {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Gera um relatório contendo informações sobre a arrecadação total do estacionamento.
+     *
+     * @return O relatório formatado da arrecadação total do estacionamento.
+     */
+    public String relatorioArrecadacaoTotal() {
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Arrecadação Total do Estacionamento\n");
+
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+           relatorio.append("Cliente: ").append(cliente.getNome())
+                   .append(", CPF: ").append(cliente.getCpf())
+                   .append(", Arrecadação Total: R$").append(cliente.arrecadadoTotal())
+                   .append("\n");
+       }
+
+        return relatorio.toString();
+    }
+
+    /**
+     * Gera um relatório contendo informações sobre a arrecadação total do estacionamento no mês especificado.
+     *
+     * @param mes O mês para o qual se deseja obter o relatório de arrecadação.
+     * @return O relatório formatado da arrecadação total do estacionamento no mês especificado.
+     */
+    public String relatorioArrecadacaoNoMes(int mes) {
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Arrecadação no Mês ").append(mes).append("\n");
+
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+            double arrecadacaoNoMes = cliente.arrecadadoNoMes(mes);
+            relatorio.append("Cliente: ").append(cliente.getNome())
+                    .append(", CPF: ").append(cliente.getCpf())
+                    .append(", Arrecadação no Mês: R$").append(arrecadacaoNoMes)
+                    .append("\n");
+        }
+
+        return relatorio.toString();
+    }
+
+    /**
+     * Gera um relatório contendo informações sobre a arrecadação total do estacionamento no mês especificado.
+     *
+     * @return O relatório formatado da arrecadação total do estacionamento no mês especificado.
+     */
+    public String relatorioValorMedioPorUso() {
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório do Valor Médio por Uso no Estacionamento\n");
+
+        double valorTotal = 0;
+        int qtd = 0;
+
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+            double arrecadacaoTotalCliente = cliente.arrecadadoTotal();
+            valorTotal += arrecadacaoTotalCliente;
+            qtd++;
+
+            relatorio.append("Cliente: ").append(cliente.getNome())
+                    .append(", CPF: ").append(cliente.getCpf())
+                    .append(", Arrecadação Total: R$").append(arrecadacaoTotalCliente)
+                    .append("\n");
+        }
+
+        double valorMedioPorUso = qtd > 0 ? valorTotal / qtd : 0;
+
+        relatorio.append("Valor Médio por Uso no Estacionamento: R$").append(valorMedioPorUso).append("\n");
+
+        return relatorio.toString();
     }
 
     public String getLocal() {

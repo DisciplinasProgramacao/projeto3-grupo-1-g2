@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Veiculo {
-    //#region atributos
+public class Veiculo implements VeiculoGenerico {
+
     private String placa;
     private List<UsoDeVaga> usos;
     //#endregion
@@ -32,6 +32,19 @@ public class Veiculo {
      */
     public void estacionar(Vaga vaga,  boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
         UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, usadoManobrista, usadoLavagem, usadoPolimento);
+    }
+    public String getPlaca() {
+        return placa;
+    }
+
+    public List<UsoDeVaga> getUsos() {
+        return usos;
+    }
+
+    @Override
+    public void estacionar(Vaga vaga) {
+        FabricaUsoVagasGenerico factory = new FabricaUsoVagasGenerico();
+        UsoDeVaga uso = factory.CriaUsoVaga(vaga, LocalDateTime.now(),null, false, false, false);
         usos.add(uso);
         vaga.estacionar();
     }
@@ -43,6 +56,7 @@ public class Veiculo {
      * @return O valor a ser pago pelo uso da vaga.
      * @throws Exception Exceção lançada em caso de problemas no processo de saída.
      */
+    @Override
     public double sair(Integer p_horario) throws Exception {
         return sairComParametro(p_horario);
     }
@@ -175,11 +189,11 @@ public class Veiculo {
         return gerarRelatorioOrdenado(Collections.reverseOrder(Comparator.comparing(UsoDeVaga::getValorPago)));
     }
 
-    public String getPlaca() {
-        return placa;
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
-    public List<UsoDeVaga> getUsos() {
-        return usos;
+    public void setUsos(List<UsoDeVaga> usos) {
+        this.usos = usos;
     }
 }

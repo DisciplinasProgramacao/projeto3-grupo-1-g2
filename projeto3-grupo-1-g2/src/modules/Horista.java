@@ -49,6 +49,12 @@ public class Horista extends Cliente {
         return totalMes;
     }
 
+
+    @Override
+    public void addObservador() {
+        ObservadoraCliente observador = new ObservadoraCliente();
+        this.setObservadores(observador);
+    }
     /**
      * Gera um relatório de arrecadação média para um grupo de clientes Horistas no mês especificado.
      *

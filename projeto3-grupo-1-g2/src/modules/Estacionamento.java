@@ -1,9 +1,7 @@
 
 package modules;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Representa um estacionamento que gerencia o estacionamento de veículos para clientes.
@@ -11,8 +9,9 @@ import java.util.HashMap;
  * uma lista de clientes associados e uma lista de vagas disponíveis.
  *
  */
-public class Estacionamento {
+
     //#region atributos
+public class Estacionamento implements IObservadorEstacionamento{
     private int id;
     private String local;
     public HashMap<Cliente, List<Veiculo>> clientesVeiculos;
@@ -222,7 +221,41 @@ public class Estacionamento {
     public boolean clienteExiste(Cliente cliente) {
         return clientesVeiculos.containsKey(cliente);
     }
+
+//    public boolean addClienteToEstacionamento(Cliente cliente) {
+//        List<Veiculo> veiculosCliente = cliente.getVeiculos();
+//
+//        if (!clientesVeiculos.containsKey(cliente)) {
+//            clientesVeiculos.put(cliente, veiculosCliente);
+//            return true;
+//        }
+//        return false;
+//    }
+
+    public Cliente[] top5Clientes(){
+        ArrayList<Cliente> clientes = null;
+        for (Cliente cliente : clientesVeiculos.keySet())
+        {
+            clientes.add(cliente);
+        }
+        Collections.sort(clientes, Comparator.comparingDouble(Cliente::arrecadadoTotal).reversed());
+
+        int tamanhoArray = Math.min(5, clientes.size());
+        Cliente[] topClientes = new Cliente[tamanhoArray];
+
+        for (int i = 0; i < tamanhoArray; i++) {
+            topClientes[i] = clientes.get(i);
+        }
+
+        return topClientes;
+    }
+
     public HashMap<Cliente, List<Veiculo>> getClientesVeiculos() {
         return this.clientesVeiculos;
+    }
+
+    @Override
+    public void update() {
+        top5Clientes();
     }
 }

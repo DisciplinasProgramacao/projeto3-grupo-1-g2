@@ -12,7 +12,7 @@ public abstract class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
-    //#endregion
+    private List<ObservadoraCliente> observadores;
 
     //#region Construtores
 
@@ -27,6 +27,7 @@ public abstract class Cliente {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
+        observadores = new ArrayList<>();
     }
 
     /**
@@ -112,4 +113,14 @@ public abstract class Cliente {
     public List<Veiculo> getVeiculos() {
         return this.veiculos;
     }
+
+    public List<ObservadoraCliente> getObservadores() {
+        return observadores;
+    }
+
+    public void setObservadores(ObservadoraCliente observador) {
+        this.observadores.add(observador);
+    }
+
+    public abstract void addObservador();
 }

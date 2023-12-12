@@ -42,11 +42,19 @@ public class Mensalista extends Cliente{
         return 500.00;
     }
 
+
+    @Override
+    public void addObservador() {
+        ObservadoraCliente observador = new ObservadoraCliente();
+        this.setObservadores(observador);
+    }
+
     /**
      * Gera um relatório de uso dos clientes Mensalistas para o mês/ano atual.
      *
      * @param mensalistas A lista de clientes Mensalistas para os quais o relatório será gerado.
      */
+
     public static void gerarRelatorioUsoMensalistas(List<Mensalista> mensalistas) {
         int mesAtual = LocalDate.now().getMonthValue();
         int anoAtual = LocalDate.now().getYear();

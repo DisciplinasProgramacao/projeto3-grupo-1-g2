@@ -14,7 +14,6 @@ public abstract class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
-    private List<ObservadoraCliente> observadores;
 
     //#region Construtores
 
@@ -29,7 +28,6 @@ public abstract class Cliente {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
-        observadores = new ArrayList<>();
     }
 
     /**
@@ -116,13 +114,7 @@ public abstract class Cliente {
         return this.veiculos;
     }
 
-    public List<ObservadoraCliente> getObservadores() {
-        return observadores;
-    }
 
-    public void setObservadores(ObservadoraCliente observador) {
-        this.observadores.add(observador);
-    }
 
     /**
      * Gera um relatório detalhado de todos os usos dos veículos associados a este cliente
@@ -188,5 +180,4 @@ public abstract class Cliente {
         return relatorio.toString();
     }
 
-    public abstract void addObservador();
 }

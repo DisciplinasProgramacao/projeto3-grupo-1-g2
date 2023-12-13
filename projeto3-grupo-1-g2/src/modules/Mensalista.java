@@ -43,11 +43,7 @@ public class Mensalista extends Cliente{
     }
 
 
-    @Override
-    public void addObservador() {
-        ObservadoraCliente observador = new ObservadoraCliente();
-        this.setObservadores(observador);
-    }
+
 
     /**
      * Gera um relatório de uso dos clientes Mensalistas para o mês/ano atual.

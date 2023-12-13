@@ -1,0 +1,75 @@
+Avenida ; 10 ; 8
+Savassi ; 10 ; 8
+Pampulha ; 10 ; 8
+50
+Avenida ; Cliente1 ; 123.456.789-01 ; ABC-1234
+Savassi ; Cliente2 ; 987.654.321-09 ; XYZ-5678
+Pampulha ; Cliente3 ; 111.222.333-44 ; QWE-7890
+Avenida ; Cliente4 ; 555.666.777-88 ; ASD-2468
+Avenida ; Cliente5 ; 999.888.777-66 ; ZXC-1357
+Savassi ; Cliente6 ; 444.333.222-11 ; QAZ-2468
+Savassi ; Cliente7 ; 777.888.999-00 ; WSX-9876
+Savassi ; Cliente8 ; 666.555.444-33 ; EDX-7531
+Avenida ; Cliente9 ; 222.333.444-55 ; UJI-1592
+Avenida ; Cliente10 ; 888.999.000-11 ; OPL-3579
+Avenida ; Cliente11 ; 333.444.555-66 ; KMN-8642
+Pampulha ; Cliente12 ; 000.111.222-33 ; BVC-9513
+Avenida ; Cliente13 ; 666.777.888-99 ; POI-2468
+Pampulha ; Cliente14 ; 444.555.666-77 ; LKJ-3579
+Avenida ; Cliente15 ; 111.222.333-44 ; YHN-4682
+Pampulha ; Cliente16 ; 888.999.000-11 ; MJU-5793
+Avenida ; Cliente17 ; 333.444.555-66 ; ZXC-6804
+Avenida ; Cliente18 ; 000.111.222-33 ; PLO-7915
+Avenida ; Cliente19 ; 666.777.888-99 ; QWE-8026
+Avenida ; Cliente20 ; 444.555.666-77 ; ASD-9137
+Pampulha ; Cliente21 ; 111.222.333-44 ; LKJ-0248
+Avenida ; Cliente22 ; 888.999.000-11 ; UJI-1359
+Avenida ; Cliente23 ; 333.444.555-66 ; OPL-2460
+Avenida ; Cliente24 ; 000.111.222-33 ; WSX-3571
+Avenida ; Cliente25 ; 666.777.888-99 ; BVC-4682
+Pampulha ; Cliente26 ; 444.555.666-77 ; POI-5793
+Avenida ; Cliente27 ; 111.222.333-44 ; LKJ-6804
+Avenida ; Cliente28 ; 888.999.000-11 ; YHN-7915
+Avenida ; Cliente29 ; 333.444.555-66 ; MJU-8026
+Avenida ; Cliente30 ; 000.111.222-33 ; ZXC-9137
+Pampulha ; Cliente31 ; 666.777.888-99 ; PLO-0248
+Avenida ; Cliente32 ; 444.555.666-77 ; QWE-1359
+Avenida ; Cliente33 ; 111.222.333-44 ; ASD-2460
+Avenida ; Cliente34 ; 888.999.000-11 ; UJI-3571
+Pampulha ; Cliente35 ; 333.444.555-66 ; OPL-4682
+Avenida ; Cliente36 ; 000.111.222-33 ; WSX-5793
+Avenida ; Cliente37 ; 666.777.888-99 ; BVC-6804
+Pampulha ; Cliente38 ; 444.555.666-77 ; POI-7915
+Avenida ; Cliente39 ; 111.222.333-44 ; LKJ-8026
+Avenida ; Cliente40 ; 888.999.000-11 ; YHN-9137
+Savassi ; Cliente41 ; 333.444.555-66 ; MJU-0248
+Avenida ; Cliente42 ; 000.111.222-33 ; ZXC-1359
+Savassi ; Cliente43 ; 666.777.888-99 ; PLO-2460
+Avenida ; Cliente44 ; 444.555.666-77 ; QWE-3571
+Savassi ; Cliente45 ; 111.222.333-44 ; ASD-4682
+Savassi ; Cliente46 ; 888.999.000-11 ; UJI-5793
+Avenida ; Cliente47 ; 333.444.555-66 ; OPL-6804
+Savassi ; Cliente48 ; 000.111.222-33 ; WSX-7915
+Avenida ; Cliente49 ; 666.777.888-99 ; BVC-8026
+Savassi ; Cliente50 ; 444.555.666-77 ; POI-9137
+20
+ABC-1234 ; 2,3,0 ; 120
+XYZ-5678 ; 0 ; 20
+QWE-7890 ; 1,0 ; 5
+ASD-2468 ; 2,0 ; 65
+ZXC-1357 ; 3,0 ; 140
+QAZ-2468 ; 0 ; 40
+WSX-9876 ; 0 ; 10
+EDX-7531 ; 0 ; 2
+UJI-1592 ; 2,3,0 ; 180
+OPL-3579 ; 1,3,0 ; 120
+KMN-8642 ; 1,0 ; 20
+BVC-9513 ; 2,0 ; 80
+POI-2468 ; 2,0 ; 70
+LKJ-3579 ; 1,2,0 ; 95
+YHN-4682 ; 0 ; 20
+MJU-5793 ; 0 ; 30
+ZXC-6804 ; 0 ; 45
+PLO-7915 ; 0 ; 12
+QWE-8026 ; 1,2,3,0 ; 220
+ASD-9137 ; 1,2,3,0 ; 260

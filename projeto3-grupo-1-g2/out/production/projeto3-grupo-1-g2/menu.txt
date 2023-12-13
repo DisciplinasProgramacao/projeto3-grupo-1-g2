@@ -1,0 +1,81 @@
+1. Cadastrar cliente
+2. Cadastrar veículo
+3. Estacionar veículo
+4. Informar saída do veículo
+5. Listar clientes e veículos
+6. Gerar relatório de uso do veículo
+7. Gerar relatório de uso do cliente
+8. Gerar total arrecadado pelo estacionamento no mês
+
+
+
+- Cadastrar cliente:
+	São três tipos de cliente
+	perguntar qual tipo de cliente
+	1. Horista (instanciado pela classe Horista.java)
+	2. Mensalista (instanciado pela classe Horista.java)
+	3. Turnista (instanciado pela classe Horista.java)
+- Armazenar esse cliente dentro da estrutura de dado: HashMap<Cliente, List<Veiculo>> clientesVeiculos 
+- Confirmar cadastro de cliente.
+
+
+case 1:
+    System.out.println("Escolha o tipo de cliente:");
+    System.out.println("1. Horista");
+    System.out.println("2. Mensalista");
+    System.out.println("3. Turnista");
+    System.out.print("Opção: ");
+    int tipoCliente = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.println("Informe o nome do cliente:");
+    String nomeCliente = scanner.nextLine();
+    System.out.println("Informe o CPF do cliente:");
+    String cpfCliente = scanner.nextLine();
+
+    Cliente novoCliente;
+    switch (tipoCliente) {
+        case 1:
+            novoCliente = new Horista(nomeCliente, cpfCliente);
+            break;
+        case 2:
+            novoCliente = new Mensalista(nomeCliente, cpfCliente);
+            break;
+        case 3:
+            novoCliente = new Turnista(nomeCliente, cpfCliente);
+            break;
+        default:
+            System.out.println("Tipo de cliente inválido.");
+            continue; // Volta para o início do loop do while
+    }
+
+    // Continuação do código para armazenar o cliente na estrutura clientesVeiculos
+
+    // Verificação e adição do cliente à estrutura clientesVeiculos
+    boolean clienteAdicionado = false;
+    for (Estacionamento estacionamento : listaEstacionamentos) {
+        boolean clienteExistente = estacionamento.clienteExiste(novoCliente);
+        if (!clienteExistente) {
+            boolean clienteAdicionadoEstacionamento = estacionamento.addClienteToEstacionamento(novoCliente);
+            if (clienteAdicionadoEstacionamento) {
+                clienteAdicionado = true;
+                List<Veiculo> veiculos = new ArrayList<>(); // ou LinkedList, dependendo da preferência
+                clientesVeiculos.put(novoCliente, veiculos);
+                System.out.println("Cliente adicionado com sucesso ao estacionamento: " + estacionamento.getLocal());
+                break;
+            } else {
+                System.out.println("O cliente já existe no estacionamento: " + estacionamento.getLocal());
+            }
+        } else {
+            System.out.println("O cliente já existe no estacionamento: " + estacionamento.getLocal());
+        }
+    }
+
+    if (!clienteAdicionado) {
+        System.out.println("Não foi possível adicionar o cliente.");
+    }
+    break;
+
+
+
+

@@ -9,6 +9,9 @@ public class Veiculo implements VeiculoGenerico {
 
     private String placa;
     private List<UsoDeVaga> usos;
+
+    private List<ObservadoraVeiculo> observadores;
+
     //#endregion
 
     //#region Construtores
@@ -21,6 +24,8 @@ public class Veiculo implements VeiculoGenerico {
     public Veiculo(String placa) {
         this.placa = placa;
         this.usos = new ArrayList<UsoDeVaga>();
+        observadores = new ArrayList<>();
+
     }
 
     /**
@@ -59,7 +64,11 @@ public class Veiculo implements VeiculoGenerico {
      */
     @Override
     public double sair(Integer p_horario) throws Exception {
-        return sairComParametro(p_horario);
+        double res = sairComParametro(p_horario);
+        for (ObservadoraVeiculo observadores: this.getObservadores()) {
+            observadores.notifica();
+        }
+        return res;
     }
 
     /**
@@ -146,6 +155,12 @@ public class Veiculo implements VeiculoGenerico {
         return usos.size();
     }
 
+    public void addObservador(Estacionamento estacionamento){
+        ObservadoraVeiculo observadoraVeiculo = new ObservadoraVeiculo();
+        observadoraVeiculo.registrar(estacionamento);
+        setObservadores(observadoraVeiculo);
+    }
+
     /**
      * Gerar um relatório ordenado de acordo com o comparador fornecido.
      *
@@ -202,5 +217,13 @@ public class Veiculo implements VeiculoGenerico {
 
     public void setUsos(List<UsoDeVaga> usos) {
         this.usos = usos;
+    }
+
+    public List<ObservadoraVeiculo> getObservadores() {
+        return observadores;
+    }
+
+    public void setObservadores(ObservadoraVeiculo observador) {
+        this.observadores.add(observador);
     }
 }

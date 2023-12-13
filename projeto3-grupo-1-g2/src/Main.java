@@ -35,9 +35,11 @@ public class Main {
             System.out.println("\t 5. Listar clientes e veículos");
             System.out.println("\t 6. Gerar relatório de uso do veículo");
             System.out.println("\t 7. Gerar relatório de uso de vagas");
-            System.out.println("\t 8. Gerar relatório de arrecadação total do estacionamento");
+            System.out.println("\t 8. Gerar relatório de arrecadação total por mês de um estacionamento");
+            System.out.println("\t 9. Gerar relatório de valor médio arrecadado de um estacionamento");
+            System.out.println("\t 10. Gerar relatório de arrecadação total do estacionamento");
 
-            System.out.println("\t 10. Sair\n");
+            System.out.println("\t 20. Sair\n");
 
             System.out.print("Escolha uma opção: ");
             escolha = scanner.nextInt();
@@ -68,8 +70,14 @@ public class Main {
                 case 8:
                     gerarRelatorioArrecadacaoTotalEstacionamento();
                     break;
+                case 9:
+                gerarRelatorioTotalArrecadadoPorMesEstacionamento();
+                break;
+                case 10:
+                gerarRelatorioValorMeioPorUsoEstacionamento();
+                break;
             }
-        } while (escolha != 10);
+        } while (escolha != 20);
         scanner.close();
     }
 
@@ -413,6 +421,17 @@ public class Main {
         }
     }
 
+    public static void gerarRelatorioTotalArrecadadoPorMesEstacionamento()
+    {
+        System.out.println("Informe o estacionamento que será gerado o relatório:");
+        String estacionamentoString = scanner.nextLine();
+        System.out.println("Informe o mês que será gerado o relatório:");
+        String mes = scanner.nextLine();
+        for(Estacionamento t_estacionamento : listaEstacionamentos)
+        {
+            if(t_estacionamento.getLocal().equals(estacionamentoString))
+            {
+                Console.WriteLine(t_estacionamento.relatorioArrecadacaoNoMes(Integer.parseInt(mes)));
     /**
      * Gera um relatório contendo informações sobre a arrecadação total do estacionamento.
      *
@@ -430,6 +449,20 @@ public class Main {
                 System.out.println(estacionamento.gerarRelatorioArrecadacaoTotalEstacionamento());
             }
         }
+    }
+
+    public static void gerarRelatorioValorMeioPorUsoEstacionamento()
+    {
+        System.out.println("Informe o estacionamento que será gerado o relatório:");
+        String estacionamentoString = scanner.nextLine();
+        for(Estacionamento t_estacionamento : listaEstacionamentos)
+        {
+            if(t_estacionamento.getLocal().equals(estacionamentoString))
+            {
+                System.out.println(t_estacionamento.relatorioValorMedioPorUso());
+            }
+        }
+
     }
 
     public static void atualizarDados() {

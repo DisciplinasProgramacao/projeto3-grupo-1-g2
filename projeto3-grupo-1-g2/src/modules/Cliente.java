@@ -1,5 +1,7 @@
 package modules;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +122,26 @@ public abstract class Cliente {
 
     public void setObservadores(ObservadoraCliente observador) {
         this.observadores.add(observador);
+    }
+
+    public String gerarRelatorioPorData(LocalDateTime inicio, LocalDateTime fim) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Uso dos Veículos\n");
+        relatorio.append("Período: ").append(formatter.format(inicio)).append(" - ").append(formatter.format(fim)).append("\n");
+
+        for (Veiculo veiculo : this.veiculos) {
+            relatorio.append("Veículo: ").append(veiculo.getPlaca()).append("\n");
+            List<UsoDeVaga> usosFiltrados = veiculo.filtrarUsosPorData(inicio, fim);
+
+            for (UsoDeVaga uso : usosFiltrados) {
+                relatorio.append("   Data de Entrada: ").append(formatter.format(uso.getEntrada()));
+                relatorio.append(", Data de Saída: ").append(uso.getSaida() != null ? formatter.format(uso.getSaida()) : "N/A");
+                relatorio.append(", Valor Pago: R$").append(uso.getValorPago()).append("\n");
+            }
+        }
+
+        return relatorio.toString();
     }
 
     public abstract void addObservador();

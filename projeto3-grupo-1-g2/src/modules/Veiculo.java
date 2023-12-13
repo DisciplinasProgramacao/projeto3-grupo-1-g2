@@ -3,6 +3,7 @@ package modules;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Veiculo implements VeiculoGenerico {
 
@@ -201,6 +202,12 @@ public class Veiculo implements VeiculoGenerico {
         ObservadoraVeiculo observador = new ObservadoraVeiculo();
         observador.registrar(estacionamento);
         this.setObservadores(observador);
+    }
+    
+    public List<UsoDeVaga> filtrarUsosPorData(LocalDateTime inicio, LocalDateTime fim) {
+        return this.usos.stream()
+                .filter(uso -> uso.getEntrada().isAfter(inicio) && (uso.getSaida() == null || uso.getSaida().isBefore(fim)))
+                .collect(Collectors.toList());
     }
 
     public void setPlaca(String placa) {

@@ -111,7 +111,6 @@ public class Estacionamento implements IObservadorEstacionamento{
     public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {
         try {
             double valor = veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
-            System.out.println("O valor pago foi: R$" + valor);
             return true;
         } catch (Exception e) {
             System.out.println(e);

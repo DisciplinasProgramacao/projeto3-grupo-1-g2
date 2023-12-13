@@ -36,7 +36,14 @@
 **/*.exe
 
 desktop.ini
+/bin/
 
-**/bin/
+.idea
+.vscode
 
-**/lib/
+.classpath
+.project
+projeto3-grupo-1-g2.iml
+
+
+Test.java

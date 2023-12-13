@@ -124,10 +124,54 @@ public abstract class Cliente {
         this.observadores.add(observador);
     }
 
+    /**
+     * Gera um relatório detalhado de todos os usos dos veículos associados a este cliente
+     * dentro de um período especificado. O relatório inclui informações como a placa do veículo,
+     * data e hora de entrada e saída, e o valor pago por cada uso de vaga.
+     *
+     * @param inicio Data e hora de início do período para o qual o relatório é gerado.
+     *               Deve ser um objeto LocalDateTime formatado.
+     * @param fim    Data e hora de fim do período para o qual o relatório é gerado.
+     *               Deve ser um objeto LocalDateTime formatado.
+     * @return       String contendo o relatório formatado. O relatório é estruturado
+     *               com a placa de cada veículo seguida pelos detalhes de cada uso
+     *               (data de entrada, data de saída, valor pago) dentro do período especificado.
+     *               Se um veículo não teve uso no período, ele será listado sem detalhes adicionais.
+     *               Se a data de saída de um uso não estiver disponível, será exibido "N/A" no lugar.
+     */
     public String gerarRelatorioPorData(LocalDateTime inicio, LocalDateTime fim) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         StringBuilder relatorio = new StringBuilder();
         relatorio.append("Relatório de Uso dos Veículos\n");
+        relatorio.append("Período: ").append(formatter.format(inicio)).append(" - ").append(formatter.format(fim)).append("\n");
+
+        for (Veiculo veiculo : this.veiculos) {
+            relatorio.append("Veículo: ").append(veiculo.getPlaca()).append("\n");
+            List<UsoDeVaga> usosFiltrados = veiculo.filtrarUsosPorData(inicio, fim);
+
+            for (UsoDeVaga uso : usosFiltrados) {
+                relatorio.append("   Data de Entrada: ").append(formatter.format(uso.getEntrada()));
+                relatorio.append(", Data de Saída: ").append(uso.getSaida() != null ? formatter.format(uso.getSaida()) : "N/A");
+                relatorio.append(", Valor Pago: R$").append(uso.getValorPago()).append("\n");
+            }
+        }
+
+        return relatorio.toString();
+    }
+
+    /**
+     * Gera um relatório detalhado de todos os usos de estacionamento para cada veículo do cliente
+     * em um período especificado.
+     *
+     * @param inicio Data e hora de início do período.
+     * @param fim Data e hora de fim do período.
+     * @return String contendo o relatório formatado.
+     */
+    public String gerarRelatorioHistoricoUso(LocalDateTime inicio, LocalDateTime fim) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Histórico de Uso do Estacionamento\n");
+        relatorio.append("Cliente: ").append(this.nome).append("\n");
         relatorio.append("Período: ").append(formatter.format(inicio)).append(" - ").append(formatter.format(fim)).append("\n");
 
         for (Veiculo veiculo : this.veiculos) {

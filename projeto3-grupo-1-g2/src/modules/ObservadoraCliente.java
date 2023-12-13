@@ -4,7 +4,6 @@ import java.util.List;
 
 public class ObservadoraCliente implements IObservadoraCliente {
 
-    private Cliente cliente;
     private List<Estacionamento> observadores;
 
     @Override

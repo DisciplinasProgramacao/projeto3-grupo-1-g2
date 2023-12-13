@@ -32,7 +32,7 @@ public class Veiculo implements VeiculoGenerico {
      * @param usadoPolimento Indica se foi utilizado serviço de polimento.
      */
     public void estacionar(Vaga vaga,  boolean usadoManobrista, boolean usadoLavagem, boolean usadoPolimento) {
-        UsoDeVaga uso = new UsoDeVaga(vaga, LocalDateTime.now(), null, usadoManobrista, usadoLavagem, usadoPolimento);
+        usos.add(new UsoDeVaga(vaga, LocalDateTime.now(), null, usadoManobrista, usadoLavagem, usadoPolimento));
     }
     public String getPlaca() {
         return placa;

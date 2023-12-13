@@ -1,7 +1,5 @@
 package modules;
 
-import org.junit.jupiter.api.function.Executable;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -18,6 +16,7 @@ public class UsoDeVaga {
     private LocalDateTime entrada;
     private LocalDateTime saida;
     private servicosDisponiveis servicoUtilizado[];
+    private Double totalPago;
     //#endregion
 
     /**
@@ -158,11 +157,12 @@ public class UsoDeVaga {
             }
         }
 
+        totalPago = valor;
         return valor;
     }
 
     public double getValorPago() {
-        return calcularValor();
+        return totalPago;
     }
 
     public LocalDateTime getEntrada() {

@@ -110,7 +110,7 @@ public class Estacionamento implements IObservadorEstacionamento{
      */
     public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {
         try {
-            double valor = veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
+            veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -220,16 +220,6 @@ public class Estacionamento implements IObservadorEstacionamento{
     public boolean clienteExiste(Cliente cliente) {
         return clientesVeiculos.containsKey(cliente);
     }
-
-//    public boolean addClienteToEstacionamento(Cliente cliente) {
-//        List<Veiculo> veiculosCliente = cliente.getVeiculos();
-//
-//        if (!clientesVeiculos.containsKey(cliente)) {
-//            clientesVeiculos.put(cliente, veiculosCliente);
-//            return true;
-//        }
-//        return false;
-//    }
 
     public Cliente[] top5Clientes(){
         ArrayList<Cliente> clientes = null;

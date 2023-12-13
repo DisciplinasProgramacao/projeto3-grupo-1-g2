@@ -73,7 +73,7 @@ public class Main {
         try {
             FileTool v_readerFile = new FileTool(true);
             String v_line;
-            v_readerFile.changePath("./projeto3-grupo-1-g2/src/data/pub.in");
+            v_readerFile.changePath("./src/data/pub.in");
             Integer v_insertClients = 0;
             for (int i = 1; i <= 53; i++) {
                 v_line = v_readerFile.readLine(1);
@@ -412,7 +412,7 @@ public class Main {
     public static void atualizarDados() {
         try {
             FileTool writer = new FileTool(false);
-            writer.changePath("./projeto3-grupo-1-g2/src/data/pub.out");
+            writer.changePath("./src/data/pub.out");
 
             String paragraph = "";
 

@@ -12,7 +12,7 @@ public abstract class Cliente {
     private String nome;
     private String cpf;
     private List<Veiculo> veiculos;
-    private List<ObservadoraCliente> observadores;
+
 
     //#region Construtores
 
@@ -27,7 +27,6 @@ public abstract class Cliente {
         nome = p_nome;
         cpf = p_cpf;
         veiculos = new ArrayList<>();
-        observadores = new ArrayList<>();
     }
 
     /**
@@ -71,6 +70,7 @@ public abstract class Cliente {
      * @return O valor arrecadado pelo veículo.
      */
     public double arrecadadoPorVeiculo(String p_placa) {
+
         return veiculos.stream()
                 .filter(veiculo -> veiculo.getPlaca().equals(p_placa))
                 .findFirst()
@@ -114,13 +114,4 @@ public abstract class Cliente {
         return this.veiculos;
     }
 
-    public List<ObservadoraCliente> getObservadores() {
-        return observadores;
-    }
-
-    public void setObservadores(ObservadoraCliente observador) {
-        this.observadores.add(observador);
-    }
-
-    public abstract void addObservador();
 }

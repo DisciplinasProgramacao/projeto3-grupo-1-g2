@@ -64,15 +64,11 @@ public class Turnista extends Cliente{
      *
      * @return O valor total arrecadado pelos veículos do cliente Turnista.
      */
-    @Override
-    public void addObservador() {
-        ObservadoraCliente observador = new ObservadoraCliente();
-        this.setObservadores(observador);
-    }
 
     @Override
     public double arrecadadoTotal() {
-       return 200 + pagoParte;
+        return 200 + pagoParte;
+
     }
 
     /**

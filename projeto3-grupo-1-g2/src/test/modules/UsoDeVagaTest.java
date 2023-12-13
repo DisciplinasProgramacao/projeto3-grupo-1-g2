@@ -28,7 +28,13 @@ class UsoDeVagaTest {
         LocalDateTime saida = LocalDateTime.now();
 
         UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, true, false);
-        assertThrows(Exception.class, usoDeVaga::sair);
+        double valor = 0;
+        try {
+            valor = usoDeVaga.sair(120);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(70.0, valor);
     }
 
     @Test
@@ -40,7 +46,7 @@ class UsoDeVagaTest {
 
         UsoDeVaga usoDeVaga = new UsoDeVaga(vaga, entrada, saida, false, false, false);
 
-        assertEquals(10.0, usoDeVaga.getValorPago());
+        assertEquals(8.0, usoDeVaga.getValorPago());
 
         LocalDateTime novaEntrada = LocalDateTime.now().minusHours(1);
         usoDeVaga.setEntrada(novaEntrada);

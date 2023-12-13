@@ -136,6 +136,25 @@ public class Estacionamento implements IObservadorEstacionamento{
     }
 
     /**
+     * Gera um relatório contendo informações sobre a arrecadação total do estacionamento.
+     *
+     * @return O relatório formatado da arrecadação total do estacionamento.
+     */
+    public String relatorioArrecadacaoTotal() {
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Arrecadação Total do Estacionamento\n");
+
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+            relatorio.append("Cliente: ").append(cliente.getNome())
+                    .append(", CPF: ").append(cliente.getCpf())
+                    .append(", Arrecadação Total: R$").append(cliente.arrecadadoTotal())
+                    .append("\n");
+        }
+
+        return relatorio.toString();
+    }
+
+    /**
      * Gera um relatório contendo informações sobre a arrecadação total do estacionamento no mês especificado.
      *
      * @param mes O mês para o qual se deseja obter o relatório de arrecadação.
@@ -201,16 +220,6 @@ public class Estacionamento implements IObservadorEstacionamento{
     public boolean clienteExiste(Cliente cliente) {
         return clientesVeiculos.containsKey(cliente);
     }
-
-//    public boolean addClienteToEstacionamento(Cliente cliente) {
-//        List<Veiculo> veiculosCliente = cliente.getVeiculos();
-//
-//        if (!clientesVeiculos.containsKey(cliente)) {
-//            clientesVeiculos.put(cliente, veiculosCliente);
-//            return true;
-//        }
-//        return false;
-//    }
 
     public Cliente[] top5Clientes(){
         ArrayList<Cliente> clientes = null;

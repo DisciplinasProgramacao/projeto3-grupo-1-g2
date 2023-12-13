@@ -9,7 +9,6 @@ import modules.Vaga;
 import modules.Veiculo;
 
 class VeiculoTest {
-
     @Test
     void testCriarVeiculoEObterPlaca() {
         Veiculo veiculo = new Veiculo("ABC1234");
@@ -20,7 +19,7 @@ class VeiculoTest {
     void testEstacionar() {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga = new Vaga(1);
-        veiculo.estacionar(vaga);
+        veiculo.estacionar(vaga, true, false, false);
 
         assertEquals(1, veiculo.getUsos().size());
         assertEquals(vaga, veiculo.getUsos().get(0).getVaga());
@@ -30,8 +29,8 @@ class VeiculoTest {
     void testSair() throws Exception {
         Veiculo veiculo = new Veiculo("ABC1234");
         Vaga vaga = new Vaga(1);
-        veiculo.estacionar(vaga);
-        veiculo.sair();
+        veiculo.estacionar(vaga, true, false, false);
+        veiculo.sair(10);
 
         assertNotNull(veiculo.getUsos().get(0).getSaida());
         assertFalse(veiculo.getUsos().get(0).getValorPago() > 0);
@@ -43,11 +42,11 @@ class VeiculoTest {
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);
 
-        veiculo.estacionar(vaga1);
-        veiculo.sair();
+        veiculo.estacionar(vaga1, true, false, false);
+        veiculo.sair(12);
 
-        veiculo.estacionar(vaga2);
-        veiculo.sair();
+        veiculo.estacionar(vaga2, true, false, false);
+        veiculo.sair(11);
 
         double totalEsperado = veiculo.getUsos().get(0).getValorPago() + veiculo.getUsos().get(1).getValorPago();
         assertEquals(totalEsperado, veiculo.totalArrecadado());
@@ -59,11 +58,11 @@ class VeiculoTest {
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);
 
-        veiculo.estacionar(vaga1);
-        veiculo.sair();
+        veiculo.estacionar(vaga1, true, false, false);
+        veiculo.sair(23);
 
-        veiculo.estacionar(vaga2);
-        veiculo.sair();
+        veiculo.estacionar(vaga2, true, false, false);
+        veiculo.sair(13);
 
         int mesAtual = LocalDateTime.now().getMonthValue();
         double totalEsperado = veiculo.getUsos().get(0).getValorPago() + veiculo.getUsos().get(1).getValorPago();
@@ -76,11 +75,11 @@ class VeiculoTest {
         Vaga vaga1 = new Vaga(1);
         Vaga vaga2 = new Vaga(2);
 
-        veiculo.estacionar(vaga1);
-        veiculo.sair();
+        veiculo.estacionar(vaga1, true, false, false);
+        veiculo.sair(21);
 
-        veiculo.estacionar(vaga2);
-        veiculo.sair();
+        veiculo.estacionar(vaga2, true, false, false);
+        veiculo.sair(22);
 
         assertEquals(2, veiculo.totalDeUsos());
     }

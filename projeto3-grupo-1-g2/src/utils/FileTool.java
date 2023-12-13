@@ -81,6 +81,7 @@ public class FileTool {
     public boolean writeNewLine(String text) throws IOException {
         buffered_writer.newLine();
         buffered_writer.write(text);
+        buffered_writer.flush();
 
         return true;
     }
@@ -91,7 +92,7 @@ public class FileTool {
      */
     public boolean write(String text) throws IOException {
         buffered_writer.write(text);
-
+        buffered_writer.flush();
         return true;
     }
 

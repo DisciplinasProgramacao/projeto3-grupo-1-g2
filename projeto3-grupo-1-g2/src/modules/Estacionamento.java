@@ -90,7 +90,6 @@ public class Estacionamento implements IObservadorEstacionamento{
      * @param numero O número usado para gerar as vagas.
      * @return A lista de vagas gerada.
      */
-
     private ArrayList<Vaga> gerarVagas(int numero) {
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {
@@ -136,6 +135,24 @@ public class Estacionamento implements IObservadorEstacionamento{
     }
 
     /**
+     * Calcula a arrecadação total do estacionamento somando as arrecadações individuais de cada cliente.
+     *
+     * Itera sobre a lista de clientes associados ao estacionamento e acumula a arrecadação total,
+     * somando as contribuições individuais de cada cliente.
+     *
+     * @return O valor total arrecadado pelo estacionamento.
+     */
+    public double calcularArrecadacaoTotalEstacionamento() {
+        double arrecadacaoTotal = 0.0;
+
+        for (Cliente cliente : clientesVeiculos.keySet()) {
+            arrecadacaoTotal += cliente.arrecadadoTotal();
+        }
+
+        return arrecadacaoTotal;
+    }
+
+    /**
      * Gera um relatório contendo informações sobre a arrecadação total do estacionamento.
      *
      * @return O relatório formatado da arrecadação total do estacionamento.
@@ -144,12 +161,7 @@ public class Estacionamento implements IObservadorEstacionamento{
         StringBuilder relatorio = new StringBuilder();
         relatorio.append("Relatório de Arrecadação Total do Estacionamento\n");
 
-        for (Cliente cliente : clientesVeiculos.keySet()) {
-            relatorio.append("Cliente: ").append(cliente.getNome())
-                    .append(", CPF: ").append(cliente.getCpf())
-                    .append(", Arrecadação Total: R$").append(cliente.arrecadadoTotal())
-                    .append("\n");
-        }
+        relatorio.append("Arrecadação Total do Estacionamento: R$").append(calcularArrecadacaoTotalEstacionamento()).append("\n");
 
         return relatorio.toString();
     }

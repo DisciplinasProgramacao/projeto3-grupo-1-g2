@@ -71,11 +71,11 @@ public class Main {
                     gerarRelatorioArrecadacaoTotalEstacionamento();
                     break;
                 case 9:
-                gerarRelatorioTotalArrecadadoPorMesEstacionamento();
-                break;
+                    gerarRelatorioTotalArrecadadoPorMesEstacionamento();
+                    break;
                 case 10:
-                gerarRelatorioValorMeioPorUsoEstacionamento();
-                break;
+                    gerarRelatorioValorMeioPorUsoEstacionamento();
+                    break;
             }
         } while (escolha != 20);
         scanner.close();

@@ -1,5 +1,6 @@
 package modules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ObservadoraVeiculo implements IObservadoraVeiculo{
@@ -7,6 +8,9 @@ public class ObservadoraVeiculo implements IObservadoraVeiculo{
 
     @Override
     public void registrar(Estacionamento estacionamento) {
+        if(observadores == null){
+            observadores = new ArrayList<Estacionamento>();
+        }
         observadores.add(estacionamento);
     }
 
@@ -15,5 +19,13 @@ public class ObservadoraVeiculo implements IObservadoraVeiculo{
         for (Estacionamento estacionamento: observadores) {
             estacionamento.update();
         }
+    }
+
+    public List<Estacionamento> getObservadores() {
+        return observadores;
+    }
+
+    public void setObservadores(List<Estacionamento> observadores) {
+        this.observadores = observadores;
     }
 }

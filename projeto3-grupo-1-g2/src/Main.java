@@ -258,6 +258,7 @@ public class Main {
                     for (Veiculo veiculo : cliente.getVeiculos()) {
                         if (veiculo.getPlaca().equals(placaVeiculo)) {
                             veiculoEstacionamento = veiculo;
+                            veiculoEstacionamento.addObservador(estacionamento);
                             break;
                         }
                     }

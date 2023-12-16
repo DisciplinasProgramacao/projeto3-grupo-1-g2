@@ -3,9 +3,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import org.junit.platform.commons.function.Try;
 
 import modules.*;
 import utils.FileTool;
@@ -33,15 +34,21 @@ public class Main {
             System.out.println("\t 5. Listar clientes e veículos");
             System.out.println("\t 6. Gerar relatório de uso do veículo");
             System.out.println("\t 7. Gerar relatório de uso de vagas");
-            System.out.println("\t 8. Gerar relatório de arrecadação total do estacionamento");
-            System.out.println("\t 9. Gerar relatório de arrecadação total por mês de um estacionamento");
-            System.out.println("\t 10. Gerar relatório de valor médio arrecadado de um estacionamento");
+            System.out.println("\t 8. Gerar relatório de arrecadação total por mês de um estacionamento");
+            System.out.println("\t 9. Gerar relatório de valor médio arrecadado de um estacionamento");
+            System.out.println("\t 10. Gerar relatório de arrecadação total do estacionamento");
+            System.out.println("\t 11. Gerar relatório de veículo por data crescente");
+            System.out.println("\t 12. Gerar relatório de veículo por valor decrescente");
 
             System.out.println("\t 20. Sair\n");
 
             System.out.print("Escolha uma opção: ");
-            escolha = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                escolha = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                escolha = 20;
+            }
 
             switch (escolha) {
                 case 1:
@@ -74,6 +81,15 @@ public class Main {
                 case 10:
                     gerarRelatorioValorMeioPorUsoEstacionamento();
                     break;
+                case 11:
+                    gerarRelatorioDataCrescenteVeiculo();
+                    break;
+                case 12:
+                    gerarRelatorioValorDecrescenteVeiculo();
+                    break;
+                default:
+                    escolha = 20;
+                    break;
             }
         } while (escolha != 20);
         scanner.close();
@@ -82,10 +98,11 @@ public class Main {
     private static void preencherDados() {
         try {
             FileTool v_readerFile = new FileTool(true);
-            String v_line;
-            v_readerFile.changePath("./src/data/pub.in");
+            String v_line = "INÍCIO";
+            v_readerFile.changePath("./projeto3-grupo-1-g2/src/data/pub.in");
             Integer v_insertClients = 0;
-            for (int i = 1; i <= 53; i++) {
+            Integer v_estacionarVeiculos = 0;
+            for (int i = 1; v_line != ""; i++) {
                 v_line = v_readerFile.readLine(1);
                 if (i <= 3) {
                     String[] v_lineSplit = v_line.split(" ; ");
@@ -110,7 +127,9 @@ public class Main {
                 }
                 if (i >= 5) {
                     for (int j = i; i <= v_insertClients; j++) {
-                        v_line = v_readerFile.readLine(1);
+                        if (!(i == j)) {
+                            v_line = v_readerFile.readLine(1);
+                        }
                         String[] v_lineSplit = v_line.split(" ; ");
                         String nomeCliente = v_lineSplit[1];
                         String cpfCliente = v_lineSplit[2];
@@ -123,6 +142,86 @@ public class Main {
                         estacionamentoEscolhido.addClienteToEstacionamento(novoCliente);
                         Veiculo novoVeiculo = new Veiculo(v_lineSplit[3]);
                         novoCliente.addVeiculo(novoVeiculo);
+                        i = j;
+                    }
+                }
+                if (i == 55) {
+                    v_estacionarVeiculos = Integer.parseInt(v_line);
+                }
+                if (i >= 56) {
+                    Integer t_valueToFinish = i + v_estacionarVeiculos - 1;
+                    for (int j = i; j <= t_valueToFinish; j++) {
+                        if (!(i == j)) {
+                            v_line = v_readerFile.readLine(1);
+                        }
+                        if (v_line != "") {
+                            String[] v_lineSplit = v_line.split(" ; ");
+                            String placaVeiculo = v_lineSplit[0];
+                            String escolhasParaEstacionar = v_lineSplit[1];
+                            Integer minutosParaSair = Integer.parseInt(v_lineSplit[2]);
+                            boolean escolhas[] = new boolean[3];
+                            for (String t_escolhas : escolhasParaEstacionar.split(",")) {
+                                if (t_escolhas.equals("0")) {
+                                    break;
+                                } else if (t_escolhas.equals("1")) {
+                                    escolhas[0] = true;
+                                } else if (t_escolhas.equals("2")) {
+                                    escolhas[1] = true;
+                                } else if (t_escolhas.equals("3")) {
+                                    escolhas[2] = true;
+                                }
+                            }
+
+                            Cliente clienteEstacionamento = null;
+                            Veiculo veiculoEstacionamento = null;
+
+                            for (Estacionamento estacionamento : listaEstacionamentos) {
+                                for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
+                                    if (cliente.possuiVeiculo(placaVeiculo)) {
+                                        clienteEstacionamento = cliente;
+                                        for (Veiculo veiculo : cliente.getVeiculos()) {
+                                            if (veiculo.getPlaca().equals(placaVeiculo)) {
+                                                veiculoEstacionamento = veiculo;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (clienteEstacionamento != null) {
+                                    break;
+                                }
+                            }
+                            Cliente clienteSaida = null;
+                            Veiculo veiculoSaida = null;
+                            Estacionamento estacionamentoParaUsar = null;
+
+                            for (Estacionamento estacionamento : listaEstacionamentos) {
+                                for (Cliente cliente : estacionamento.clientesVeiculos.keySet()) {
+                                    if (cliente.possuiVeiculo(placaVeiculo)) {
+                                        clienteSaida = cliente;
+                                        for (Veiculo veiculo : cliente.getVeiculos()) {
+                                            if (veiculo.getPlaca().equals(placaVeiculo)) {
+                                                veiculoSaida = veiculo;
+                                                estacionamentoParaUsar = estacionamento;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (clienteSaida != null) {
+                                    break;
+                                }
+                            }
+                            estacionamentoParaUsar.estacionar(veiculoEstacionamento, escolhas[0], escolhas[1],
+                                    escolhas[2]);
+
+                            if (clienteSaida != null && veiculoSaida != null && estacionamentoParaUsar != null) {
+                                estacionamentoParaUsar.sair(veiculoSaida, minutosParaSair);
+                            }
+                        }
+
                         i = j;
                     }
                 }
@@ -226,7 +325,7 @@ public class Main {
 
             FabricaVeiculoGenerico factory = new FabricaVeiculoGenerico();
             Veiculo novoVeiculo = factory.CriarVeiculo(placaVeiculo);
-            //clienteExistente.addVeiculo(novoVeiculo);
+            // clienteExistente.addVeiculo(novoVeiculo);
 
             for (Estacionamento estacionamento : listaEstacionamentos) {
                 if (estacionamento.clientesVeiculos.containsKey(clienteExistente)) {
@@ -370,34 +469,37 @@ public class Main {
         }
     }
 
-    public static void atualizarDados() {
-        try {
-            FileTool writer = new FileTool(false);
-            writer.changePath("./src/data/pub.out");
+    public static void gerarRelatorioDataCrescenteVeiculo() {
+        System.out.println("Informe a placa do veículo para calcular o relatório por data de forma crescente:");
+        String placaVeiculoParaRelatorio = scanner.nextLine();
 
-            String paragraph = "";
-
-            for (Estacionamento estacionamento : listaEstacionamentos) {
-                String text = estacionamento.clientesVeiculos.entrySet().stream()
-                        .map(entry -> {
-                            Cliente cliente = entry.getKey();
-                            List<Veiculo> veiculos = entry.getValue();
-                            String veiculosText = veiculos.stream()
-                                    .map(Veiculo::getPlaca)
-                                    .collect(Collectors.joining("\n"));
-
-                            return "Cliente: " + cliente.getNome() + " - " + cliente.getCpf() + "\nVeiculos:\n"
-                                    + veiculosText + "\n";
-                        })
-                        .collect(Collectors.joining("\n"));
-                paragraph += "Estacionamento: " + estacionamento.getLocal() + "\n" + text + "\n\n";
+        for (Estacionamento estacionamento : listaEstacionamentos) {
+            for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                List<Veiculo> veiculos = estacionamento.getClientesVeiculos().get(cliente);
+                for (Veiculo veiculo : veiculos) {
+                    if (veiculo.getPlaca().equals(placaVeiculoParaRelatorio)) {
+                        System.out.println(veiculo.gerarRelatorioVagasPorDataCrescente());
+                        break;
+                    }
+                }
             }
+        }
+    }
 
-            writer.write(paragraph);
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Falha ao executar o writer", e);
+    public static void gerarRelatorioValorDecrescenteVeiculo() {
+        System.out.println("Informe a placa do veículo para calcular o relatório por valor de forma decrescente:");
+        String placaVeiculoParaRelatorio = scanner.nextLine();
+
+        for (Estacionamento estacionamento : listaEstacionamentos) {
+            for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                List<Veiculo> veiculos = estacionamento.getClientesVeiculos().get(cliente);
+                for (Veiculo veiculo : veiculos) {
+                    if (veiculo.getPlaca().equals(placaVeiculoParaRelatorio)) {
+                        System.out.println(veiculo.gerarRelatorioVagasPorValorDecrescente());
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -463,25 +565,28 @@ public class Main {
         }
     }
 
+    /**
+     * Gera um relatório contendo informações sobre a arrecadação total do
+     * estacionamento.
+     *
+     * @return O relatório formatado da arrecadação total do estacionamento.
+     */
     public static void gerarRelatorioArrecadacaoTotalEstacionamento() {
         System.out.println("Informe o estacionamento desejado:");
         String relatorioEstacionamento = scanner.nextLine();
 
-        for(Estacionamento estacionamento : listaEstacionamentos) {
-            if(estacionamento.getLocal().equals(relatorioEstacionamento)) {
+        for (Estacionamento estacionamento : listaEstacionamentos) {
+            if (estacionamento.getLocal().equals(relatorioEstacionamento)) {
                 System.out.println(estacionamento.relatorioArrecadacaoTotal());
             }
         }
     }
 
-    public static void gerarRelatorioValorMeioPorUsoEstacionamento()
-    {
+    public static void gerarRelatorioValorMeioPorUsoEstacionamento() {
         System.out.println("Informe o estacionamento que será gerado o relatório:");
         String estacionamentoString = scanner.nextLine();
-        for(Estacionamento t_estacionamento : listaEstacionamentos)
-        {
-            if(t_estacionamento.getLocal().equals(estacionamentoString))
-            {
+        for (Estacionamento t_estacionamento : listaEstacionamentos) {
+            if (t_estacionamento.getLocal().equals(estacionamentoString)) {
                 System.out.println(t_estacionamento.relatorioValorMedioPorUso());
             }
         }

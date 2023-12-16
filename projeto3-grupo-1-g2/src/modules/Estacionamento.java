@@ -109,7 +109,7 @@ public class Estacionamento implements IObservadorEstacionamento{
      */
     public boolean sair(Veiculo veiculo, Integer p_valorParaAdicionarNoDateTimeNow) {
         try {
-            double valor = veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
+            veiculo.sair(p_valorParaAdicionarNoDateTimeNow);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -241,7 +241,7 @@ public class Estacionamento implements IObservadorEstacionamento{
      * @return Um array contendo os top 5 clientes com base na arrecadação total, ordenados por valor decrescente.
      */
     public Cliente[] top5Clientes(){
-        ArrayList<Cliente> clientes = null;
+        ArrayList<Cliente> clientes = new ArrayList<>();
         for (Cliente cliente : clientesVeiculos.keySet())
         {
             clientes.add(cliente);

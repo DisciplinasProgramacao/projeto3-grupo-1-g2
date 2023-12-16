@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import org.junit.platform.commons.function.Try;
-
 import modules.*;
 import utils.FileTool;
 
@@ -300,6 +298,37 @@ public class Main {
             }
             System.out.println("Cliente cadastrado com sucesso!");
             atualizarDados();
+        }
+    }
+
+    public static void atualizarDados() {
+        try {
+            FileTool writer = new FileTool(false);
+            writer.changePath("./src/data/pub.out");
+
+            String paragraph = "";
+
+            for (Estacionamento estacionamento : listaEstacionamentos) {
+                String text = estacionamento.clientesVeiculos.entrySet().stream()
+                        .map(entry -> {
+                            Cliente cliente = entry.getKey();
+                            List<Veiculo> veiculos = entry.getValue();
+                            String veiculosText = veiculos.stream()
+                                    .map(Veiculo::getPlaca)
+                                    .collect(Collectors.joining("\n"));
+
+                            return "Cliente: " + cliente.getNome() + " - " + cliente.getCpf() + "\nVeiculos:\n"
+                                    + veiculosText + "\n";
+                        })
+                        .collect(Collectors.joining("\n"));
+                paragraph += "Estacionamento: " + estacionamento.getLocal() + "\n" + text + "\n\n";
+            }
+
+            writer.write(paragraph);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Falha ao executar o writer", e);
         }
     }
 

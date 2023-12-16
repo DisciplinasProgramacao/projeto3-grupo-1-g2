@@ -1,15 +1,14 @@
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import modules.*;
-import test.modules.EstacionamentoTest;
+import modules.relatorio.Relatorios;
 import utils.FileTool;
 
 public class Main {
@@ -35,9 +34,9 @@ public class Main {
             System.out.println("\t 5. Listar clientes e veículos");
             System.out.println("\t 6. Gerar relatório de uso do veículo");
             System.out.println("\t 7. Gerar relatório de uso de vagas");
-            System.out.println("\t 8. Gerar relatório de arrecadação total por mês de um estacionamento");
-            System.out.println("\t 9. Gerar relatório de valor médio arrecadado de um estacionamento");
-            System.out.println("\t 10. Gerar relatório de arrecadação total do estacionamento");
+            System.out.println("\t 8. Gerar relatório de arrecadação total do estacionamento");
+            System.out.println("\t 9. Gerar relatório de arrecadação total por mês de um estacionamento");
+            System.out.println("\t 10. Gerar relatório de valor médio arrecadado de um estacionamento");
 
             System.out.println("\t 20. Sair\n");
 
@@ -372,6 +371,37 @@ public class Main {
         }
     }
 
+    public static void atualizarDados() {
+        try {
+            FileTool writer = new FileTool(false);
+            writer.changePath("./src/data/pub.out");
+
+            String paragraph = "";
+
+            for (Estacionamento estacionamento : listaEstacionamentos) {
+                String text = estacionamento.clientesVeiculos.entrySet().stream()
+                        .map(entry -> {
+                            Cliente cliente = entry.getKey();
+                            List<Veiculo> veiculos = entry.getValue();
+                            String veiculosText = veiculos.stream()
+                                    .map(Veiculo::getPlaca)
+                                    .collect(Collectors.joining("\n"));
+
+                            return "Cliente: " + cliente.getNome() + " - " + cliente.getCpf() + "\nVeiculos:\n"
+                                    + veiculosText + "\n";
+                        })
+                        .collect(Collectors.joining("\n"));
+                paragraph += "Estacionamento: " + estacionamento.getLocal() + "\n" + text + "\n\n";
+            }
+
+            writer.write(paragraph);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Falha ao executar o writer", e);
+        }
+    }
+
     public static void gerarRelatorioUsoVeiculo() {
         System.out.println("Informe a placa do veículo para calcular o valor médio por uso:");
         String placaVeiculoParaRelatorio = scanner.nextLine();
@@ -434,11 +464,6 @@ public class Main {
         }
     }
 
-    /**
-     * Gera um relatório contendo informações sobre a arrecadação total do estacionamento.
-     *
-     * @return O relatório formatado da arrecadação total do estacionamento.
-     */
     public static void gerarRelatorioArrecadacaoTotalEstacionamento() {
         System.out.println("Informe o estacionamento desejado:");
         String relatorioEstacionamento = scanner.nextLine();
@@ -460,38 +485,6 @@ public class Main {
             {
                 System.out.println(t_estacionamento.relatorioValorMedioPorUso());
             }
-        }
-
-    }
-
-    public static void atualizarDados() {
-        try {
-            FileTool writer = new FileTool(false);
-            writer.changePath("./src/data/pub.out");
-
-            String paragraph = "";
-
-            for (Estacionamento estacionamento : listaEstacionamentos) {
-                String text = estacionamento.clientesVeiculos.entrySet().stream()
-                        .map(entry -> {
-                            Cliente cliente = entry.getKey();
-                            List<Veiculo> veiculos = entry.getValue();
-                            String veiculosText = veiculos.stream()
-                                    .map(Veiculo::getPlaca)
-                                    .collect(Collectors.joining("\n"));
-
-                            return "Cliente: " + cliente.getNome() + " - " + cliente.getCpf() + "\nVeiculos:\n"
-                                    + veiculosText + "\n";
-                        })
-                        .collect(Collectors.joining("\n"));
-                paragraph += "Estacionamento: " + estacionamento.getLocal() + "\n" + text + "\n\n";
-            }
-
-            writer.write(paragraph);
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Falha ao executar o writer", e);
         }
     }
 }

@@ -39,6 +39,7 @@ public class Main {
             System.out.println("\t 11. Gerar relatório de veículo por data crescente");
             System.out.println("\t 12. Gerar relatório de veículo por valor decrescente");
             System.out.println("\t 13. Gerar relatório de arrecadação média pelos clientes horistas no mês atual");
+            System.out.println("\t 14. Gerar relatório de quantas vezes os clientes mensalistas utilizaram um estacionamento no mês corrente, em valores absolutos e em porcentagem de uso.");
 
             System.out.println("\t 20. Sair\n");
 
@@ -90,6 +91,10 @@ public class Main {
                 case 13:
                     gerarRelatorioArrecadacaoMediaHoristas();
                     break;
+                case 14: 
+                    gerarRelatorioUsoMensalistas();
+                    break;
+
                 default:
                     escolha = 20;
                     break;
@@ -637,6 +642,22 @@ public class Main {
         }
     }
     Horista.gerarRelatorioArrecadacaoMedia(horistas, mesAtual);
+}
+private static void gerarRelatorioUsoMensalistas() {
+    int mesAtual = LocalDate.now().getMonthValue();
+    List<Mensalista> mensalistas = new ArrayList<>();
+
+    
+    for (Estacionamento estacionamento : listaEstacionamentos) {
+        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+            if (cliente instanceof Mensalista) {
+                mensalistas.add((Mensalista) cliente);
+            }
+        }
+    }
+
+    
+    Mensalista.gerarRelatorioUsoMensalistas(mensalistas);
 }
 
 }   

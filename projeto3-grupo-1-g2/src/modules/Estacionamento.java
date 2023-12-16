@@ -217,22 +217,29 @@ public class Estacionamento implements IObservadorEstacionamento{
         return relatorio.toString();
     }
 
-    public String getLocal() {
-        return local;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    /**
+     * Verifica se um cliente já está registrado no estacionamento.
+     *
+     * Este método verifica se o cliente fornecido já está presente na coleção de clientes
+     * associados aos veículos registrados no estacionamento. Retorna verdadeiro se o cliente
+     * existe e falso caso contrário.
+     *
+     * @param cliente O cliente a ser verificado.
+     * @return True se o cliente existe, False se o cliente não existe.
+     */
     public boolean clienteExiste(Cliente cliente) {
         return clientesVeiculos.containsKey(cliente);
     }
 
+    /**
+     * Retorna um array contendo os top 5 clientes com base na arrecadação total.
+     *
+     * Este método cria uma lista de clientes a partir da coleção de clientes associados aos veículos
+     * registrados no estacionamento. A lista é então ordenada em ordem decrescente com base na arrecadação
+     * total de cada cliente. Os top 5 clientes são selecionados e retornados como um array.
+     *
+     * @return Um array contendo os top 5 clientes com base na arrecadação total, ordenados por valor decrescente.
+     */
     public Cliente[] top5Clientes(){
         ArrayList<Cliente> clientes = null;
         for (Cliente cliente : clientesVeiculos.keySet())
@@ -258,5 +265,17 @@ public class Estacionamento implements IObservadorEstacionamento{
     @Override
     public void update() {
         top5Clientes();
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

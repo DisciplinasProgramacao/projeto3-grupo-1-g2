@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import modules.*;
-import modules.relatorio.Relatorios;
 import utils.FileTool;
 
 public class Main {

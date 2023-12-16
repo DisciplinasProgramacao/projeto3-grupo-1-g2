@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,6 +38,7 @@ public class Main {
             System.out.println("\t 10. Gerar relatório de arrecadação total do estacionamento");
             System.out.println("\t 11. Gerar relatório de veículo por data crescente");
             System.out.println("\t 12. Gerar relatório de veículo por valor decrescente");
+            System.out.println("\t 13. Gerar relatório de arrecadação média pelos clientes horistas no mês atual");
 
             System.out.println("\t 20. Sair\n");
 
@@ -84,6 +86,9 @@ public class Main {
                     break;
                 case 12:
                     gerarRelatorioValorDecrescenteVeiculo();
+                    break;
+                case 13:
+                    gerarRelatorioArrecadacaoMediaHoristas();
                     break;
                 default:
                     escolha = 20;
@@ -620,4 +625,18 @@ public class Main {
             }
         }
     }
+    private static void gerarRelatorioArrecadacaoMediaHoristas() {
+    int mesAtual = LocalDate.now().getMonthValue();
+    List<Horista> horistas = new ArrayList<>();
+
+    for (Estacionamento estacionamento : listaEstacionamentos) {
+        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+            if (cliente instanceof Horista) {
+                horistas.add((Horista) cliente);
+            }
+        }
+    }
+    Horista.gerarRelatorioArrecadacaoMedia(horistas, mesAtual);
 }
+
+}   

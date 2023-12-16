@@ -241,11 +241,7 @@ public class Main {
     }
 
     private static void criarCliente() {
-        System.out.println("Escolha o tipo de cliente:");
-        System.out.println("\t1. Horista");
-        System.out.println("\t2. Mensalista");
-        System.out.println("\t3. Turnista");
-        System.out.print("Resposta: ");
+        exibirTipoDeCliente();
         int tipoCliente = scanner.nextInt();
         scanner.nextLine();
 
@@ -312,10 +308,18 @@ public class Main {
         }
     }
 
+    private static void exibirTipoDeCliente() {
+        System.out.println("Escolha o tipo de cliente:");
+        System.out.println("\t1. Horista");
+        System.out.println("\t2. Mensalista");
+        System.out.println("\t3. Turnista");
+        System.out.print("Resposta: ");
+    }
+
     public static void atualizarDados() {
         try {
             FileTool writer = new FileTool(false);
-            writer.changePath("./src/data/pub.out");
+            writer.changePath("./projeto3-grupo-1-g2/src/data/pub.out");
 
             String paragraph = "";
 
@@ -414,11 +418,7 @@ public class Main {
             boolean usarPolimento = false;
             while (tipoServico != 0) {
                 System.out.println("Escolha o tipo de serviço que vai ser utilizado:");
-                System.out.println("\t0. Todos serviços escolhidos");
-                System.out.println("\t1. Manobrista");
-                System.out.println("\t2. Lavagem");
-                System.out.println("\t3. Polimento");
-                System.out.print("Resposta: ");
+                exibirTipoDeServico();
                 tipoServico = scanner.nextInt();
                 switch (tipoServico) {
                     case 1:
@@ -451,6 +451,14 @@ public class Main {
         } else {
             System.out.println("Veículo não encontrado ou cliente não cadastrado.");
         }
+    }
+
+    private static void exibirTipoDeServico() {
+        System.out.println("\t0. Todos serviços escolhidos");
+        System.out.println("\t1. Manobrista");
+        System.out.println("\t2. Lavagem");
+        System.out.println("\t3. Polimento");
+        System.out.print("Resposta: ");
     }
 
     public static void registrarSaida() {

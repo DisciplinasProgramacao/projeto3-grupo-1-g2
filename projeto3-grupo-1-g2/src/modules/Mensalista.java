@@ -43,14 +43,11 @@ public class Mensalista extends Cliente{
     }
 
 
-
-
     /**
      * Gera um relatório de uso dos clientes Mensalistas para o mês/ano atual.
      *
      * @param mensalistas A lista de clientes Mensalistas para os quais o relatório será gerado.
      */
-
     public static void gerarRelatorioUsoMensalistas(List<Mensalista> mensalistas) {
         int mesAtual = LocalDate.now().getMonthValue();
         int anoAtual = LocalDate.now().getYear();

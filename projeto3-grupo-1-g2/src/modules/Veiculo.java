@@ -155,6 +155,15 @@ public class Veiculo implements VeiculoGenerico {
         return usos.size();
     }
 
+    /**
+     * Adiciona um observador ao veículo.
+     *
+     * Este método cria uma nova instância de {@link ObservadoraVeiculo}, registra o estacionamento
+     * fornecido utilizando o método {@link ObservadoraVeiculo#registrar(Estacionamento)}, e atribui
+     * a observadora criada aos observadores do veículo utilizando o método {@link Veiculo#setObservadores(ObservadoraVeiculo)}.
+     *
+     * @param estacionamento O estacionamento a ser registrado como observador.)
+     */
     public void addObservador(Estacionamento estacionamento){
         ObservadoraVeiculo observadoraVeiculo = new ObservadoraVeiculo();
         observadoraVeiculo.registrar(estacionamento);
@@ -205,6 +214,17 @@ public class Veiculo implements VeiculoGenerico {
         return gerarRelatorioOrdenado(Collections.reverseOrder(Comparator.comparing(UsoDeVaga::getValorPago)));
     }
 
+    /**
+     * Filtra os usos de vaga com base em um intervalo de datas.
+     *
+     * Este método utiliza a funcionalidade de stream para filtrar os usos de vaga da lista com base
+     * em um intervalo de datas fornecido. Retorna uma lista contendo os usos de vaga cujas datas de
+     * entrada estão após a data de início e cujas datas de saída (se existirem) estão antes da data de fim.
+     *
+     * @param inicio A data de início do intervalo.
+     * @param fim A data de fim do intervalo.
+     * @return Uma lista de usos de vaga filtrados pelo intervalo de datas.
+     */
     public List<UsoDeVaga> filtrarUsosPorData(LocalDateTime inicio, LocalDateTime fim) {
         return this.usos.stream()
                 .filter(uso -> uso.getEntrada().isAfter(inicio) && (uso.getSaida() == null || uso.getSaida().isBefore(fim)))

@@ -39,7 +39,8 @@ public class Main {
             System.out.println("\t 11. Gerar relatório de veículo por data crescente");
             System.out.println("\t 12. Gerar relatório de veículo por valor decrescente");
             System.out.println("\t 13. Gerar relatório de arrecadação média pelos clientes horistas no mês atual");
-            System.out.println("\t 14. Gerar relatório de quantas vezes os clientes mensalistas utilizaram um estacionamento no mês corrente, em valores absolutos e em porcentagem de uso.");
+            System.out.println(
+                    "\t 14. Gerar relatório de quantas vezes os clientes mensalistas utilizaram um estacionamento no mês corrente, em valores absolutos e em porcentagem de uso.");
 
             System.out.println("\t 20. Sair\n");
 
@@ -91,7 +92,7 @@ public class Main {
                 case 13:
                     gerarRelatorioArrecadacaoMediaHoristas();
                     break;
-                case 14: 
+                case 14:
                     gerarRelatorioUsoMensalistas();
                     break;
 
@@ -630,34 +631,62 @@ public class Main {
             }
         }
     }
+
+    /**
+     * Gera e exibe um relatório sobre a arrecadação média gerada pelos clientes
+     * horistas no mês atual.
+     * 
+     * Este método percorre todos os estacionamentos disponíveis e coleta clientes
+     * do tipo Horista.
+     * Com a lista de clientes horistas, chama um método estático da classe Horista
+     * para gerar um relatório detalhado
+     * que inclui a arrecadação média desses clientes no mês atual.
+     * 
+     * O mês atual é determinado automaticamente pelo sistema. O relatório inclui o
+     * nome, CPF e a arrecadação de cada
+     * cliente horista, além da arrecadação média de todos os horistas no mês
+     * especificado.
+     */
     private static void gerarRelatorioArrecadacaoMediaHoristas() {
-    int mesAtual = LocalDate.now().getMonthValue();
-    List<Horista> horistas = new ArrayList<>();
+        int mesAtual = LocalDate.now().getMonthValue();
+        List<Horista> horistas = new ArrayList<>();
 
-    for (Estacionamento estacionamento : listaEstacionamentos) {
-        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
-            if (cliente instanceof Horista) {
-                horistas.add((Horista) cliente);
+        for (Estacionamento estacionamento : listaEstacionamentos) {
+            for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                if (cliente instanceof Horista) {
+                    horistas.add((Horista) cliente);
+                }
             }
         }
-    }
-    Horista.gerarRelatorioArrecadacaoMedia(horistas, mesAtual);
-}
-private static void gerarRelatorioUsoMensalistas() {
-    int mesAtual = LocalDate.now().getMonthValue();
-    List<Mensalista> mensalistas = new ArrayList<>();
 
-    
-    for (Estacionamento estacionamento : listaEstacionamentos) {
-        for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
-            if (cliente instanceof Mensalista) {
-                mensalistas.add((Mensalista) cliente);
+        Horista.gerarRelatorioArrecadacaoMedia(horistas, mesAtual);
+    }
+
+    /**
+     * Gera e exibe um relatório sobre a utilização dos estacionamentos pelos
+     * clientes mensalistas no mês atual.
+     * 
+     * Este método percorre todos os estacionamentos disponíveis e coleta clientes
+     * do tipo Mensalista.
+     * Em seguida, chama um método estático da classe Mensalista para gerar um
+     * relatório detalhado
+     * que inclui o número total de usos no mês atual e a porcentagem de uso de cada
+     * mensalista.
+     * 
+     * O mês atual é determinado automaticamente pelo sistema.
+     */
+    private static void gerarRelatorioUsoMensalistas() {
+        List<Mensalista> mensalistas = new ArrayList<>();
+
+        for (Estacionamento estacionamento : listaEstacionamentos) {
+            for (Cliente cliente : estacionamento.getClientesVeiculos().keySet()) {
+                if (cliente instanceof Mensalista) {
+                    mensalistas.add((Mensalista) cliente);
+                }
             }
         }
+
+        Mensalista.gerarRelatorioUsoMensalistas(mensalistas);
     }
 
-    
-    Mensalista.gerarRelatorioUsoMensalistas(mensalistas);
 }
-
-}   

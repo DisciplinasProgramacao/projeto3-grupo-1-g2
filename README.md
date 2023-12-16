@@ -9,6 +9,7 @@ O projeto visa desenvolver um sistema de software para a Xulambs Inc., uma organ
 * Luís Miguel Souza Almeida
 * Luiz Felipe Saraiva Sério
 * Rubens Marcelo Ramos dos Santos
+* Joana Iuna de Morais
 
 ## Professores responsáveis
 

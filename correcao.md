@@ -4,10 +4,14 @@
 
 ## Contribuições
 
-  - Requisitos (classes e testes): 6,5/12 pontos;
+  - Requisitos (classes e testes): 7/12 pontos;
   - Documentação: 0/3 pontos;
   - Tarefas nas aulas: 5 pontos;
   - Atraso nos artefatos: desconto de 1 a 4 pontos por semana.
+  - 01/11 (Augusto, Erica, Felipe, Luis Miguel)
+  - 08/11 (Augusto, Erica, Felipe, Luis Miguel)
+  - 15/11 (Augusto, Felipe, Joana, Rubens)
+
 
 ## Requisitos
 
